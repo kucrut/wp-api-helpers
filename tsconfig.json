@@ -2,6 +2,7 @@
 	"include": [ "scripts/**/*", "src/**/*" ],
 	"compilerOptions": {
 		"allowJs": true,
+		"allowSyntheticDefaultImports": true,
 		"baseUrl": "./",
 		"checkJs": true,
 		"forceConsistentCasingInFileNames": true,
