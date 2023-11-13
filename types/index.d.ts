@@ -59,4 +59,19 @@ declare module '@kucrut/wp-api-helpers' {
 	}>>;
 }
 
+declare module '@kucrut/wp-api-helpers/utils' {
+	/**
+	 * Get error message
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param error    Error object, whatever.
+	 * @param fallback Fallback message if the error is unrecognized.
+	 * @param dump     Whether to dump error if the error is unrecognized. (Defaults to true).
+	 *
+	 * @return Error message.
+	 */
+	export function get_error_message(error: unknown, fallback: string, dump?: boolean | undefined): string;
+}
+
 //# sourceMappingURL=index.d.ts.map
