@@ -32,3 +32,35 @@ export async function discover( url ) {
 
 	return match[ 1 ];
 }
+
+/**
+ * Log in to WordPress via JWT
+ *
+ * @since 0.1.0
+ *
+ * @see {@link https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/}
+ *
+ * @param {Object} credentials Credentials.
+ * @param {string} credentials.url WordPress API root URL.
+ * @param {string} credentials.username Username.
+ * @param {string} credentials.password Password.
+ *
+ * @throws {Error}
+ *
+ * @return {Promise<Response>} Fetch response.
+ */
+export async function jwt_login( { url, username, password } ) {
+	const response = await fetch( `${ url }/jwt-auth/v1/token`, {
+		method: 'POST',
+		body: JSON.stringify( {
+			username,
+			password,
+		} ),
+		headers: {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json',
+		},
+	} );
+
+	return response;
+}
