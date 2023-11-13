@@ -2,13 +2,17 @@
 	"version": 3,
 	"file": "index.d.ts",
 	"names": [
-		"discover"
+		"discover",
+		"jwt_login_data",
+		"JWT_Login_Data"
 	],
 	"sources": [
-		"../src/exports/wp/general.js"
+		"../src/exports/wp/general.js",
+		"../src/exports/wp/schema.js"
 	],
 	"sourcesContent": [
+		null,
 		null
 	],
-	"mappings": ";;;;;;;;;;iBAWsBA,QAAQA"
+	"mappings": ";;;;;;;;;;;iBAWsBA,QAAQA;cCTjBC,cAAcA;;;;;;;;;;;;;;;;aAOYC,cAAcA"
 }
