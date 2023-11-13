@@ -15,7 +15,8 @@
 		"check-format": "prettier --check .",
 		"check-js": "eslint --ext .cjs,.js,.ts .",
 		"generate-types": "node scripts/generate-types.js",
-		"lint": "pnpm prettier:check && pnpm eslint:check && tsc"
+		"lint": "pnpm prettier:check && pnpm eslint:check && tsc",
+		"test": "vitest"
 	},
 	"exports": {
 		".": {
