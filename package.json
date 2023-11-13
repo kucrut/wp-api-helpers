@@ -22,7 +22,7 @@
 		"./package.json": "./package.json",
 		".": {
 			"types": "./types/index.d.ts",
-			"import": "./src/exports/index.js"
+			"import": "./src/exports/wp/index.js"
 		},
 		"./utils": {
 			"types": "./types/index.d.ts",
