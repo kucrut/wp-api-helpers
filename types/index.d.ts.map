@@ -3,6 +3,7 @@
 	"file": "index.d.ts",
 	"names": [
 		"discover",
+		"jwt_login",
 		"jwt_login_data",
 		"JWT_Login_Data"
 	],
@@ -14,5 +15,5 @@
 		null,
 		null
 	],
-	"mappings": ";;;;;;;;;;;iBAWsBA,QAAQA;cCTjBC,cAAcA;;;;;;;;;;;;;;;;aAOYC,cAAcA"
+	"mappings": ";;;;;;;;;;;iBAWsBA,QAAQA;;;;;;;;;;;iBAwCRC,SAASA;;;;;cCjDlBC,cAAcA;;;;;;;;;;;;;;;;aAOYC,cAAcA"
 }
