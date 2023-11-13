@@ -5,7 +5,9 @@
 		"discover",
 		"jwt_login",
 		"jwt_login_data",
+		"rest_error_schema",
 		"JWT_Login_Data",
+		"WP_Rest_Error",
 		"get_error_message"
 	],
 	"sources": [
@@ -18,5 +20,5 @@
 		null,
 		null
 	],
-	"mappings": ";;;;;;;;;;;iBAWsBA,QAAQA;;;;;;;;;;;iBAwCRC,SAASA;;;;;cCjDlBC,cAAcA;;;;;;;;;;;;;;;;aAOYC,cAAcA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCIrCC,iBAAiBA"
+	"mappings": ";;;;;;;;;;;iBAWsBA,QAAQA;;;;;;;;;;;iBAwCRC,SAASA;;;;;cCjDlBC,cAAcA;;;;;;;;;;;;;;;;;cASdC,iBAAiBA;;;;;;;;;;;;;;;;;;;;;;;aAFSC,cAAcA;;;;;;;;;;;;;;;;aAUXC,aAAaA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCNvCC,iBAAiBA"
 }

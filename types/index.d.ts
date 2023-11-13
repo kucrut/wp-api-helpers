@@ -41,6 +41,30 @@ declare module '@kucrut/wp-api-helpers' {
 		user_nicename: string;
 		token: string;
 	}>;
+
+	export const rest_error_schema: z.ZodObject<{
+		code: z.ZodString;
+		message: z.ZodString;
+		data: z.ZodObject<{
+			status: z.ZodNumber;
+		}, "strip", z.ZodTypeAny, {
+			status: number;
+		}, {
+			status: number;
+		}>;
+	}, "strip", z.ZodTypeAny, {
+		code: string;
+		data: {
+			status: number;
+		};
+		message: string;
+	}, {
+		code: string;
+		data: {
+			status: number;
+		};
+		message: string;
+	}>;
 	export type JWT_Login_Data = z.infer<z.ZodObject<{
 		user_email: z.ZodString;
 		user_display_name: z.ZodString;
@@ -56,6 +80,29 @@ declare module '@kucrut/wp-api-helpers' {
 		user_display_name: string;
 		user_nicename: string;
 		token: string;
+	}>>;
+	export type WP_Rest_Error = z.infer<z.ZodObject<{
+		code: z.ZodString;
+		message: z.ZodString;
+		data: z.ZodObject<{
+			status: z.ZodNumber;
+		}, "strip", z.ZodTypeAny, {
+			status: number;
+		}, {
+			status: number;
+		}>;
+	}, "strip", z.ZodTypeAny, {
+		code: string;
+		data: {
+			status: number;
+		};
+		message: string;
+	}, {
+		code: string;
+		data: {
+			status: number;
+		};
+		message: string;
 	}>>;
 }
 
