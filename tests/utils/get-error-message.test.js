@@ -27,4 +27,18 @@ describe( 'Get error message', () => {
 		expect( result ).toStrictEqual( fallback );
 		expect( console_mock ).not.toHaveBeenCalled();
 	} );
+
+	test( 'Zod error message is returned', () => {
+		class ZodError extends Error {
+			constructor( message ) {
+				super( message );
+				this.message = message;
+			}
+		}
+
+		const msg = 'Boo!';
+		const result = get_error_message( new ZodError( msg ) );
+
+		expect( result ).toStrictEqual( msg );
+	} );
 } );
