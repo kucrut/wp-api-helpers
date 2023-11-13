@@ -1,5 +1,5 @@
 import { describe, test, expect, vi } from 'vitest';
-import { jwt_login } from '../../src/exports/wp/index.js';
+import { jwt_auth } from '../../src/exports/wp/index.js';
 
 global.fetch = vi.fn();
 
@@ -18,7 +18,7 @@ describe( 'JWT Login', () => {
 		};
 
 		/** @param {boolean} handle */
-		const make_request = handle => jwt_login( { url, username, password, handle } );
+		const make_request = handle => jwt_auth( { url, username, password, handle } );
 		const fake_response = () => {
 			fetch.mockReturnValueOnce(
 				new Response( JSON.stringify( data ), {
@@ -67,7 +67,7 @@ describe( 'JWT Login', () => {
 		};
 
 		/** @type {boolean} handle */
-		const make_request = handle => jwt_login( { username: 'user', password: 'pass', url, handle } );
+		const make_request = handle => jwt_auth( { username: 'user', password: 'pass', url, handle } );
 
 		fake_response( error );
 		await expect( make_request ).rejects.toThrowError( 'Invalid credentials' );

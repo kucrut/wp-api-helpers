@@ -1,7 +1,7 @@
 import { handle_response } from '../utils';
-import { jwt_login_data } from './schema';
+import { jwt_auth_data } from './schema';
 
-/** @typedef {import('./schema').JWT_Login_Data} JWT_Login_Data */
+/** @typedef {import('./schema').JWT_Auth_Data} JWT_Auth_Data */
 
 /**
  * Discover WordPress API root URL
@@ -39,13 +39,13 @@ export async function discover( url ) {
 }
 
 /**
- * Log in to WordPress via JWT
+ * Get JWT authentication
  *
  * @since 0.1.0
  *
  * @see {@link https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/}
  *
- * @template [T=JWT_Login_Data]
+ * @template [T=JWT_Auth_Data]
  *
  * @param {Object} options Options.
  * @param {string} options.url WordPress API root URL.
@@ -55,9 +55,9 @@ export async function discover( url ) {
  *
  * @throws {Error}
  *
- * @return {Promise<Response|JWT_Login_Data|T>} Fetch response or handled data.
+ * @return {Promise<Response|JWT_Auth_Data|T>} Fetch response or handled data.
  */
-export async function jwt_login( options ) {
+export async function jwt_auth( options ) {
 	const { url, username, password, handle = true } = options;
 
 	const response = await fetch( `${ url }/jwt-auth/v1/token`, {
@@ -73,9 +73,9 @@ export async function jwt_login( options ) {
 	} );
 
 	if ( handle === true ) {
-		/** @type {import('$types').HandleResponse<JWT_Login_Data>} */
+		/** @type {import('$types').HandleResponse<JWT_Auth_Data>} */
 		const handler = async data => {
-			return jwt_login_data.parse( data );
+			return jwt_auth_data.parse( data );
 		};
 
 		return handle_response( response, handler );
