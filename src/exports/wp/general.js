@@ -1,5 +1,5 @@
-import { handle_response } from '../utils';
-import { jwt_auth_data } from './schema';
+import { handle_response } from '../utils/index.js';
+import { jwt_auth_data } from './schema.js';
 
 /** @typedef {import('./schema').JWT_Auth_Data} JWT_Auth_Data */
 
