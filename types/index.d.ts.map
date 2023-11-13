@@ -1,0 +1,14 @@
+{
+	"version": 3,
+	"file": "index.d.ts",
+	"names": [
+		"discover"
+	],
+	"sources": [
+		"../src/exports/wp/general.js"
+	],
+	"sourcesContent": [
+		null
+	],
+	"mappings": ";;;;;;;;;;iBAWsBA,QAAQA"
+}
