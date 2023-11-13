@@ -8,3 +8,13 @@ export const jwt_login_data = z.object( {
 } );
 
 /** @typedef {z.infer<jwt_login_data>} JWT_Login_Data */
+
+export const rest_error_schema = z.object( {
+	code: z.string(),
+	message: z.string(),
+	data: z.object( {
+		status: z.number(),
+	} ),
+} );
+
+/** @typedef {z.infer<rest_error_schema>} WP_Rest_Error */
