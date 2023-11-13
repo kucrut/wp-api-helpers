@@ -119,6 +119,22 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @return Error message.
 	 */
 	export function get_error_message(error: unknown, fallback: string, dump?: boolean | undefined): string;
+	/**
+	 * Handle WP REST API response
+	 *
+	 * This helps catch syntax errors in json because of PHP notices, etc.
+	 *
+	 * @since 0.0.1
+	 *
+	 * @param response Fetch response object.
+	 * @param callback Callback to run when json is valid.
+	 *
+	 * @throws JSON.parse error.
+	 *
+	 * @return Whatever the callback returns.
+	 */
+	export function handle_response<T>(response: Response, callback: HandleResponse<T>): Promise<T>;
+	type HandleResponse<T> = (data: unknown) => Promise<T>;
 }
 
 //# sourceMappingURL=index.d.ts.map
