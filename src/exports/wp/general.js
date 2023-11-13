@@ -1,3 +1,8 @@
+import { handle_response } from '../utils';
+import { jwt_login_data } from './schema';
+
+/** @typedef {import('./schema').JWT_Login_Data} JWT_Login_Data */
+
 /**
  * Discover WordPress API root URL
  *
@@ -40,16 +45,21 @@ export async function discover( url ) {
  *
  * @see {@link https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/}
  *
- * @param {Object} credentials Credentials.
- * @param {string} credentials.url WordPress API root URL.
- * @param {string} credentials.username Username.
- * @param {string} credentials.password Password.
+ * @template [T=JWT_Login_Data]
+ *
+ * @param {Object} options Options.
+ * @param {string} options.url WordPress API root URL.
+ * @param {string} options.username Username.
+ * @param {string} options.password Password.
+ * @param {boolean|import("$types").HandleResponse<T>=} [options.handle=true] Whether or not to handle the response.
  *
  * @throws {Error}
  *
- * @return {Promise<Response>} Fetch response.
+ * @return {Promise<Response|JWT_Login_Data|T>} Fetch response or handled data.
  */
-export async function jwt_login( { url, username, password } ) {
+export async function jwt_login( options ) {
+	const { url, username, password, handle = true } = options;
+
 	const response = await fetch( `${ url }/jwt-auth/v1/token`, {
 		method: 'POST',
 		body: JSON.stringify( {
@@ -61,6 +71,19 @@ export async function jwt_login( { url, username, password } ) {
 			'Accept': 'application/json',
 		},
 	} );
+
+	if ( handle === true ) {
+		/** @type {import('$types').HandleResponse<JWT_Login_Data>} */
+		const handler = async data => {
+			return jwt_login_data.parse( data );
+		};
+
+		return handle_response( response, handler );
+	}
+
+	if ( typeof handle === 'function' ) {
+		return handle_response( response, handle );
+	}
 
 	return response;
 }
