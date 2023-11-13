@@ -6,6 +6,7 @@
 		"plugin:@wordpress/eslint-plugin/jsdoc"
 	],
 	"env": { "node": true },
+	"globals": { "ResponseInit": false },
 	"parser": "@typescript-eslint/parser",
 	"plugins": [ "@typescript-eslint" ],
 	"rules": {
