@@ -1,5 +1,5 @@
 import { describe, test, expect, vi } from 'vitest';
-import { jwt_auth } from '../../src/exports/wp/index.js';
+import { get_jwt_auth } from '../../src/exports/wp/index.js';
 
 global.fetch = vi.fn();
 
@@ -17,8 +17,7 @@ describe( 'JWT Login', () => {
 			token: 'token',
 		};
 
-		/** @param {boolean} handle */
-		const make_request = handle => jwt_auth( { url, username, password, handle } );
+		const make_request = () => get_jwt_auth( { url, username, password } );
 		const fake_response = () => {
 			fetch.mockReturnValueOnce(
 				new Response( JSON.stringify( data ), {
@@ -28,7 +27,7 @@ describe( 'JWT Login', () => {
 		};
 
 		fake_response();
-		const response_with_default_handle = await make_request( true );
+		const response_with_default_handle = await make_request();
 
 		expect( fetch ).toHaveBeenCalledWith( `${ url }/jwt-auth/v1/token`, {
 			method: 'POST',
@@ -43,11 +42,6 @@ describe( 'JWT Login', () => {
 		} );
 
 		expect( response_with_default_handle ).toStrictEqual( data );
-
-		fake_response();
-		const response_without_default_handle = await make_request( false );
-		const result = await response_without_default_handle.json();
-		expect( result ).toStrictEqual( data );
 	} );
 
 	test( 'Throw error when given invalid credentials', async () => {
@@ -66,16 +60,10 @@ describe( 'JWT Login', () => {
 			);
 		};
 
-		/** @type {boolean} handle */
-		const make_request = handle => jwt_auth( { username: 'user', password: 'pass', url, handle } );
+		const make_request = () => get_jwt_auth( { username: 'user', password: 'pass', url } );
 
 		fake_response( error );
 		await expect( make_request ).rejects.toThrowError( 'Invalid credentials' );
-
-		fake_response( error );
-		const response = await make_request( false );
-		const json = await response.json();
-		expect( json ).toStrictEqual( error );
 
 		const unknown_error = { error: true };
 		fake_response( unknown_error );
