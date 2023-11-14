@@ -1,16 +1,6 @@
 declare module '@kucrut/wp-api-helpers' {
 	import type { z } from 'zod';
 	/**
-	 * Discover WordPress API root URL
-	 *
-	 * @since 0.0.1
-	 *
-	 * @param url WordPress URL.
-	 *
-	 * @return WordPress API root URL.
-	 */
-	export function discover(url: string): Promise<string>;
-	/**
 	 * Fetch JWT authentication
 	 *
 	 * @since 0.1.0
@@ -35,6 +25,16 @@ declare module '@kucrut/wp-api-helpers' {
 		user_nicename: string;
 		token: string;
 	}>;
+	/**
+	 * Discover WordPress API root URL
+	 *
+	 * @since 0.0.1
+	 *
+	 * @param url WordPress URL.
+	 *
+	 * @return WordPress API root URL.
+	 */
+	export function discover(url: string): Promise<string>;
 	export const jwt_auth_data: z.ZodObject<{
 		user_email: z.ZodString;
 		user_display_name: z.ZodString;

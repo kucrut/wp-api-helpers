@@ -2,8 +2,8 @@
 	"version": 3,
 	"file": "index.d.ts",
 	"names": [
-		"discover",
 		"fetch_jwt_auth",
+		"discover",
 		"jwt_auth_data",
 		"rest_error",
 		"JWT_Auth_Data",
@@ -14,6 +14,7 @@
 		"HandleResponse"
 	],
 	"sources": [
+		"../src/exports/wp/auth.js",
 		"../src/exports/wp/general.js",
 		"../src/exports/wp/schema.js",
 		"../src/exports/utils/index.js",
@@ -23,7 +24,8 @@
 		null,
 		null,
 		null,
+		null,
 		null
 	],
-	"mappings": ";;;;;;;;;;;iBAcsBA,QAAQA;;;;;;;;;;;iBAwCdC,cAAcA;;;;;;;;;;;;;;;cCpDjBC,aAAaA;;;;;;;;;;;;;;;;;cASbC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAFeC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,aAAaA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCLhCC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MCvFzBC,cAAcA"
+	"mappings": ";;;;;;;;;;;;iBAmBgBA,cAAcA;;;;;;;;;;;;;;;;;;;;;;;;iBCRRC,QAAQA;cCTjBC,aAAaA;;;;;;;;;;;;;;;;;cASbC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAFeC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,aAAaA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCLhCC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MCvFzBC,cAAcA"
 }
