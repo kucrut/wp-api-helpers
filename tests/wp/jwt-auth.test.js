@@ -45,11 +45,7 @@ describe( 'JWT Login', () => {
 	} );
 
 	test( 'Throw error when given invalid credentials', async () => {
-		const error = {
-			code: 'jwt_auth_error',
-			message: 'Invalid credentials',
-			data: { status: 403 },
-		};
+		const console_mock = vi.spyOn( console, 'error' ).mockImplementation( () => undefined );
 
 		const fake_response = data => {
 			fetch.mockReturnValueOnce(
@@ -62,11 +58,15 @@ describe( 'JWT Login', () => {
 
 		const make_request = () => get_jwt_auth( { username: 'user', password: 'pass', url } );
 
-		fake_response( error );
+		fake_response( {
+			code: 'jwt_auth_error',
+			message: 'Invalid credentials',
+			data: { status: 403 },
+		} );
 		await expect( make_request ).rejects.toThrowError( 'Invalid credentials' );
 
-		const unknown_error = { error: true };
-		fake_response( unknown_error );
+		fake_response( { error: true } );
 		await expect( make_request ).rejects.toThrowError( 'Unexpected response' );
+		expect( console_mock ).toHaveBeenCalledOnce();
 	} );
 } );
