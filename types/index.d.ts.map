@@ -5,8 +5,10 @@
 		"fetch_jwt_auth",
 		"discover",
 		"jwt_auth_data",
+		"jwt_valid_token",
 		"rest_error",
 		"user",
+		"JWT_Valid_Token",
 		"JWT_Auth_Data",
 		"Rest_Error",
 		"User",
@@ -32,5 +34,5 @@
 		null,
 		null
 	],
-	"mappings": ";;;;;;;;;;;;iBAmBgBA,cAAcA;;;;;;;;;;;;;;;;;;;;;;;;iBCRRC,QAAQA;cCTjBC,aAAaA;;;;;;;;;;;;;;;;;cAgBbC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;;cAUVC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aAZqBC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAwBhBC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCnCjBC,QAAQA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCDRC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MCvFzBC,cAAcA"
+	"mappings": ";;;;;;;;;;;;iBAmBgBA,cAAcA;;;;;;;;;;;;;;;;;;;;;;;;iBCRRC,QAAQA;cCTjBC,aAAaA;;;;;;;;;;;;;;;;cAObC,eAAeA;;;;;;;;;;;;;;;;;;;;;cAkBfC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;;cAUVC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aArBuBC,eAAeA;;;;;;;;;;;;;;;;;;;;aASjBC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAwBhBC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBC5CjBC,QAAQA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCDRC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MCvFzBC,cAAcA"
 }

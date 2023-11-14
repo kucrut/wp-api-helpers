@@ -7,6 +7,15 @@ export const jwt_auth_data = z.object( {
 	token: z.string(),
 } );
 
+export const jwt_valid_token = z.object( {
+	code: z.string().refine( val => val === 'jwt_auth_valid_token' ),
+	data: z.object( {
+		status: z.number().refine( val => val === 200 ),
+	} ),
+} );
+
+/** @typedef {z.infer<jwt_valid_token>} JWT_Valid_Token */
+
 const link_item = z.array( z.object( { href: z.string().url() } ) );
 
 const links = z.object( {

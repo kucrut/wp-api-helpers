@@ -51,6 +51,26 @@ declare module '@kucrut/wp-api-helpers' {
 		user_nicename: string;
 		token: string;
 	}>;
+	export const jwt_valid_token: z.ZodObject<{
+		code: z.ZodEffects<z.ZodString, string, string>;
+		data: z.ZodObject<{
+			status: z.ZodEffects<z.ZodNumber, number, number>;
+		}, "strip", z.ZodTypeAny, {
+			status: number;
+		}, {
+			status: number;
+		}>;
+	}, "strip", z.ZodTypeAny, {
+		code: string;
+		data: {
+			status: number;
+		};
+	}, {
+		code: string;
+		data: {
+			status: number;
+		};
+	}>;
 
 	export const rest_error: z.ZodObject<{
 		code: z.ZodString;
@@ -180,6 +200,26 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		meta?: Record<string, any> | undefined;
 	}>;
+	export type JWT_Valid_Token = z.infer<z.ZodObject<{
+		code: z.ZodEffects<z.ZodString, string, string>;
+		data: z.ZodObject<{
+			status: z.ZodEffects<z.ZodNumber, number, number>;
+		}, "strip", z.ZodTypeAny, {
+			status: number;
+		}, {
+			status: number;
+		}>;
+	}, "strip", z.ZodTypeAny, {
+		code: string;
+		data: {
+			status: number;
+		};
+	}, {
+		code: string;
+		data: {
+			status: number;
+		};
+	}>>;
 	export type JWT_Auth_Data = z.infer<z.ZodObject<{
 		user_email: z.ZodString;
 		user_display_name: z.ZodString;
