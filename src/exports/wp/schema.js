@@ -17,4 +17,4 @@ export const rest_error = z.object( {
 	} ),
 } );
 
-/** @typedef {z.infer<rest_error>} WP_Rest_Error */
+/** @typedef {z.infer<rest_error>} Rest_Error */

@@ -91,7 +91,7 @@ declare module '@kucrut/wp-api-helpers' {
 		user_nicename: string;
 		token: string;
 	}>>;
-	export type WP_Rest_Error = z.infer<z.ZodObject<{
+	export type Rest_Error = z.infer<z.ZodObject<{
 		code: z.ZodString;
 		message: z.ZodString;
 		data: z.ZodObject<{

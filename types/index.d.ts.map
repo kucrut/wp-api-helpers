@@ -7,7 +7,7 @@
 		"jwt_auth_data",
 		"rest_error",
 		"JWT_Auth_Data",
-		"WP_Rest_Error",
+		"Rest_Error",
 		"get_error_message",
 		"handle_response",
 		"make_response_handler",
@@ -27,5 +27,5 @@
 		null,
 		null
 	],
-	"mappings": ";;;;;;;;;;;;iBAmBgBA,cAAcA;;;;;;;;;;;;;;;;;;;;;;;;iBCRRC,QAAQA;cCTjBC,aAAaA;;;;;;;;;;;;;;;;;cASbC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAFeC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,aAAaA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCLhCC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MCvFzBC,cAAcA"
+	"mappings": ";;;;;;;;;;;;iBAmBgBA,cAAcA;;;;;;;;;;;;;;;;;;;;;;;;iBCRRC,QAAQA;cCTjBC,aAAaA;;;;;;;;;;;;;;;;;cASbC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAFeC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCL7BC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MCvFzBC,cAAcA"
 }
