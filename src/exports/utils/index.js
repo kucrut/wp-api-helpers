@@ -1,4 +1,4 @@
-import { rest_error_schema } from '../wp/schema.js';
+import { rest_error } from '../wp/schema.js';
 import { ZodError } from 'zod';
 
 /**
@@ -64,7 +64,7 @@ export async function handle_response( response, callback ) {
 	}
 
 	const json = await response.json();
-	const error = rest_error_schema.safeParse( json );
+	const error = rest_error.safeParse( json );
 	/** @type {string} */
 	let message;
 
