@@ -11,49 +11,30 @@ declare module '@kucrut/wp-api-helpers' {
 	 */
 	export function discover(url: string): Promise<string>;
 	/**
-	 * Get JWT authentication
+	 * Fetch JWT authentication
 	 *
 	 * @since 0.1.0
 	 *
 	 * @see {@link https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/}
 	 *
-	 * @param {Object} options Options.
-	 * @return Fetch response or handled data.
+	 * @param {Object} credentials Credentials.
+	 * @return Fetch response.
 	 */
-	export function jwt_auth<T = {
-		user_email: string;
-		user_display_name: string;
-		user_nicename: string;
-		token: string;
-	}>(options: {
+	export function fetch_jwt_auth(credentials: {
 		url: string;
 		username: string;
 		password: string;
-		handle?: boolean | HandleResponse<T> | undefined;
-	}): Promise<Response | {
-		user_email: string;
-		user_display_name: string;
-		user_nicename: string;
-		token: string;
-	} | T>;
-	export type JWT_Auth_Data = JWT_Auth_Data_1;
-	export const jwt_auth_data: z.ZodObject<{
-		user_email: z.ZodString;
-		user_display_name: z.ZodString;
-		user_nicename: z.ZodString;
-		token: z.ZodString;
-	}, "strip", z.ZodTypeAny, {
-		user_email: string;
-		user_display_name: string;
-		user_nicename: string;
-		token: string;
-	}, {
+	}): Promise<Response>;
+	export function get_jwt_auth(credentials: {
+		url: string;
+		username: string;
+		password: string;
+	}): Promise<{
 		user_email: string;
 		user_display_name: string;
 		user_nicename: string;
 		token: string;
 	}>;
-
 	export const rest_error_schema: z.ZodObject<{
 		code: z.ZodString;
 		message: z.ZodString;
@@ -77,46 +58,6 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		message: string;
 	}>;
-	type JWT_Auth_Data_1 = z.infer<z.ZodObject<{
-		user_email: z.ZodString;
-		user_display_name: z.ZodString;
-		user_nicename: z.ZodString;
-		token: z.ZodString;
-	}, "strip", z.ZodTypeAny, {
-		user_email: string;
-		user_display_name: string;
-		user_nicename: string;
-		token: string;
-	}, {
-		user_email: string;
-		user_display_name: string;
-		user_nicename: string;
-		token: string;
-	}>>;
-	export type WP_Rest_Error = z.infer<z.ZodObject<{
-		code: z.ZodString;
-		message: z.ZodString;
-		data: z.ZodObject<{
-			status: z.ZodNumber;
-		}, "strip", z.ZodTypeAny, {
-			status: number;
-		}, {
-			status: number;
-		}>;
-	}, "strip", z.ZodTypeAny, {
-		code: string;
-		data: {
-			status: number;
-		};
-		message: string;
-	}, {
-		code: string;
-		data: {
-			status: number;
-		};
-		message: string;
-	}>>;
-	type HandleResponse<T> = (data: unknown) => Promise<T>;
 }
 
 declare module '@kucrut/wp-api-helpers/utils' {
@@ -147,6 +88,13 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @return Whatever the callback returns.
 	 */
 	export function handle_response<T>(response: Response, callback: HandleResponse<T>): Promise<T>;
+	/**
+	 * Make response handler
+	 *
+	 * @param handler Handler function.
+	 * @return Bleh
+	 */
+	export function make_response_handler<T>(handler: HandleResponse<T>): (resp: Response) => Promise<T>;
 	type HandleResponse<T> = (data: unknown) => Promise<T>;
 }
 

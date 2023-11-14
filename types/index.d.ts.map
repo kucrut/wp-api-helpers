@@ -3,20 +3,18 @@
 	"file": "index.d.ts",
 	"names": [
 		"discover",
-		"jwt_auth",
-		"JWT_Auth_Data",
-		"jwt_auth_data",
+		"fetch_jwt_auth",
 		"rest_error_schema",
-		"WP_Rest_Error",
-		"HandleResponse",
 		"get_error_message",
-		"handle_response"
+		"handle_response",
+		"make_response_handler",
+		"HandleResponse"
 	],
 	"sources": [
 		"../src/exports/wp/general.js",
 		"../src/exports/wp/schema.js",
-		"../src/types.ts",
-		"../src/exports/utils/index.js"
+		"../src/exports/utils/index.js",
+		"../src/types.ts"
 	],
 	"sourcesContent": [
 		null,
@@ -24,5 +22,5 @@
 		null,
 		null
 	],
-	"mappings": ";;;;;;;;;;;iBAgBsBA,QAAQA;;;;;;;;;;;iBA2CRC,QAAQA;;;;;;;;;;;;;;;;aClDQC,aAAaA;cAPtCC,aAAaA;;;;;;;;;;;;;;;;;cASbC,iBAAiBA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aAQYC,aAAaA;;;;;;;;;;;;;;;;;;;;;;;MCjB3CC,cAAcA;;;;;;;;;;;;;;;iBCYVC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;MD9CzBF,cAAcA"
+	"mappings": ";;;;;;;;;;;iBAcsBA,QAAQA;;;;;;;;;;;iBAwCdC,cAAcA;;;;;;;;;;;;;;;cC3CjBC,iBAAiBA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCGdC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MCvFzBC,cAAcA"
 }

@@ -1,8 +1,6 @@
 import { jwt_auth_data } from './schema.js';
 import { make_response_handler } from '../utils/index.js';
 
-/** @typedef {import('./schema').JWT_Auth_Data} JWT_Auth_Data */
-
 /**
  * Discover WordPress API root URL
  *
@@ -73,7 +71,7 @@ export function fetch_jwt_auth( credentials ) {
 /**
  * Get JWT authentication
  *
- * @type {import('$types').HandledFetch<fetch_jwt_auth, JWT_Auth_Data>}
+ * @type {import('$types').HandledFetch<fetch_jwt_auth, import('./schema').JWT_Auth_Data>}
  */
 export async function get_jwt_auth( ...args ) {
 	return make_response_handler( async data => jwt_auth_data.parse( data ) )( await fetch_jwt_auth( ...args ) );
