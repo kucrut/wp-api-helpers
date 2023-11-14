@@ -26,6 +26,21 @@ declare module '@kucrut/wp-api-helpers' {
 		token: string;
 	}>;
 	/**
+	 * Validate JWT token (fetch only)
+	 *
+	 * @param url WordPress API root URL.
+	 * @param token JWT token.
+	 *
+	 * @return Fetch response.
+	 */
+	export function fetch_jwt_validate_token(url: string, token: string): Promise<Response>;
+	export function get_jwt_validate_token(url: string, token: string): Promise<{
+		code: string;
+		data: {
+			status: number;
+		};
+	}>;
+	/**
 	 * Discover WordPress API root URL
 	 *
 	 * @since 0.0.1

@@ -3,6 +3,7 @@
 	"file": "index.d.ts",
 	"names": [
 		"fetch_jwt_auth",
+		"fetch_jwt_validate_token",
 		"discover",
 		"jwt_auth_data",
 		"jwt_valid_token",
@@ -34,5 +35,5 @@
 		null,
 		null
 	],
-	"mappings": ";;;;;;;;;;;;iBAmBgBA,cAAcA;;;;;;;;;;;;;;;;;;;;;;;;iBCRRC,QAAQA;cCTjBC,aAAaA;;;;;;;;;;;;;;;;cAObC,eAAeA;;;;;;;;;;;;;;;;;;;;;cAkBfC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;;cAUVC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aArBuBC,eAAeA;;;;;;;;;;;;;;;;;;;;aASjBC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAwBhBC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBC5CjBC,QAAQA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCDRC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MCvFzBC,cAAcA"
+	"mappings": ";;;;;;;;;;;;iBAmBgBA,cAAcA;;;;;;;;;;;;;;;;;;;;;;;iBAiCdC,wBAAwBA;;;;;;;;;;;;;;;;iBCzClBC,QAAQA;cCTjBC,aAAaA;;;;;;;;;;;;;;;;cAObC,eAAeA;;;;;;;;;;;;;;;;;;;;;cAkBfC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;;cAUVC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aArBuBC,eAAeA;;;;;;;;;;;;;;;;;;;;aASjBC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAwBhBC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBC5CjBC,QAAQA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCDRC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MCvFzBC,cAAcA"
 }
