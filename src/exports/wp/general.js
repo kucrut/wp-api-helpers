@@ -1,5 +1,5 @@
-import { handle_response } from '../utils/index.js';
 import { jwt_auth_data } from './schema.js';
+import { make_response_handler } from '../utils/index.js';
 
 /** @typedef {import('./schema').JWT_Auth_Data} JWT_Auth_Data */
 
@@ -39,28 +39,25 @@ export async function discover( url ) {
 }
 
 /**
- * Get JWT authentication
+ * Fetch JWT authentication
  *
  * @since 0.1.0
  *
  * @see {@link https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/}
  *
- * @template [T=JWT_Auth_Data]
- *
- * @param {Object} options Options.
- * @param {string} options.url WordPress API root URL.
- * @param {string} options.username Username.
- * @param {string} options.password Password.
- * @param {boolean|import("$types").HandleResponse<T>=} [options.handle=true] Whether or not to handle the response.
+ * @param {Object} credentials Credentials.
+ * @param {string} credentials.url WordPress API root URL.
+ * @param {string} credentials.username Username.
+ * @param {string} credentials.password Password.
  *
  * @throws {Error}
  *
- * @return {Promise<Response|JWT_Auth_Data|T>} Fetch response or handled data.
+ * @return {Promise<Response>} Fetch response.
  */
-export async function jwt_auth( options ) {
-	const { url, username, password, handle = true } = options;
+export function fetch_jwt_auth( credentials ) {
+	const { url, username, password } = credentials;
 
-	const response = await fetch( `${ url }/jwt-auth/v1/token`, {
+	return fetch( `${ url }/jwt-auth/v1/token`, {
 		method: 'POST',
 		body: JSON.stringify( {
 			username,
@@ -71,19 +68,13 @@ export async function jwt_auth( options ) {
 			'Accept': 'application/json',
 		},
 	} );
+}
 
-	if ( handle === true ) {
-		/** @type {import('$types').HandleResponse<JWT_Auth_Data>} */
-		const handler = async data => {
-			return jwt_auth_data.parse( data );
-		};
-
-		return handle_response( response, handler );
-	}
-
-	if ( typeof handle === 'function' ) {
-		return handle_response( response, handle );
-	}
-
-	return response;
+/**
+ * Get JWT authentication
+ *
+ * @type {import('$types').HandledFetch<fetch_jwt_auth, JWT_Auth_Data>}
+ */
+export async function get_jwt_auth( ...args ) {
+	return make_response_handler( async data => jwt_auth_data.parse( data ) )( await fetch_jwt_auth( ...args ) );
 }
