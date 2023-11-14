@@ -35,7 +35,24 @@ declare module '@kucrut/wp-api-helpers' {
 		user_nicename: string;
 		token: string;
 	}>;
-	export const rest_error_schema: z.ZodObject<{
+	export const jwt_auth_data: z.ZodObject<{
+		user_email: z.ZodString;
+		user_display_name: z.ZodString;
+		user_nicename: z.ZodString;
+		token: z.ZodString;
+	}, "strip", z.ZodTypeAny, {
+		user_email: string;
+		user_display_name: string;
+		user_nicename: string;
+		token: string;
+	}, {
+		user_email: string;
+		user_display_name: string;
+		user_nicename: string;
+		token: string;
+	}>;
+
+	export const rest_error: z.ZodObject<{
 		code: z.ZodString;
 		message: z.ZodString;
 		data: z.ZodObject<{
@@ -58,6 +75,45 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		message: string;
 	}>;
+	export type JWT_Auth_Data = z.infer<z.ZodObject<{
+		user_email: z.ZodString;
+		user_display_name: z.ZodString;
+		user_nicename: z.ZodString;
+		token: z.ZodString;
+	}, "strip", z.ZodTypeAny, {
+		user_email: string;
+		user_display_name: string;
+		user_nicename: string;
+		token: string;
+	}, {
+		user_email: string;
+		user_display_name: string;
+		user_nicename: string;
+		token: string;
+	}>>;
+	export type WP_Rest_Error = z.infer<z.ZodObject<{
+		code: z.ZodString;
+		message: z.ZodString;
+		data: z.ZodObject<{
+			status: z.ZodNumber;
+		}, "strip", z.ZodTypeAny, {
+			status: number;
+		}, {
+			status: number;
+		}>;
+	}, "strip", z.ZodTypeAny, {
+		code: string;
+		data: {
+			status: number;
+		};
+		message: string;
+	}, {
+		code: string;
+		data: {
+			status: number;
+		};
+		message: string;
+	}>>;
 }
 
 declare module '@kucrut/wp-api-helpers/utils' {

@@ -4,7 +4,10 @@
 	"names": [
 		"discover",
 		"fetch_jwt_auth",
-		"rest_error_schema",
+		"jwt_auth_data",
+		"rest_error",
+		"JWT_Auth_Data",
+		"WP_Rest_Error",
 		"get_error_message",
 		"handle_response",
 		"make_response_handler",
@@ -22,5 +25,5 @@
 		null,
 		null
 	],
-	"mappings": ";;;;;;;;;;;iBAcsBA,QAAQA;;;;;;;;;;;iBAwCdC,cAAcA;;;;;;;;;;;;;;;cC3CjBC,iBAAiBA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCGdC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MCvFzBC,cAAcA"
+	"mappings": ";;;;;;;;;;;iBAcsBA,QAAQA;;;;;;;;;;;iBAwCdC,cAAcA;;;;;;;;;;;;;;;cCpDjBC,aAAaA;;;;;;;;;;;;;;;;;cASbC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAFeC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,aAAaA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCLhCC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MCvFzBC,cAAcA"
 }
