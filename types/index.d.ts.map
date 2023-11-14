@@ -6,8 +6,10 @@
 		"discover",
 		"jwt_auth_data",
 		"rest_error",
+		"user",
 		"JWT_Auth_Data",
 		"Rest_Error",
+		"User",
 		"get_error_message",
 		"handle_response",
 		"make_response_handler",
@@ -27,5 +29,5 @@
 		null,
 		null
 	],
-	"mappings": ";;;;;;;;;;;;iBAmBgBA,cAAcA;;;;;;;;;;;;;;;;;;;;;;;;iBCRRC,QAAQA;cCTjBC,aAAaA;;;;;;;;;;;;;;;;;cASbC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAFeC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCL7BC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MCvFzBC,cAAcA"
+	"mappings": ";;;;;;;;;;;;iBAmBgBA,cAAcA;;;;;;;;;;;;;;;;;;;;;;;;iBCRRC,QAAQA;cCTjBC,aAAaA;;;;;;;;;;;;;;;;;cAgBbC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;;cAUVC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aAZqBC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAwBhBC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCpCjBC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MCvFzBC,cAAcA"
 }
