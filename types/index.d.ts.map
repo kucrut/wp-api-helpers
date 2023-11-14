@@ -10,6 +10,7 @@
 		"JWT_Auth_Data",
 		"Rest_Error",
 		"User",
+		"fetch_me",
 		"get_error_message",
 		"handle_response",
 		"make_response_handler",
@@ -19,6 +20,7 @@
 		"../src/exports/wp/auth.js",
 		"../src/exports/wp/general.js",
 		"../src/exports/wp/schema.js",
+		"../src/exports/wp/users.js",
 		"../src/exports/utils/index.js",
 		"../src/types.ts"
 	],
@@ -27,7 +29,8 @@
 		null,
 		null,
 		null,
+		null,
 		null
 	],
-	"mappings": ";;;;;;;;;;;;iBAmBgBA,cAAcA;;;;;;;;;;;;;;;;;;;;;;;;iBCRRC,QAAQA;cCTjBC,aAAaA;;;;;;;;;;;;;;;;;cAgBbC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;;cAUVC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aAZqBC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAwBhBC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCpCjBC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MCvFzBC,cAAcA"
+	"mappings": ";;;;;;;;;;;;iBAmBgBA,cAAcA;;;;;;;;;;;;;;;;;;;;;;;;iBCRRC,QAAQA;cCTjBC,aAAaA;;;;;;;;;;;;;;;;;cAgBbC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;;cAUVC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aAZqBC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAwBhBC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCnCjBC,QAAQA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCDRC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MCvFzBC,cAAcA"
 }

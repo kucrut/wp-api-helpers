@@ -323,6 +323,45 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		meta?: Record<string, any> | undefined;
 	}>>;
+	/**
+	 * Fetch own user data
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param url WordPress API root URL.
+	 * @param auth Autorization header.
+	 *
+	 * @return Fetch response.
+	 */
+	export function fetch_me(url: string, auth: string): Promise<Response>;
+	export function get_me(url: string, auth: string): Promise<{
+		link: string;
+		id: number;
+		url: string;
+		name: string;
+		username: string;
+		email: string;
+		description: string;
+		avatar_urls: Record<string, string>;
+		capabilities: Record<string, boolean>;
+		extra_capabilities: Record<string, boolean>;
+		first_name: string;
+		last_name: string;
+		locale: string;
+		nickname: string;
+		registered_date: string;
+		roles: string[];
+		slug: string;
+		_links: {
+			self: {
+				href: string;
+			}[];
+			collection: {
+				href: string;
+			}[];
+		};
+		meta?: Record<string, any> | undefined;
+	}>;
 }
 
 declare module '@kucrut/wp-api-helpers/utils' {
