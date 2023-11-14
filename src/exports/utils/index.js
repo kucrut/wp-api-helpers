@@ -78,3 +78,16 @@ export async function handle_response( response, callback ) {
 
 	throw new Error( message );
 }
+
+/**
+ * Make response handler
+ *
+ * @template T
+ *
+ * @param {import('$types').HandleResponse<T>} handler Handler function.
+ * @return {(resp: Response) => Promise<T>} Bleh
+ */
+export function make_response_handler( handler ) {
+	/** @param {Response} response */
+	return response => handle_response( response, handler );
+}
