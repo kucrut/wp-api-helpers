@@ -36,6 +36,8 @@ export function fetch_jwt_auth( credentials ) {
 /**
  * Get JWT authentication
  *
+ * @since 0.1.0
+ *
  * @type {import('$types').HandledFetch<fetch_jwt_auth, import('./schema').JWT_Auth_Data>}
  */
 export async function get_jwt_auth( ...args ) {
@@ -44,6 +46,8 @@ export async function get_jwt_auth( ...args ) {
 
 /**
  * Validate JWT token (fetch only)
+ *
+ * @since 0.1.0
  *
  * @param {string} url WordPress API root URL.
  * @param {string} token JWT token.
@@ -61,6 +65,8 @@ export function fetch_jwt_validate_token( url, token ) {
 
 /**
  * Validate JWT token
+ *
+ * @since 0.1.0
  *
  * @type {import('$types').HandledFetch<fetch_jwt_validate_token, import('./schema').JWT_Valid_Token>}
  */

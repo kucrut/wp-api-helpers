@@ -25,7 +25,9 @@ export function fetch_me( url, auth ) {
 }
 
 /**
- * Get JWT authentication
+ * Get own user data
+ *
+ * @since 0.1.0
  *
  * @type {import('$types').HandledFetch<fetch_me, import('./schema').User>}
  */
