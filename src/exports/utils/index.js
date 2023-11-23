@@ -82,6 +82,8 @@ export async function handle_response( response, callback ) {
 /**
  * Make response handler
  *
+ * @since 0.0.1
+ *
  * @template T
  *
  * @param {import('$types').HandleResponse<T>} handler Handler function.
