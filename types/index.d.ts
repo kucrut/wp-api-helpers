@@ -717,13 +717,12 @@ declare module '@kucrut/wp-api-helpers' {
 	 *
 	 * @param url WordPress API root URL.
 	 * @param auth Autorization header.
-	 * @param type Post type.
-	 * @param context Request context.
+	 * @param args Request arguments.
 	 *
 	 * @return Fetch response.
 	 */
-	export function fetch_taxonomies(url: string, auth: string, type?: string | undefined, context?: ContextArg | undefined): Promise<Response>;
-	export function get_taxonomies(url: string, auth: string, type?: string | undefined, context?: ContextArg | undefined): Promise<{
+	export function fetch_taxonomies(url: string, auth: string, args?: FetchTaxonomiesArgs | undefined): Promise<Response>;
+	export function get_taxonomies(url: string, auth: string, args?: FetchTaxonomiesArgs | undefined): Promise<{
 		name: string;
 		description: string;
 		hierarchical: boolean;
@@ -849,6 +848,12 @@ declare module '@kucrut/wp-api-helpers' {
 		 * Order sort attribute ascending or descending.
 		 */
 		order?: OrderArg;
+	}
+	interface FetchTaxonomiesArgs extends FetchArgs {
+		/**
+		 * Limit results to taxonomies associated with a specific post type.
+		 */
+		type?: string;
 	}
 	interface FetchTermsArgs extends FetchArgs, FetchCollectionArgs {
 		/**

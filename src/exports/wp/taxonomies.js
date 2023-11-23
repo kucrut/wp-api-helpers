@@ -1,4 +1,4 @@
-import { make_response_handler } from '../utils/index.js';
+import { make_response_handler, normalize_fetch_args } from '../utils/index.js';
 import { taxonomy } from './schema.js';
 import { z } from 'zod';
 
@@ -11,22 +11,19 @@ const PATH = '/wp/v2/taxonomies';
  *
  * @param {string} url WordPress API root URL.
  * @param {string} auth Autorization header.
- * @param {string=} type Post type.
- * @param {import("$types").ContextArg=} context Request context.
+ * @param {import("$types").FetchTaxonomiesArgs=} args Request arguments.
  *
  * @throws {Error}
  *
  * @return {Promise<Response>} Fetch response.
  */
-export function fetch_taxonomies( url, auth, type, context ) {
+export function fetch_taxonomies( url, auth, args ) {
 	const endpoint = new URL( url + PATH );
 
-	if ( type ) {
-		endpoint.searchParams.append( 'type', type );
-	}
-
-	if ( context ) {
-		endpoint.searchParams.append( 'context', context );
+	if ( args ) {
+		normalize_fetch_args( args ).forEach( ( [ name, value ] ) => {
+			endpoint.searchParams.append( name, value );
+		} );
 	}
 
 	return fetch( endpoint, {
