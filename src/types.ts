@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 
+export type ContextArg = 'view' | 'embed' | 'edit';
+
 export type HandleResponse< T > = ( data: unknown ) => Promise< T >;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
