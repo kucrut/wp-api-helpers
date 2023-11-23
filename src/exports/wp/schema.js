@@ -19,13 +19,13 @@ const renderable_item = z.object( {
 } );
 
 const post_base = z.object( {
+	meta,
 	author: z.number().min( 1 ),
 	comment_status: comment_ping_status,
 	date_gmt: date_item,
 	date: date_item,
 	id: z.number(),
 	link: z.string().url(),
-	meta: z.record( z.any() ),
 	modified: date_item,
 	modified_gmt: date_item,
 	ping_status: comment_ping_status,
