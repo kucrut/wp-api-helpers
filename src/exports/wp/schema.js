@@ -2,6 +2,18 @@ import { z } from 'zod';
 
 const date_item = z.string().datetime( { offset: true } );
 
+const link_item = z.array( z.object( { embeddable: z.boolean().optional(), href: z.string().url() } ) );
+
+const links = z.object( {
+	self: link_item,
+	collection: link_item,
+} );
+
+const renderable_item = z.object( {
+	raw: z.string().optional(),
+	rendered: z.string(),
+} );
+
 export const jwt_auth_data = z.object( {
 	user_email: z.string().email(),
 	user_display_name: z.string(),
@@ -17,18 +29,6 @@ export const jwt_valid_token = z.object( {
 } );
 
 /** @typedef {z.infer<jwt_valid_token>} JWT_Valid_Token */
-
-const link_item = z.array( z.object( { embeddable: z.boolean().optional(), href: z.string().url() } ) );
-
-const links = z.object( {
-	self: link_item,
-	collection: link_item,
-} );
-
-const renderable_item = z.object( {
-	raw: z.string().optional(),
-	rendered: z.string(),
-} );
 
 /** @typedef {z.infer<jwt_auth_data>} JWT_Auth_Data */
 
