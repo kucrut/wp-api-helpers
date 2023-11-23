@@ -35,7 +35,7 @@ export function get_error_message( error, fallback, dump = true ) {
  *
  * This helps catch syntax errors in json because of PHP notices, etc.
  *
- * @since 0.0.1
+ * @since 0.1.0
  *
  * @template T
  *
@@ -82,7 +82,7 @@ export async function handle_response( response, callback ) {
 /**
  * Make response handler
  *
- * @since 0.0.1
+ * @since 0.1.0
  *
  * @template T
  *
@@ -97,7 +97,7 @@ export function make_response_handler( handler ) {
 /**
  * Normalize fetch arguments
  *
- * @since 0.0.1
+ * @since 0.1.0
  *
  * @param {Record<string,any>} args Fetch arguments.
  * @return {[string, string][]} Pairs of key and value strings.

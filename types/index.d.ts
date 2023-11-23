@@ -45,7 +45,7 @@ declare module '@kucrut/wp-api-helpers' {
 	/**
 	 * Discover WordPress API root URL
 	 *
-	 * @since 0.0.1
+	 * @since 0.1.0
 	 *
 	 * @param url WordPress URL.
 	 *
@@ -895,7 +895,7 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 *
 	 * This helps catch syntax errors in json because of PHP notices, etc.
 	 *
-	 * @since 0.0.1
+	 * @since 0.1.0
 	 *
 	 * @param response Fetch response object.
 	 * @param callback Callback to run when json is valid.
@@ -908,6 +908,8 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	/**
 	 * Make response handler
 	 *
+	 * @since 0.1.0
+	 *
 	 * @param handler Handler function.
 	 * @return Bleh
 	 */
@@ -915,7 +917,7 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	/**
 	 * Normalize fetch arguments
 	 *
-	 * @since 0.0.1
+	 * @since 0.1.0
 	 *
 	 * @param args Fetch arguments.
 	 * @return Pairs of key and value strings.

@@ -1,7 +1,7 @@
 /**
  * Discover WordPress API root URL
  *
- * @since 0.0.1
+ * @since 0.1.0
  *
  * @param {string} url WordPress URL.
  *
