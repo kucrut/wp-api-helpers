@@ -67,7 +67,7 @@ export const media = post_base.extend( {
 	post: z.number().nullable(),
 	source_url: z.string().url(),
 	media_details: z.object( {
-		file: z.string(),
+		file: z.string().optional(),
 		filesize: z.number(),
 		height: z.number(),
 		image_meta: z.record( z.any() ).optional(),
