@@ -51,6 +51,22 @@ export const taxonomy = z.object( {
 
 /** @typedef {z.infer<taxonomy>} Taxonomy */
 
+export const term = z.object( {
+	id: z.number().min( 1 ),
+	count: z.number(),
+	description: z.string(),
+	link: z.string(),
+	name: z.string(),
+	slug: z.string(),
+	taxonomy: z.string(),
+	parent: z.number(),
+	_links: links.extend( {
+		about: link_item,
+	} ),
+} );
+
+/** @typedef {z.infer<term>} Term */
+
 export const user = z.object( {
 	avatar_urls: z.record( z.string().url() ),
 	capabilities: z.record( z.boolean() ),
