@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const comment_ping_status = z.enum( [ 'open', 'closed' ] );
 
-const date_item = z.string().datetime( { offset: true } );
+const date_item = z.coerce.date();
 
 const link_item = z.array( z.object( { embeddable: z.boolean().optional(), href: z.string().url() } ) );
 
