@@ -1,4 +1,4 @@
-import { make_response_handler } from '../utils/index.js';
+import { make_response_handler, normalize_fetch_args } from '../utils/index.js';
 import { term } from './schema.js';
 
 /**
@@ -19,20 +19,7 @@ export function fetch_terms( url, auth, taxonomy, args ) {
 	const endpoint = new URL( `${ url }/wp/v2/${ taxonomy }` );
 
 	if ( args ) {
-		/** @type {[string, string][]} */
-		const params = Object.entries( args ).map( ( [ name, value ] ) => {
-			if ( typeof value === 'string' ) {
-				return [ name, value ];
-			}
-
-			if ( Array.isArray( value ) ) {
-				return [ name, value.map( v => v.toString() ).join( ',' ) ];
-			}
-
-			return [ name, value.toString() ];
-		} );
-
-		params.forEach( ( [ name, value ] ) => {
+		normalize_fetch_args( args ).forEach( ( [ name, value ] ) => {
 			endpoint.searchParams.append( name, value );
 		} );
 	}
