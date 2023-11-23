@@ -9,6 +9,13 @@ describe( 'Get error message', () => {
 		expect( result ).toStrictEqual( message );
 	} );
 
+	test( 'Message from string error is returned.', () => {
+		const message = 'Error!';
+		const result = get_error_message( message, '' );
+
+		expect( result ).toStrictEqual( message );
+	} );
+
 	test( 'Fallback message is returned when the error is not recognized, and error is dumped.', () => {
 		const console_mock = vi.spyOn( console, 'error' ).mockImplementation( () => undefined );
 		const fallback = 'Fallback message';
