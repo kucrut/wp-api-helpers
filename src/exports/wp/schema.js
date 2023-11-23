@@ -11,6 +11,8 @@ const links = z.object( {
 	collection: link_item,
 } );
 
+const meta = z.record( z.any() ).or( z.array( z.any() ) ).optional(),
+
 const renderable_item = z.object( {
 	raw: z.string().optional(),
 	rendered: z.string(),
