@@ -129,6 +129,7 @@ export const term = z.object( {
 /** @typedef {z.infer<term>} Term */
 
 export const user = z.object( {
+	meta,
 	avatar_urls: z.record( z.string().url() ),
 	capabilities: z.record( z.boolean() ),
 	description: z.string(),
@@ -139,7 +140,6 @@ export const user = z.object( {
 	last_name: z.string(),
 	link: z.string().url(),
 	locale: z.string(),
-	meta: z.record( z.any() ).optional(),
 	name: z.string().min( 1 ),
 	nickname: z.string(),
 	registered_date: z.string().datetime( { offset: true } ),
