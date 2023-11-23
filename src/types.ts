@@ -40,6 +40,13 @@ export interface FetchCollectionArgs {
 	order?: OrderArg;
 }
 
+export interface FetchTaxonomiesArgs extends FetchArgs {
+	/**
+	 * Limit results to taxonomies associated with a specific post type.
+	 */
+	type?: string;
+}
+
 export interface FetchTermsArgs extends FetchArgs, FetchCollectionArgs {
 	/**
 	 * Whether to hide terms not assigned to any posts.
