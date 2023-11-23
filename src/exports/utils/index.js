@@ -103,15 +103,29 @@ export function make_response_handler( handler ) {
  * @return {[string, string][]} Pairs of key and value strings.
  */
 export function normalize_fetch_args( args ) {
+	/** @param {unknown} input */
+	const to_string = input => {
+		if ( input === true ) {
+			return '1';
+		}
+
+		if ( input === false || input === null || input === undefined ) {
+			return '0';
+		}
+
+		return input.toString();
+	};
+
 	return Object.entries( args ).map( ( [ name, value ] ) => {
 		if ( typeof value === 'string' ) {
 			return [ name, value ];
 		}
 
 		if ( Array.isArray( value ) ) {
-			return [ name, value.map( v => v.toString() ).join( ',' ) ];
+			// TODO: Maybe reduce.
+			return [ name, value.map( v => to_string( v ) ).join( ',' ) ];
 		}
 
-		return [ name, value.toString() ];
+		return [ name, to_string( value ) ];
 	} );
 }
