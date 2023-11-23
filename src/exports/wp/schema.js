@@ -35,6 +35,22 @@ export const rest_error = z.object( {
 
 /** @typedef {z.infer<rest_error>} Rest_Error */
 
+export const taxonomy = z.object( {
+	hierarchical: z.boolean(),
+	description: z.string(),
+	name: z.string(),
+	rest_base: z.string(),
+	rest_namespace: z.string(),
+	slug: z.string(),
+	types: z.string().array(),
+	_links: z.object( {
+		'collection': link_item,
+		'wp:items': link_item,
+	} ),
+} );
+
+/** @typedef {z.infer<taxonomy>} Taxonomy */
+
 export const user = z.object( {
 	avatar_urls: z.record( z.string().url() ),
 	capabilities: z.record( z.boolean() ),
