@@ -16,6 +16,28 @@ const renderable_item = z.object( {
 	rendered: z.string(),
 } );
 
+const post_base = z.object( {
+	author: z.number().min( 1 ),
+	comment_status: comment_ping_status,
+	date_gmt: date_item,
+	date: date_item,
+	id: z.number(),
+	link: z.string().url(),
+	meta: z.record( z.any() ),
+	modified: date_item,
+	modified_gmt: date_item,
+	ping_status: comment_ping_status,
+	slug: z.string(),
+	status: z.string(),
+	template: z.string(),
+	title: renderable_item,
+	type: z.string(),
+	guid: z.object( {
+		raw: z.string().url().optional(),
+		rendered: z.string().url(),
+	} ),
+} );
+
 export const jwt_auth_data = z.object( {
 	user_email: z.string().email(),
 	user_display_name: z.string(),
