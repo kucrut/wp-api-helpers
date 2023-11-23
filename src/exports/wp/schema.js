@@ -67,20 +67,27 @@ export const media = post_base.extend( {
 	post: z.number().nullable(),
 	source_url: z.string().url(),
 	media_details: z.object( {
-		file: z.string().optional(),
-		filesize: z.number(),
-		height: z.number(),
-		image_meta: z.record( z.any() ).optional(),
-		width: z.number(),
-		sizes: z.record(
-			z.object( {
-				file: z.string(),
-				height: z.number(),
-				mime_type: z.string(),
-				source_url: z.string(),
-				width: z.number(),
-			} ),
-		),
+		bitrate: z.number().optional(), // Video.
+		dataformat: z.string().optional(), // Video.
+		file: z.string().optional(), // Image.
+		fileformat: z.string().optional(), // Video.
+		filesize: z.number(), // Image.
+		height: z.number().optional(), // Image.
+		image_meta: z.record( z.any() ).optional(), // Image.
+		length: z.number().optional(), // Video.
+		length_formatted: z.string().optional(), // Video.
+		width: z.number().optional(), // Image.
+		sizes: z
+			.record(
+				z.object( {
+					file: z.string(),
+					height: z.number(),
+					mime_type: z.string(),
+					source_url: z.string(),
+					width: z.number(),
+				} ),
+			)
+			.optional(), // Image.
 	} ),
 } );
 
