@@ -28,6 +28,8 @@ declare module '@kucrut/wp-api-helpers' {
 	/**
 	 * Validate JWT token (fetch only)
 	 *
+	 * @since 0.1.0
+	 *
 	 * @param url WordPress API root URL.
 	 * @param token JWT token.
 	 *
@@ -111,6 +113,78 @@ declare module '@kucrut/wp-api-helpers' {
 		message: string;
 	}>;
 
+	export const taxonomy: z.ZodObject<{
+		hierarchical: z.ZodBoolean;
+		description: z.ZodString;
+		name: z.ZodString;
+		rest_base: z.ZodString;
+		rest_namespace: z.ZodString;
+		slug: z.ZodString;
+		types: z.ZodArray<z.ZodString, "many">;
+		_links: z.ZodObject<{
+			collection: z.ZodArray<z.ZodObject<{
+				href: z.ZodString;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+			}, {
+				href: string;
+			}>, "many">;
+			'wp:items': z.ZodArray<z.ZodObject<{
+				href: z.ZodString;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+			}, {
+				href: string;
+			}>, "many">;
+		}, "strip", z.ZodTypeAny, {
+			collection: {
+				href: string;
+			}[];
+			'wp:items': {
+				href: string;
+			}[];
+		}, {
+			collection: {
+				href: string;
+			}[];
+			'wp:items': {
+				href: string;
+			}[];
+		}>;
+	}, "strip", z.ZodTypeAny, {
+		name: string;
+		description: string;
+		hierarchical: boolean;
+		rest_base: string;
+		rest_namespace: string;
+		slug: string;
+		types: string[];
+		_links: {
+			collection: {
+				href: string;
+			}[];
+			'wp:items': {
+				href: string;
+			}[];
+		};
+	}, {
+		name: string;
+		description: string;
+		hierarchical: boolean;
+		rest_base: string;
+		rest_namespace: string;
+		slug: string;
+		types: string[];
+		_links: {
+			collection: {
+				href: string;
+			}[];
+			'wp:items': {
+				href: string;
+			}[];
+		};
+	}>;
+
 	export const user: z.ZodObject<{
 		avatar_urls: z.ZodRecord<z.ZodString, z.ZodString>;
 		capabilities: z.ZodRecord<z.ZodString, z.ZodBoolean>;
@@ -168,15 +242,6 @@ declare module '@kucrut/wp-api-helpers' {
 		username: string;
 		email: string;
 		description: string;
-		avatar_urls: Record<string, string>;
-		capabilities: Record<string, boolean>;
-		extra_capabilities: Record<string, boolean>;
-		first_name: string;
-		last_name: string;
-		locale: string;
-		nickname: string;
-		registered_date: string;
-		roles: string[];
 		slug: string;
 		_links: {
 			self: {
@@ -186,6 +251,15 @@ declare module '@kucrut/wp-api-helpers' {
 				href: string;
 			}[];
 		};
+		avatar_urls: Record<string, string>;
+		capabilities: Record<string, boolean>;
+		extra_capabilities: Record<string, boolean>;
+		first_name: string;
+		last_name: string;
+		locale: string;
+		nickname: string;
+		registered_date: string;
+		roles: string[];
 		meta?: Record<string, any> | undefined;
 	}, {
 		link: string;
@@ -195,15 +269,6 @@ declare module '@kucrut/wp-api-helpers' {
 		username: string;
 		email: string;
 		description: string;
-		avatar_urls: Record<string, string>;
-		capabilities: Record<string, boolean>;
-		extra_capabilities: Record<string, boolean>;
-		first_name: string;
-		last_name: string;
-		locale: string;
-		nickname: string;
-		registered_date: string;
-		roles: string[];
 		slug: string;
 		_links: {
 			self: {
@@ -213,6 +278,15 @@ declare module '@kucrut/wp-api-helpers' {
 				href: string;
 			}[];
 		};
+		avatar_urls: Record<string, string>;
+		capabilities: Record<string, boolean>;
+		extra_capabilities: Record<string, boolean>;
+		first_name: string;
+		last_name: string;
+		locale: string;
+		nickname: string;
+		registered_date: string;
+		roles: string[];
 		meta?: Record<string, any> | undefined;
 	}>;
 	export type JWT_Valid_Token = z.infer<z.ZodObject<{
@@ -274,6 +348,77 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		message: string;
 	}>>;
+	export type Taxonomy = z.infer<z.ZodObject<{
+		hierarchical: z.ZodBoolean;
+		description: z.ZodString;
+		name: z.ZodString;
+		rest_base: z.ZodString;
+		rest_namespace: z.ZodString;
+		slug: z.ZodString;
+		types: z.ZodArray<z.ZodString, "many">;
+		_links: z.ZodObject<{
+			collection: z.ZodArray<z.ZodObject<{
+				href: z.ZodString;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+			}, {
+				href: string;
+			}>, "many">;
+			'wp:items': z.ZodArray<z.ZodObject<{
+				href: z.ZodString;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+			}, {
+				href: string;
+			}>, "many">;
+		}, "strip", z.ZodTypeAny, {
+			collection: {
+				href: string;
+			}[];
+			'wp:items': {
+				href: string;
+			}[];
+		}, {
+			collection: {
+				href: string;
+			}[];
+			'wp:items': {
+				href: string;
+			}[];
+		}>;
+	}, "strip", z.ZodTypeAny, {
+		name: string;
+		description: string;
+		hierarchical: boolean;
+		rest_base: string;
+		rest_namespace: string;
+		slug: string;
+		types: string[];
+		_links: {
+			collection: {
+				href: string;
+			}[];
+			'wp:items': {
+				href: string;
+			}[];
+		};
+	}, {
+		name: string;
+		description: string;
+		hierarchical: boolean;
+		rest_base: string;
+		rest_namespace: string;
+		slug: string;
+		types: string[];
+		_links: {
+			collection: {
+				href: string;
+			}[];
+			'wp:items': {
+				href: string;
+			}[];
+		};
+	}>>;
 	export type User = z.infer<z.ZodObject<{
 		avatar_urls: z.ZodRecord<z.ZodString, z.ZodString>;
 		capabilities: z.ZodRecord<z.ZodString, z.ZodBoolean>;
@@ -331,15 +476,6 @@ declare module '@kucrut/wp-api-helpers' {
 		username: string;
 		email: string;
 		description: string;
-		avatar_urls: Record<string, string>;
-		capabilities: Record<string, boolean>;
-		extra_capabilities: Record<string, boolean>;
-		first_name: string;
-		last_name: string;
-		locale: string;
-		nickname: string;
-		registered_date: string;
-		roles: string[];
 		slug: string;
 		_links: {
 			self: {
@@ -349,6 +485,15 @@ declare module '@kucrut/wp-api-helpers' {
 				href: string;
 			}[];
 		};
+		avatar_urls: Record<string, string>;
+		capabilities: Record<string, boolean>;
+		extra_capabilities: Record<string, boolean>;
+		first_name: string;
+		last_name: string;
+		locale: string;
+		nickname: string;
+		registered_date: string;
+		roles: string[];
 		meta?: Record<string, any> | undefined;
 	}, {
 		link: string;
@@ -358,15 +503,6 @@ declare module '@kucrut/wp-api-helpers' {
 		username: string;
 		email: string;
 		description: string;
-		avatar_urls: Record<string, string>;
-		capabilities: Record<string, boolean>;
-		extra_capabilities: Record<string, boolean>;
-		first_name: string;
-		last_name: string;
-		locale: string;
-		nickname: string;
-		registered_date: string;
-		roles: string[];
 		slug: string;
 		_links: {
 			self: {
@@ -376,8 +512,47 @@ declare module '@kucrut/wp-api-helpers' {
 				href: string;
 			}[];
 		};
+		avatar_urls: Record<string, string>;
+		capabilities: Record<string, boolean>;
+		extra_capabilities: Record<string, boolean>;
+		first_name: string;
+		last_name: string;
+		locale: string;
+		nickname: string;
+		registered_date: string;
+		roles: string[];
 		meta?: Record<string, any> | undefined;
 	}>>;
+	/**
+	 * Fetch taxonomies
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param url WordPress API root URL.
+	 * @param auth Autorization header.
+	 * @param type Post type.
+	 * @param context Request context.
+	 *
+	 * @return Fetch response.
+	 */
+	export function fetch_taxonomies(url: string, auth: string, type?: string | undefined, context?: ContextArg | undefined): Promise<Response>;
+	export function get_taxonomies(url: string, auth: string, type?: string | undefined, context?: ContextArg | undefined): Promise<{
+		name: string;
+		description: string;
+		hierarchical: boolean;
+		rest_base: string;
+		rest_namespace: string;
+		slug: string;
+		types: string[];
+		_links: {
+			collection: {
+				href: string;
+			}[];
+			'wp:items': {
+				href: string;
+			}[];
+		};
+	}[]>;
 	/**
 	 * Fetch own user data
 	 *
@@ -397,15 +572,6 @@ declare module '@kucrut/wp-api-helpers' {
 		username: string;
 		email: string;
 		description: string;
-		avatar_urls: Record<string, string>;
-		capabilities: Record<string, boolean>;
-		extra_capabilities: Record<string, boolean>;
-		first_name: string;
-		last_name: string;
-		locale: string;
-		nickname: string;
-		registered_date: string;
-		roles: string[];
 		slug: string;
 		_links: {
 			self: {
@@ -415,8 +581,18 @@ declare module '@kucrut/wp-api-helpers' {
 				href: string;
 			}[];
 		};
+		avatar_urls: Record<string, string>;
+		capabilities: Record<string, boolean>;
+		extra_capabilities: Record<string, boolean>;
+		first_name: string;
+		last_name: string;
+		locale: string;
+		nickname: string;
+		registered_date: string;
+		roles: string[];
 		meta?: Record<string, any> | undefined;
 	}>;
+	type ContextArg = 'view' | 'embed' | 'edit';
 }
 
 declare module '@kucrut/wp-api-helpers/utils' {

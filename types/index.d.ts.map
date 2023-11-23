@@ -8,12 +8,16 @@
 		"jwt_auth_data",
 		"jwt_valid_token",
 		"rest_error",
+		"taxonomy",
 		"user",
 		"JWT_Valid_Token",
 		"JWT_Auth_Data",
 		"Rest_Error",
+		"Taxonomy",
 		"User",
+		"fetch_taxonomies",
 		"fetch_me",
+		"ContextArg",
 		"get_error_message",
 		"handle_response",
 		"make_response_handler",
@@ -23,9 +27,10 @@
 		"../src/exports/wp/auth.js",
 		"../src/exports/wp/general.js",
 		"../src/exports/wp/schema.js",
+		"../src/exports/wp/taxonomies.js",
 		"../src/exports/wp/users.js",
-		"../src/exports/utils/index.js",
-		"../src/types.ts"
+		"../src/types.ts",
+		"../src/exports/utils/index.js"
 	],
 	"sourcesContent": [
 		null,
@@ -33,7 +38,8 @@
 		null,
 		null,
 		null,
+		null,
 		null
 	],
-	"mappings": ";;;;;;;;;;;;iBAmBgBA,cAAcA;;;;;;;;;;;;;;;;;;;;;;;iBAiCdC,wBAAwBA;;;;;;;;;;;;;;;;iBCzClBC,QAAQA;cCTjBC,aAAaA;;;;;;;;;;;;;;;;cAObC,eAAeA;;;;;;;;;;;;;;;;;;;;;cAkBfC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;;cAUVC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aArBuBC,eAAeA;;;;;;;;;;;;;;;;;;;;aASjBC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAwBhBC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBC5CjBC,QAAQA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCDRC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MCvFzBC,cAAcA"
+	"mappings": ";;;;;;;;;;;;iBAmBgBA,cAAcA;;;;;;;;;;;;;;;;;;;;;;;;;iBAqCdC,wBAAwBA;;;;;;;;;;;;;;;;iBC7ClBC,QAAQA;cCTjBC,aAAaA;;;;;;;;;;;;;;;;cAObC,eAAeA;;;;;;;;;;;;;;;;;;;;;cAkBfC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;;cAUVC,QAAQA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;cAgBRC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aArCuBC,eAAeA;;;;;;;;;;;;;;;;;;;;aASjBC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAgBZC,QAAQA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aAwBZC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCvDjBC,gBAAgBA;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCLhBC,QAAQA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;MCbZC,UAAUA;;;;;;;;;;;;;;;iBCYNC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MDrFzBC,cAAcA"
 }
