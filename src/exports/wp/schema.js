@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+const date_item = z.string().datetime( { offset: true } );
+
 export const jwt_auth_data = z.object( {
 	user_email: z.string().email(),
 	user_display_name: z.string(),
