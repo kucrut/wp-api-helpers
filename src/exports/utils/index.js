@@ -16,7 +16,9 @@ export function get_error_message( error, fallback, dump = true ) {
 	/** @type {string} */
 	let message;
 
-	if ( error instanceof Error || error instanceof ZodError ) {
+	if ( typeof error === 'string' ) {
+		message = error;
+	} else if ( error instanceof Error || error instanceof ZodError ) {
 		message = error.message;
 	} else {
 		message = fallback;
