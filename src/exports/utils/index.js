@@ -118,14 +118,14 @@ export function normalize_fetch_args( args ) {
 
 	return Object.entries( args ).map( ( [ name, value ] ) => {
 		if ( typeof value === 'string' ) {
-			return [ name, value ];
+			return [ name, value.trim() ];
 		}
 
 		if ( Array.isArray( value ) ) {
 			// TODO: Maybe reduce.
-			return [ name, value.map( v => to_string( v ) ).join( ',' ) ];
+			return [ name, value.map( v => to_string( v ).trim() ).join( ',' ) ];
 		}
 
-		return [ name, to_string( value ) ];
+		return [ name, to_string( value ).trim() ];
 	} );
 }
