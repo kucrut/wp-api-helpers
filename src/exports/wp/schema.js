@@ -25,6 +25,11 @@ const links = z.object( {
 	collection: link_item,
 } );
 
+const renderable_item = z.object( {
+	raw: z.string().optional(),
+	rendered: z.string(),
+} );
+
 /** @typedef {z.infer<jwt_auth_data>} JWT_Auth_Data */
 
 export const rest_error = z.object( {
