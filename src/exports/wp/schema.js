@@ -45,6 +45,8 @@ export const jwt_auth_data = z.object( {
 	token: z.string(),
 } );
 
+/** @typedef {z.infer<jwt_auth_data>} JWT_Auth_Data */
+
 export const jwt_valid_token = z.object( {
 	code: z.string().refine( val => val === 'jwt_auth_valid_token' ),
 	data: z.object( {
@@ -53,8 +55,6 @@ export const jwt_valid_token = z.object( {
 } );
 
 /** @typedef {z.infer<jwt_valid_token>} JWT_Valid_Token */
-
-/** @typedef {z.infer<jwt_auth_data>} JWT_Auth_Data */
 
 export const rest_error = z.object( {
 	code: z.string(),
