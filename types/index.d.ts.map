@@ -9,15 +9,22 @@
 		"jwt_valid_token",
 		"rest_error",
 		"taxonomy",
+		"term",
 		"user",
 		"JWT_Valid_Token",
 		"JWT_Auth_Data",
 		"Rest_Error",
 		"Taxonomy",
+		"Term",
 		"User",
 		"fetch_taxonomies",
+		"fetch_terms",
 		"fetch_me",
 		"ContextArg",
+		"OrderArg",
+		"FetchArgs",
+		"FetchCollectionArgs",
+		"FetchTermsArgs",
 		"get_error_message",
 		"handle_response",
 		"make_response_handler",
@@ -28,6 +35,7 @@
 		"../src/exports/wp/general.js",
 		"../src/exports/wp/schema.js",
 		"../src/exports/wp/taxonomies.js",
+		"../src/exports/wp/terms.js",
 		"../src/exports/wp/users.js",
 		"../src/types.ts",
 		"../src/exports/utils/index.js"
@@ -39,7 +47,8 @@
 		null,
 		null,
 		null,
+		null,
 		null
 	],
-	"mappings": ";;;;;;;;;;;;iBAmBgBA,cAAcA;;;;;;;;;;;;;;;;;;;;;;;;;iBAqCdC,wBAAwBA;;;;;;;;;;;;;;;;iBC7ClBC,QAAQA;cCTjBC,aAAaA;;;;;;;;;;;;;;;;cAObC,eAAeA;;;;;;;;;;;;;;;;;;;;;cAkBfC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;;cAUVC,QAAQA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;cAgBRC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aArCuBC,eAAeA;;;;;;;;;;;;;;;;;;;;aASjBC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAgBZC,QAAQA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aAwBZC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCvDjBC,gBAAgBA;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCLhBC,QAAQA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;MCbZC,UAAUA;;;;;;;;;;;;;;;iBCYNC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MDrFzBC,cAAcA"
+	"mappings": ";;;;;;;;;;;;iBAmBgBA,cAAcA;;;;;;;;;;;;;;;;;;;;;;;;;iBAqCdC,wBAAwBA;;;;;;;;;;;;;;;;iBC7ClBC,QAAQA;cCTjBC,aAAaA;;;;;;;;;;;;;;;;cAObC,eAAeA;;;;;;;;;;;;;;;;;;;;;cAkBfC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;;cAUVC,QAAQA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;cAgBRC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;cAgBJC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aArDuBC,eAAeA;;;;;;;;;;;;;;;;;;;;aASjBC,aAAaA;;;;;;;;;;;;;;;;aAUhBC,UAAUA;;;;;;;;;;;;;;;;;;;;;;;aAgBZC,QAAQA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aAgBZC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aAwBJC,IAAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCvEjBC,gBAAgBA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCHhBC,WAAWA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCFXC,QAAQA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;MCbZC,UAAUA;MACVC,QAAQA;WAEHC,SAASA;;;;;;;WAQTC,mBAAmBA;;;;;;;;;;;;;;;;;;;;;;;;;;;;WA6BnBC,cAAcA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBC5BfC,iBAAiBA;;;;;;;;;;;;;;;iBAkCXC,eAAeA;;;;;;;iBAyCrBC,qBAAqBA;MD1BzBC,cAAcA"
 }

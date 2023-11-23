@@ -185,6 +185,100 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 	}>;
 
+	export const term: z.ZodObject<{
+		id: z.ZodNumber;
+		count: z.ZodNumber;
+		description: z.ZodString;
+		link: z.ZodString;
+		name: z.ZodString;
+		slug: z.ZodString;
+		taxonomy: z.ZodString;
+		parent: z.ZodNumber;
+		_links: z.ZodObject<{
+			self: z.ZodArray<z.ZodObject<{
+				href: z.ZodString;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+			}, {
+				href: string;
+			}>, "many">;
+			collection: z.ZodArray<z.ZodObject<{
+				href: z.ZodString;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+			}, {
+				href: string;
+			}>, "many">;
+			about: z.ZodArray<z.ZodObject<{
+				href: z.ZodString;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+			}, {
+				href: string;
+			}>, "many">;
+		}, "strip", z.ZodTypeAny, {
+			self: {
+				href: string;
+			}[];
+			collection: {
+				href: string;
+			}[];
+			about: {
+				href: string;
+			}[];
+		}, {
+			self: {
+				href: string;
+			}[];
+			collection: {
+				href: string;
+			}[];
+			about: {
+				href: string;
+			}[];
+		}>;
+	}, "strip", z.ZodTypeAny, {
+		link: string;
+		id: number;
+		name: string;
+		description: string;
+		parent: number;
+		slug: string;
+		_links: {
+			self: {
+				href: string;
+			}[];
+			collection: {
+				href: string;
+			}[];
+			about: {
+				href: string;
+			}[];
+		};
+		count: number;
+		taxonomy: string;
+	}, {
+		link: string;
+		id: number;
+		name: string;
+		description: string;
+		parent: number;
+		slug: string;
+		_links: {
+			self: {
+				href: string;
+			}[];
+			collection: {
+				href: string;
+			}[];
+			about: {
+				href: string;
+			}[];
+		};
+		count: number;
+		taxonomy: string;
+	}>;
+
 	export const user: z.ZodObject<{
 		avatar_urls: z.ZodRecord<z.ZodString, z.ZodString>;
 		capabilities: z.ZodRecord<z.ZodString, z.ZodBoolean>;
@@ -419,6 +513,99 @@ declare module '@kucrut/wp-api-helpers' {
 			}[];
 		};
 	}>>;
+	export type Term = z.infer<z.ZodObject<{
+		id: z.ZodNumber;
+		count: z.ZodNumber;
+		description: z.ZodString;
+		link: z.ZodString;
+		name: z.ZodString;
+		slug: z.ZodString;
+		taxonomy: z.ZodString;
+		parent: z.ZodNumber;
+		_links: z.ZodObject<{
+			self: z.ZodArray<z.ZodObject<{
+				href: z.ZodString;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+			}, {
+				href: string;
+			}>, "many">;
+			collection: z.ZodArray<z.ZodObject<{
+				href: z.ZodString;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+			}, {
+				href: string;
+			}>, "many">;
+			about: z.ZodArray<z.ZodObject<{
+				href: z.ZodString;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+			}, {
+				href: string;
+			}>, "many">;
+		}, "strip", z.ZodTypeAny, {
+			self: {
+				href: string;
+			}[];
+			collection: {
+				href: string;
+			}[];
+			about: {
+				href: string;
+			}[];
+		}, {
+			self: {
+				href: string;
+			}[];
+			collection: {
+				href: string;
+			}[];
+			about: {
+				href: string;
+			}[];
+		}>;
+	}, "strip", z.ZodTypeAny, {
+		link: string;
+		id: number;
+		name: string;
+		description: string;
+		parent: number;
+		slug: string;
+		_links: {
+			self: {
+				href: string;
+			}[];
+			collection: {
+				href: string;
+			}[];
+			about: {
+				href: string;
+			}[];
+		};
+		count: number;
+		taxonomy: string;
+	}, {
+		link: string;
+		id: number;
+		name: string;
+		description: string;
+		parent: number;
+		slug: string;
+		_links: {
+			self: {
+				href: string;
+			}[];
+			collection: {
+				href: string;
+			}[];
+			about: {
+				href: string;
+			}[];
+		};
+		count: number;
+		taxonomy: string;
+	}>>;
 	export type User = z.infer<z.ZodObject<{
 		avatar_urls: z.ZodRecord<z.ZodString, z.ZodString>;
 		capabilities: z.ZodRecord<z.ZodString, z.ZodBoolean>;
@@ -554,6 +741,40 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 	}[]>;
 	/**
+	 * Fetch taxonomy terms
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param url WordPress API root URL.
+	 * @param auth Autorization header.
+	 * @param taxonomy Taxonomy's rest_base.
+	 * @param args Request arguments.
+	 *
+	 * @return Fetch response.
+	 */
+	export function fetch_terms(url: string, auth: string, taxonomy?: string | undefined, args?: FetchTermsArgs | undefined): Promise<Response>;
+	export function get_terms(url: string, auth: string, taxonomy?: string | undefined, args?: FetchTermsArgs | undefined): Promise<{
+		link: string;
+		id: number;
+		name: string;
+		description: string;
+		parent: number;
+		slug: string;
+		_links: {
+			self: {
+				href: string;
+			}[];
+			collection: {
+				href: string;
+			}[];
+			about: {
+				href: string;
+			}[];
+		};
+		count: number;
+		taxonomy: string;
+	}[]>;
+	/**
 	 * Fetch own user data
 	 *
 	 * @since 0.1.0
@@ -593,6 +814,62 @@ declare module '@kucrut/wp-api-helpers' {
 		meta?: Record<string, any> | undefined;
 	}>;
 	type ContextArg = 'view' | 'embed' | 'edit';
+	type OrderArg = 'asc' | 'desc';
+	interface FetchArgs {
+		/**
+		 * Scope under which the request is made; determines fields present in response.
+		 * @default 'view'
+		 */
+		context?: ContextArg;
+	}
+	interface FetchCollectionArgs {
+		/**
+		 * "Current page of the collection."
+		 * @default 1
+		 */
+		page?: number;
+		/**
+		 * Maximum number of items to be returned in result set (maximum 100).
+		 * @default 10
+		 */
+		per_page?: number;
+		/**
+		 * Limit results to those matching a string.
+		 */
+		search?: string;
+		/**
+		 * Ensure result set excludes specific IDs.
+		 */
+		exclude?: number[];
+		/**
+		 * Limit result set to specific IDs.
+		 */
+		include?: number[];
+		/**
+		 * Order sort attribute ascending or descending.
+		 */
+		order?: OrderArg;
+	}
+	interface FetchTermsArgs extends FetchArgs, FetchCollectionArgs {
+		/**
+		 * Whether to hide terms not assigned to any posts.
+		 * @default false
+		 */
+		hide_empty?: boolean;
+		/**
+		 * Sort collection by term attribute.
+		 * @default 'name'
+		 */
+		orderby?: 'id' | 'include' | 'name' | 'slug' | 'include_slugs' | 'term_group' | 'description' | 'count';
+		/**
+		 * Limit result set to terms assigned to a specific post.
+		 */
+		post?: number;
+		/**
+		 * Limit result set to terms with one or more specific slugs.
+		 */
+		slug?: string[];
+	}
 }
 
 declare module '@kucrut/wp-api-helpers/utils' {
