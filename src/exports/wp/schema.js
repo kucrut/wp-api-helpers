@@ -18,7 +18,7 @@ export const jwt_valid_token = z.object( {
 
 /** @typedef {z.infer<jwt_valid_token>} JWT_Valid_Token */
 
-const link_item = z.array( z.object( { href: z.string().url() } ) );
+const link_item = z.array( z.object( { embeddable: z.boolean().optional(), href: z.string().url() } ) );
 
 const links = z.object( {
 	self: link_item,
