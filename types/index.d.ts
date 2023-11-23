@@ -907,6 +907,15 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @return Bleh
 	 */
 	export function make_response_handler<T>(handler: HandleResponse<T>): (resp: Response) => Promise<T>;
+	/**
+	 * Normalize fetch arguments
+	 *
+	 * @since 0.0.1
+	 *
+	 * @param args Fetch arguments.
+	 * @return Pairs of key and value strings.
+	 */
+	export function normalize_fetch_args(args: Record<string, any>): [string, string][];
 	type HandleResponse<T> = (data: unknown) => Promise<T>;
 }
 

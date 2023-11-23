@@ -91,3 +91,25 @@ export function make_response_handler( handler ) {
 	/** @param {Response} response */
 	return response => handle_response( response, handler );
 }
+
+/**
+ * Normalize fetch arguments
+ *
+ * @since 0.0.1
+ *
+ * @param {Record<string,any>} args Fetch arguments.
+ * @return {[string, string][]} Pairs of key and value strings.
+ */
+export function normalize_fetch_args( args ) {
+	return Object.entries( args ).map( ( [ name, value ] ) => {
+		if ( typeof value === 'string' ) {
+			return [ name, value ];
+		}
+
+		if ( Array.isArray( value ) ) {
+			return [ name, value.map( v => v.toString() ).join( ',' ) ];
+		}
+
+		return [ name, value.toString() ];
+	} );
+}
