@@ -56,6 +56,34 @@ export const jwt_valid_token = z.object( {
 
 /** @typedef {z.infer<jwt_valid_token>} JWT_Valid_Token */
 
+export const media = post_base.extend( {
+	alt_text: z.string(),
+	caption: renderable_item,
+	description: renderable_item,
+	media_type: z.string(),
+	mime_type: z.string(),
+	post: z.number().nullable(),
+	source_url: z.string().url(),
+	media_details: z.object( {
+		file: z.string(),
+		filesize: z.number(),
+		height: z.number(),
+		image_meta: z.record( z.any() ).optional(),
+		width: z.number(),
+		sizes: z.record(
+			z.object( {
+				file: z.string(),
+				height: z.number(),
+				mime_type: z.string(),
+				source_url: z.string(),
+				width: z.number(),
+			} ),
+		),
+	} ),
+} );
+
+/** @typedef {z.infer<media>} Media */
+
 export const rest_error = z.object( {
 	code: z.string(),
 	message: z.string(),
