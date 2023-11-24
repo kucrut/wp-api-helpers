@@ -47,6 +47,29 @@ const post_base = z.object( {
 	} ),
 } );
 
+export const info = z.object( {
+	desription: z.string(),
+	gmt_offset: z.number(),
+	home: z.string().url(),
+	name: z.string(),
+	namespaces: z.string().array(),
+	site_icon_url: z.string(),
+	site_icon: z.number(),
+	site_logo: z.number(),
+	timezone_string: z.string(),
+	url: z.string().url(),
+	authentication: z.record(
+		z.object( {
+			endpoints: z.object( {
+				authorization: z.string().url(),
+			} ),
+		} ),
+	),
+	_links: z.record( link_item ),
+} );
+
+/** @typedef {z.infer<info>} Info */
+
 export const jwt_auth_data = z.object( {
 	user_email: z.string().email(),
 	user_display_name: z.string(),
