@@ -145,14 +145,14 @@ export const taxonomy = z.object( {
 /** @typedef {z.infer<taxonomy>} Taxonomy */
 
 export const term = z.object( {
-	id: z.number().min( 1 ),
 	count: z.number(),
 	description: z.string(),
+	id: z.number().min( 1 ),
 	link: z.string(),
 	name: z.string(),
+	parent: z.number(),
 	slug: z.string(),
 	taxonomy: z.string(),
-	parent: z.number(),
 	_links: z.record( link_item ),
 } );
 
