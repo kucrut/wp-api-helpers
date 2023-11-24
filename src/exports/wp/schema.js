@@ -8,6 +8,7 @@ const link_item = z.array(
 	z.object( {
 		embeddable: z.boolean().optional(),
 		href: z.string().url(),
+		templated: z.boolean().optional(),
 		type: z.string().optional(),
 	} ),
 );
