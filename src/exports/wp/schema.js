@@ -4,7 +4,13 @@ const comment_ping_status = z.enum( [ 'open', 'closed' ] );
 
 const date_item = z.coerce.date();
 
-const link_item = z.array( z.object( { embeddable: z.boolean().optional(), href: z.string().url() } ) );
+const link_item = z.array(
+	z.object( {
+		embeddable: z.boolean().optional(),
+		href: z.string().url(),
+		type: z.string().optional(),
+	} ),
+);
 
 const links = z.object( {
 	self: link_item,
