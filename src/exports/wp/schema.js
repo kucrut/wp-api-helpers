@@ -158,9 +158,7 @@ export const term = z.object( {
 	slug: z.string(),
 	taxonomy: z.string(),
 	parent: z.number(),
-	_links: links.extend( {
-		about: link_item,
-	} ),
+	_links: z.record( link_item ),
 } );
 
 /** @typedef {z.infer<term>} Term */
