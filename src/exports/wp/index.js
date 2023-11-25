@@ -1,5 +1,4 @@
 export * from './auth.js';
-export * from './collection.js';
 export * from './general.js';
 export * from './media.js';
 export * from './schema.js';

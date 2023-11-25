@@ -43,27 +43,6 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 	}>;
 	/**
-	 * Fetch collection
-	 *
-	 * @param endpoint Collection endpoint.
-	 * @param auth Authentication header.
-	 * @param args Arguments.
-	 *
-	 * @return Response.
-	 */
-	export function fetch_data(endpoint: string, auth?: string | undefined, args?: Record<string, any> | undefined): ReturnType<typeof fetch>;
-	/**
-	 * Fetch and parse response
-	 *
-	 * @since 0.1.0
-	 *
-	 * @param schema Zod schema to parse the response with.
-	 * @param fetcher Fetch function.
-	 *
-	 * @return Parsed data.
-	 */
-	export function fetch_and_parse<T extends import("zod").ZodTypeAny>(schema: T, fetcher: () => ReturnType<typeof fetch>): Promise<import("zod").TypeOf<T>>;
-	/**
 	 * Discover WordPress API root URL
 	 *
 	 * @since 0.1.0
@@ -1725,6 +1704,27 @@ declare module '@kucrut/wp-api-helpers' {
 }
 
 declare module '@kucrut/wp-api-helpers/utils' {
+	/**
+	 * Fetch and parse response
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param schema Zod schema to parse the response with.
+	 * @param fetcher Fetch function.
+	 *
+	 * @return Parsed data.
+	 */
+	export function fetch_and_parse<T extends import("zod").ZodTypeAny>(schema: T, fetcher: () => ReturnType<typeof fetch>): Promise<import("zod").TypeOf<T>>;
+	/**
+	 * Fetch data
+	 *
+	 * @param endpoint Data endpoint.
+	 * @param auth Authentication header.
+	 * @param args Arguments.
+	 *
+	 * @return Response.
+	 */
+	export function fetch_data(endpoint: string, auth?: string | undefined, args?: Record<string, any> | undefined): ReturnType<typeof fetch>;
 	/**
 	 * Get error message
 	 *
