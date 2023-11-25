@@ -53,7 +53,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 */
 	export function fetch_data(endpoint: string, auth?: string | undefined, args?: Record<string, any> | undefined): ReturnType<typeof fetch>;
 	/**
-	 * Get collection
+	 * Fetch and parse response
 	 *
 	 * @since 0.1.0
 	 *
@@ -62,7 +62,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 *
 	 * @return Parsed data.
 	 */
-	export function get_data<T extends import("zod").ZodTypeAny>(schema: T, fetcher: () => ReturnType<typeof fetch>): Promise<import("zod").TypeOf<T>>;
+	export function fetch_and_parse<T extends import("zod").ZodTypeAny>(schema: T, fetcher: () => ReturnType<typeof fetch>): Promise<import("zod").TypeOf<T>>;
 	/**
 	 * Discover WordPress API root URL
 	 *
