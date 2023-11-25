@@ -34,7 +34,7 @@ export function fetch_me( url, auth ) {
  *
  * @throws {Error|import('zod').ZodError}
  *
- * @return {Promise<import('./schema.js').User_View>} User (view) data.
+ * @return {Promise<import('zod').infer<typeof user_view>>} User (view) data.
  */
 export function get_me( url, auth ) {
 	return fetch_and_parse( user_view, () => fetch_data( `${ url }/wp/v2/users/me`, auth ) );
