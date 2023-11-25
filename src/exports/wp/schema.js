@@ -183,8 +183,6 @@ export const user_edit = z.object( {
 	} ),
 } );
 
-/** @typedef {z.infer<user_edit>} User_Edit */
-
 export const user_view = user_edit.omit( {
 	capabilities: true,
 	email: true,
@@ -198,8 +196,4 @@ export const user_view = user_edit.omit( {
 	username: true,
 } );
 
-/** @typedef {z.infer<user_view>} User_View */
-
 export const user_embed = user_view.omit( { meta: true } );
-
-/** @typedef {z.infer<user_view>} User_Embed */
