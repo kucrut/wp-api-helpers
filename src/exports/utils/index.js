@@ -33,8 +33,7 @@ export function fetch_data( endpoint, auth = '', args = undefined ) {
 
 	/** @type {HeadersInit} */
 	const headers = {
-		'Accept': 'application/json',
-		'Content-Type': 'application/json',
+		Accept: 'application/json',
 	};
 
 	if ( auth ) {
