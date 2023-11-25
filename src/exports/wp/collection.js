@@ -9,7 +9,7 @@ import { make_response_handler, normalize_fetch_args } from '../utils/index.js';
  *
  * @return {ReturnType<typeof fetch>} Response.
  */
-export function fetch_collection( endpoint, auth = '', args = undefined ) {
+export function fetch_data( endpoint, auth = '', args = undefined ) {
 	const url = new URL( endpoint );
 
 	/** @type {HeadersInit} */
@@ -36,18 +36,13 @@ export function fetch_collection( endpoint, auth = '', args = undefined ) {
  *
  * @since 0.1.0
  *
- * @template T
- * @template {( ...args: any ) => ReturnType<typeof fetch>} F
+ * @template {import('zod').ZodTypeAny} T
  *
- * @param {import('zod').ZodTypeAny} schema Zod schema to parse the response with.
- * @param {F} fetcher Fetch function.
- * @param {...Parameters<F>} args fetch_collection arguments.
+ * @param {T} schema Zod schema to parse the response with.
+ * @param {() => ReturnType<typeof fetch>} fetcher Fetch function.
  *
- * @return {ReturnType<import('$types').HandleResponse<T>>} Parsed data.
+ * @return {ReturnType<import('$types').HandleResponse<import('zod').infer<T>>>} Parsed data.
  */
-
-export async function get_collection( fetcher, schema, ...args ) {
-	return make_response_handler( async data => schema.parse( data ) )( await fetcher( ...args ) );
+export async function get_data( schema, fetcher ) {
+	return make_response_handler( async data => schema.parse( data ) )( await fetcher() );
 }
-
-// * @type {import('$types').HandledFetch<fetch_collection, import('./schema').User>}
