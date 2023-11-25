@@ -158,29 +158,48 @@ export const term = z.object( {
 
 /** @typedef {z.infer<term>} Term */
 
-export const user = z.object( {
+export const user_edit = z.object( {
+	meta,
 	avatar_urls: z.record( z.string().url() ),
-	capabilities: z.record( z.boolean() ).optional(),
+	capabilities: z.record( z.boolean() ),
 	description: z.string(),
-	email: z.string().email().optional(),
-	extra_capabilities: z.record( z.boolean() ).optional(),
-	first_name: z.string().optional(),
+	email: z.string().email(),
+	extra_capabilities: z.record( z.boolean() ),
+	first_name: z.string(),
 	id: z.number().min( 1 ),
-	last_name: z.string().optional(),
+	last_name: z.string(),
 	link: z.string().url(),
-	locale: z.string().optional(),
-	meta: meta.optional(), // Context: view, edit.
+	locale: z.string(),
 	name: z.string().min( 1 ),
-	nickname: z.string().optional(),
-	registered_date: z.string().datetime( { offset: true } ).optional(),
-	roles: z.string().array().optional(),
+	nickname: z.string(),
+	registered_date: z.string().datetime( { offset: true } ),
+	roles: z.string().array(),
 	slug: z.string(),
 	url: z.string().url(),
-	username: z.string().optional(),
+	username: z.string(),
 	_links: z.object( {
 		self: link_item,
 		collection: link_item,
 	} ),
 } );
 
-/** @typedef {z.infer<user>} User */
+/** @typedef {z.infer<user_edit>} User_Edit */
+
+export const user_view = user_edit.omit( {
+	capabilities: true,
+	email: true,
+	extra_capabilities: true,
+	first_name: true,
+	last_name: true,
+	locale: true,
+	nickname: true,
+	registered_date: true,
+	roles: true,
+	username: true,
+} );
+
+/** @typedef {z.infer<user_view>} User_View */
+
+export const user_embed = user_view.omit( { meta: true } );
+
+/** @typedef {z.infer<user_view>} User_Embed */
