@@ -682,7 +682,7 @@ declare module '@kucrut/wp-api-helpers' {
 		taxonomy: string;
 	}>;
 
-	export const user: z.ZodObject<{
+	export const user_edit: z.ZodObject<{
 		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
 		avatar_urls: z.ZodRecord<z.ZodString, z.ZodString>;
 		capabilities: z.ZodRecord<z.ZodString, z.ZodBoolean>;
@@ -827,6 +827,258 @@ declare module '@kucrut/wp-api-helpers' {
 		registered_date: string;
 		roles: string[];
 		meta?: any[] | Record<string, any> | undefined;
+	}>;
+
+	export const user_view: z.ZodObject<Omit<{
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
+		avatar_urls: z.ZodRecord<z.ZodString, z.ZodString>;
+		capabilities: z.ZodRecord<z.ZodString, z.ZodBoolean>;
+		description: z.ZodString;
+		email: z.ZodString;
+		extra_capabilities: z.ZodRecord<z.ZodString, z.ZodBoolean>;
+		first_name: z.ZodString;
+		id: z.ZodNumber;
+		last_name: z.ZodString;
+		link: z.ZodString;
+		locale: z.ZodString;
+		name: z.ZodString;
+		nickname: z.ZodString;
+		registered_date: z.ZodString;
+		roles: z.ZodArray<z.ZodString, "many">;
+		slug: z.ZodString;
+		url: z.ZodString;
+		username: z.ZodString;
+		_links: z.ZodObject<{
+			self: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+			collection: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+		}, "strip", z.ZodTypeAny, {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}, {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}>;
+	}, "username" | "email" | "capabilities" | "extra_capabilities" | "first_name" | "last_name" | "locale" | "nickname" | "registered_date" | "roles">, "strip", z.ZodTypeAny, {
+		link: string;
+		id: number;
+		url: string;
+		name: string;
+		description: string;
+		slug: string;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		avatar_urls: Record<string, string>;
+		meta?: any[] | Record<string, any> | undefined;
+	}, {
+		link: string;
+		id: number;
+		url: string;
+		name: string;
+		description: string;
+		slug: string;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		avatar_urls: Record<string, string>;
+		meta?: any[] | Record<string, any> | undefined;
+	}>;
+
+	export const user_embed: z.ZodObject<Omit<Omit<{
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
+		avatar_urls: z.ZodRecord<z.ZodString, z.ZodString>;
+		capabilities: z.ZodRecord<z.ZodString, z.ZodBoolean>;
+		description: z.ZodString;
+		email: z.ZodString;
+		extra_capabilities: z.ZodRecord<z.ZodString, z.ZodBoolean>;
+		first_name: z.ZodString;
+		id: z.ZodNumber;
+		last_name: z.ZodString;
+		link: z.ZodString;
+		locale: z.ZodString;
+		name: z.ZodString;
+		nickname: z.ZodString;
+		registered_date: z.ZodString;
+		roles: z.ZodArray<z.ZodString, "many">;
+		slug: z.ZodString;
+		url: z.ZodString;
+		username: z.ZodString;
+		_links: z.ZodObject<{
+			self: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+			collection: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+		}, "strip", z.ZodTypeAny, {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}, {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}>;
+	}, "username" | "email" | "capabilities" | "extra_capabilities" | "first_name" | "last_name" | "locale" | "nickname" | "registered_date" | "roles">, "meta">, "strip", z.ZodTypeAny, {
+		link: string;
+		id: number;
+		url: string;
+		name: string;
+		description: string;
+		slug: string;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		avatar_urls: Record<string, string>;
+	}, {
+		link: string;
+		id: number;
+		url: string;
+		name: string;
+		description: string;
+		slug: string;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		avatar_urls: Record<string, string>;
 	}>;
 	export type Info = z.infer<z.ZodObject<{
 		desription: z.ZodString;
@@ -1383,7 +1635,7 @@ declare module '@kucrut/wp-api-helpers' {
 		count: number;
 		taxonomy: string;
 	}>>;
-	export type User = z.infer<z.ZodObject<{
+	export type User_Edit = z.infer<z.ZodObject<{
 		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
 		avatar_urls: z.ZodRecord<z.ZodString, z.ZodString>;
 		capabilities: z.ZodRecord<z.ZodString, z.ZodBoolean>;
@@ -1529,6 +1781,258 @@ declare module '@kucrut/wp-api-helpers' {
 		roles: string[];
 		meta?: any[] | Record<string, any> | undefined;
 	}>>;
+	export type User_View = z.infer<z.ZodObject<Omit<{
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
+		avatar_urls: z.ZodRecord<z.ZodString, z.ZodString>;
+		capabilities: z.ZodRecord<z.ZodString, z.ZodBoolean>;
+		description: z.ZodString;
+		email: z.ZodString;
+		extra_capabilities: z.ZodRecord<z.ZodString, z.ZodBoolean>;
+		first_name: z.ZodString;
+		id: z.ZodNumber;
+		last_name: z.ZodString;
+		link: z.ZodString;
+		locale: z.ZodString;
+		name: z.ZodString;
+		nickname: z.ZodString;
+		registered_date: z.ZodString;
+		roles: z.ZodArray<z.ZodString, "many">;
+		slug: z.ZodString;
+		url: z.ZodString;
+		username: z.ZodString;
+		_links: z.ZodObject<{
+			self: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+			collection: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+		}, "strip", z.ZodTypeAny, {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}, {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}>;
+	}, "username" | "email" | "capabilities" | "extra_capabilities" | "first_name" | "last_name" | "locale" | "nickname" | "registered_date" | "roles">, "strip", z.ZodTypeAny, {
+		link: string;
+		id: number;
+		url: string;
+		name: string;
+		description: string;
+		slug: string;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		avatar_urls: Record<string, string>;
+		meta?: any[] | Record<string, any> | undefined;
+	}, {
+		link: string;
+		id: number;
+		url: string;
+		name: string;
+		description: string;
+		slug: string;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		avatar_urls: Record<string, string>;
+		meta?: any[] | Record<string, any> | undefined;
+	}>>;
+	export type User_Embed = z.infer<z.ZodObject<Omit<{
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
+		avatar_urls: z.ZodRecord<z.ZodString, z.ZodString>;
+		capabilities: z.ZodRecord<z.ZodString, z.ZodBoolean>;
+		description: z.ZodString;
+		email: z.ZodString;
+		extra_capabilities: z.ZodRecord<z.ZodString, z.ZodBoolean>;
+		first_name: z.ZodString;
+		id: z.ZodNumber;
+		last_name: z.ZodString;
+		link: z.ZodString;
+		locale: z.ZodString;
+		name: z.ZodString;
+		nickname: z.ZodString;
+		registered_date: z.ZodString;
+		roles: z.ZodArray<z.ZodString, "many">;
+		slug: z.ZodString;
+		url: z.ZodString;
+		username: z.ZodString;
+		_links: z.ZodObject<{
+			self: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+			collection: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+		}, "strip", z.ZodTypeAny, {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}, {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}>;
+	}, "username" | "email" | "capabilities" | "extra_capabilities" | "first_name" | "last_name" | "locale" | "nickname" | "registered_date" | "roles">, "strip", z.ZodTypeAny, {
+		link: string;
+		id: number;
+		url: string;
+		name: string;
+		description: string;
+		slug: string;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		avatar_urls: Record<string, string>;
+		meta?: any[] | Record<string, any> | undefined;
+	}, {
+		link: string;
+		id: number;
+		url: string;
+		name: string;
+		description: string;
+		slug: string;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		avatar_urls: Record<string, string>;
+		meta?: any[] | Record<string, any> | undefined;
+	}>>;
 	/**
 	 * Fetch taxonomies
 	 *
@@ -1604,40 +2108,17 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @return Fetch response.
 	 */
 	export function fetch_me(url: string, auth: string): Promise<Response>;
-	export function get_me(url: string, auth: string): Promise<{
-		link: string;
-		id: number;
-		url: string;
-		name: string;
-		username: string;
-		email: string;
-		description: string;
-		slug: string;
-		_links: {
-			self: {
-				href: string;
-				embeddable?: boolean | undefined;
-				templated?: boolean | undefined;
-				type?: string | undefined;
-			}[];
-			collection: {
-				href: string;
-				embeddable?: boolean | undefined;
-				templated?: boolean | undefined;
-				type?: string | undefined;
-			}[];
-		};
-		avatar_urls: Record<string, string>;
-		capabilities: Record<string, boolean>;
-		extra_capabilities: Record<string, boolean>;
-		first_name: string;
-		last_name: string;
-		locale: string;
-		nickname: string;
-		registered_date: string;
-		roles: string[];
-		meta?: any[] | Record<string, any> | undefined;
-	}>;
+	/**
+	 * Get self user data
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param url WordPress API root URL.
+	 * @param auth Authorization header.
+	 *
+	 * @return User (view) data.
+	 */
+	export function get_me(url: string, auth: string): Promise<User_View>;
 	type ContextArg = 'view' | 'embed' | 'edit';
 	type OrderArg = 'asc' | 'desc';
 	interface FetchArgs {

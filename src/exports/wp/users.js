@@ -1,5 +1,5 @@
-import { user } from './schema.js';
-import { make_response_handler } from '../utils/index.js';
+import { user_view } from './schema.js';
+import { fetch_and_parse, fetch_data } from '../utils/index.js';
 
 /**
  * Fetch own user data
@@ -25,12 +25,17 @@ export function fetch_me( url, auth ) {
 }
 
 /**
- * Get own user data
+ * Get self user data
  *
  * @since 0.1.0
  *
- * @type {import('$types').HandledFetch<fetch_me, import('./schema').User>}
+ * @param {string} url WordPress API root URL.
+ * @param {string} auth Authorization header.
+ *
+ * @throws {Error|import('zod').ZodError}
+ *
+ * @return {Promise<import('./schema.js').User_View>} User (view) data.
  */
-export async function get_me( ...args ) {
-	return make_response_handler( async data => user.parse( data ) )( await fetch_me( ...args ) );
+export function get_me( url, auth ) {
+	return fetch_and_parse( user_view, () => fetch_data( `${ url }/wp/v2/users/me`, auth ) );
 }
