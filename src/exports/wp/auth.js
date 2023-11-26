@@ -28,25 +28,6 @@ export async function get_jwt_auth( url, username, password ) {
 }
 
 /**
- * Validate JWT token (fetch only)
- *
- * @since 0.1.0
- *
- * @param {string} url WordPress API root URL.
- * @param {string} token JWT token.
- *
- * @return {Promise<Response>} Fetch response.
- */
-export function fetch_jwt_validate_token( url, token ) {
-	return fetch( `${ url }/jwt-auth/v1/token/validate`, {
-		method: 'POST',
-		headers: {
-			Authorization: `Bearer ${ token }`,
-		},
-	} );
-}
-
-/**
  * Validate JWT token
  *
  * @since 0.1.0

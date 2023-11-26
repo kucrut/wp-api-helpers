@@ -13,17 +13,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 */
 	export function get_jwt_auth(url: string, username: string, password: string): Promise<import('zod').infer<typeof jwt_auth_data>>;
 	/**
-	 * Validate JWT token (fetch only)
-	 *
-	 * @since 0.1.0
-	 *
-	 * @param url WordPress API root URL.
-	 * @param token JWT token.
-	 *
-	 * @return Fetch response.
-	 */
-	export function fetch_jwt_validate_token(url: string, token: string): Promise<Response>;
-	/**
 	 * Validate JWT token
 	 *
 	 * @since 0.1.0
