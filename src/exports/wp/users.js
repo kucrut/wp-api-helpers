@@ -1,5 +1,5 @@
 import { user_view } from './schema.js';
-import { fetch_and_parse, fetch_data } from '../utils/index.js';
+import { fetch_and_parse } from '../utils/index.js';
 
 /**
  * Get self user data
@@ -14,5 +14,12 @@ import { fetch_and_parse, fetch_data } from '../utils/index.js';
  * @return {Promise<import('zod').infer<typeof user_view>>} User (view) data.
  */
 export function get_me( url, auth ) {
-	return fetch_and_parse( user_view, () => fetch_data( `${ url }/wp/v2/users/me`, auth ) );
+	return fetch_and_parse( user_view, () =>
+		fetch( `${ url }/wp/v2/users/me`, {
+			headers: {
+				Accept: 'application/json',
+				Authorization: auth,
+			},
+		} ),
+	);
 }
