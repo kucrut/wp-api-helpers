@@ -191,6 +191,10 @@ export const taxonomy_edit = taxonomy_view.extend( {
 	} ),
 } );
 
+export const taxonomies_embed = z.record( taxonomy_embed );
+export const taxonomies_view = z.record( taxonomy_view );
+export const taxonomies_edit = z.record( taxonomy_edit );
+
 export const term = z.object( {
 	count: z.number(),
 	description: z.string(),
