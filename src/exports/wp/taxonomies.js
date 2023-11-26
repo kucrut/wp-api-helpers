@@ -1,6 +1,5 @@
-import { make_response_handler, normalize_fetch_args } from '../utils/index.js';
-import { taxonomy } from './schema.js';
-import { z } from 'zod';
+import { fetch_and_parse, fetch_data, normalize_fetch_args } from '../utils/index.js';
+import { taxonomies_view } from './schema.js';
 
 const PATH = '/wp/v2/taxonomies';
 
@@ -41,10 +40,14 @@ export function fetch_taxonomies( url, auth, args ) {
  *
  * @since 0.1.0
  *
- * @type {import('$types').HandledFetch<fetch_taxonomies, import('./schema').Taxonomy[]>}
+ * @param {string} url WordPress API root URL.
+ * @param {string=} auth Authorization header.
+ * @param {import("$types").FetchTaxonomiesArgs=} args Request arguments.
+ *
+ * @throws {Error|import('zod').ZodError}
+ *
+ * @return {Promise<import('zod').infer<typeof taxonomies_view>>} Taxonomies (view) data.
  */
-export async function get_taxonomies( ...args ) {
-	return make_response_handler( async data => Object.values( z.record( taxonomy ).parse( data ) ) )(
-		await fetch_taxonomies( ...args ),
-	);
+export async function get_taxonomies( url, auth, args ) {
+	return fetch_and_parse( taxonomies_view, () => fetch_data( `${ url }/wp/v2/taxonomies`, auth, args ) );
 }
