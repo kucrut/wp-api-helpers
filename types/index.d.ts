@@ -2739,19 +2739,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 */
 	export function get_taxonomies(url: string, auth?: string | undefined, args?: FetchTaxonomiesArgs | undefined): Promise<import('zod').infer<typeof taxonomies_view>>;
 	/**
-	 * Fetch taxonomy terms
-	 *
-	 * @since 0.1.0
-	 *
-	 * @param url WordPress API root URL.
-	 * @param auth Autorization header.
-	 * @param taxonomy Taxonomy's rest_base.
-	 * @param args Request arguments.
-	 *
-	 * @return Fetch response.
-	 */
-	export function fetch_terms(url: string, auth: string, taxonomy?: string | undefined, args?: FetchTermsArgs | undefined): Promise<Response>;
-	/**
 	 * Get taxonomy terms
 	 *
 	 * @since 0.1.0
