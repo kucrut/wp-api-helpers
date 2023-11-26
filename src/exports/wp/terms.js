@@ -1,5 +1,5 @@
-import { make_response_handler, normalize_fetch_args } from '../utils/index.js';
-import { term } from './schema.js';
+import { fetch_and_parse, fetch_data, normalize_fetch_args } from '../utils/index.js';
+import { term_view } from './schema.js';
 
 /**
  * Fetch taxonomy terms
@@ -39,8 +39,15 @@ export function fetch_terms( url, auth, taxonomy, args ) {
  *
  * @since 0.1.0
  *
- * @type {import('$types').HandledFetch<fetch_terms, import('./schema').Term[]>}
+ * @param {string} url WordPress API root URL.
+ * @param {string} taxonomy Taxonomy's rest_base.
+ * @param {string=} auth Authorization header.
+ * @param {import("$types").FetchTermsArgs=} args Request arguments.
+ *
+ * @throws {Error|import('zod').ZodError}
+ *
+ * @return {Promise<import('zod').infer<typeof term_view>[]>} Terms (view) data.
  */
-export async function get_terms( ...args ) {
-	return make_response_handler( async data => term.array().parse( data ) )( await fetch_terms( ...args ) );
+export async function get_terms( url, taxonomy, auth, args ) {
+	return fetch_and_parse( term_view.array(), () => fetch_data( `${ url }/wp/v2/${ taxonomy }`, auth, args ) );
 }

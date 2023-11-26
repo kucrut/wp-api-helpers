@@ -1585,31 +1585,319 @@ declare module '@kucrut/wp-api-helpers' {
 		capabilities: Record<string, string>;
 		show_cloud: boolean;
 	}>>;
-	export const term: z.ZodObject<{
-		count: z.ZodNumber;
-		description: z.ZodString;
+	export const term_embed: z.ZodObject<{
 		id: z.ZodNumber;
 		link: z.ZodString;
 		name: z.ZodString;
-		parent: z.ZodNumber;
 		slug: z.ZodString;
 		taxonomy: z.ZodString;
-		_links: z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
-			embeddable: z.ZodOptional<z.ZodBoolean>;
-			href: z.ZodString;
-			templated: z.ZodOptional<z.ZodBoolean>;
-			type: z.ZodOptional<z.ZodString>;
+		_links: z.ZodObject<{
+			about: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+			collection: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+			self: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+			'wp:post_type': z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
 		}, "strip", z.ZodTypeAny, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			about: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:post_type': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
 		}, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}>, "many">>;
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			about: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:post_type': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}>;
+	}, "strip", z.ZodTypeAny, {
+		link: string;
+		id: number;
+		name: string;
+		slug: string;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			about: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:post_type': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		taxonomy: string;
+	}, {
+		link: string;
+		id: number;
+		name: string;
+		slug: string;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			about: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:post_type': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		taxonomy: string;
+	}>;
+	export const term_view: z.ZodObject<{
+		link: z.ZodString;
+		id: z.ZodNumber;
+		name: z.ZodString;
+		slug: z.ZodString;
+		_links: z.ZodObject<{
+			about: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+			collection: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+			self: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+			'wp:post_type': z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+		}, "strip", z.ZodTypeAny, {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			about: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:post_type': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}, {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			about: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:post_type': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}>;
+		taxonomy: z.ZodString;
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
+		count: z.ZodNumber;
+		description: z.ZodString;
+		parent: z.ZodNumber;
 	}, "strip", z.ZodTypeAny, {
 		link: string;
 		id: number;
@@ -1617,14 +1905,35 @@ declare module '@kucrut/wp-api-helpers' {
 		description: string;
 		parent: number;
 		slug: string;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
-		count: number;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			about: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:post_type': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
 		taxonomy: string;
+		count: number;
+		meta?: any[] | Record<string, any> | undefined;
 	}, {
 		link: string;
 		id: number;
@@ -1632,16 +1941,36 @@ declare module '@kucrut/wp-api-helpers' {
 		description: string;
 		parent: number;
 		slug: string;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
-		count: number;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			about: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:post_type': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
 		taxonomy: string;
+		count: number;
+		meta?: any[] | Record<string, any> | undefined;
 	}>;
-
 	export const user_embed: z.ZodObject<{
 		avatar_urls: z.ZodRecord<z.ZodString, z.ZodString>;
 		description: z.ZodString;
@@ -2397,62 +2726,6 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		message: string;
 	}>>;
-	export type Term = z.infer<z.ZodObject<{
-		count: z.ZodNumber;
-		description: z.ZodString;
-		id: z.ZodNumber;
-		link: z.ZodString;
-		name: z.ZodString;
-		parent: z.ZodNumber;
-		slug: z.ZodString;
-		taxonomy: z.ZodString;
-		_links: z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
-			embeddable: z.ZodOptional<z.ZodBoolean>;
-			href: z.ZodString;
-			templated: z.ZodOptional<z.ZodBoolean>;
-			type: z.ZodOptional<z.ZodString>;
-		}, "strip", z.ZodTypeAny, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}>, "many">>;
-	}, "strip", z.ZodTypeAny, {
-		link: string;
-		id: number;
-		name: string;
-		description: string;
-		parent: number;
-		slug: string;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
-		count: number;
-		taxonomy: string;
-	}, {
-		link: string;
-		id: number;
-		name: string;
-		description: string;
-		parent: number;
-		slug: string;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
-		count: number;
-		taxonomy: string;
-	}>>;
 	/**
 	 * Get taxonomies
 	 *
@@ -2478,22 +2751,19 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @return Fetch response.
 	 */
 	export function fetch_terms(url: string, auth: string, taxonomy?: string | undefined, args?: FetchTermsArgs | undefined): Promise<Response>;
-	export function get_terms(url: string, auth: string, taxonomy?: string | undefined, args?: FetchTermsArgs | undefined): Promise<{
-		link: string;
-		id: number;
-		name: string;
-		description: string;
-		parent: number;
-		slug: string;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
-		count: number;
-		taxonomy: string;
-	}[]>;
+	/**
+	 * Get taxonomy terms
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param url WordPress API root URL.
+	 * @param taxonomy Taxonomy's rest_base.
+	 * @param auth Authorization header.
+	 * @param args Request arguments.
+	 *
+	 * @return Terms (view) data.
+	 */
+	export function get_terms(url: string, taxonomy: string, auth?: string | undefined, args?: FetchTermsArgs | undefined): Promise<import('zod').infer<typeof term_view>[]>;
 	/**
 	 * Get self user data
 	 *
