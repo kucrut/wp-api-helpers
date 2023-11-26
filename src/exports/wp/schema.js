@@ -158,42 +158,31 @@ export const term = z.object( {
 
 /** @typedef {z.infer<term>} Term */
 
-export const user_edit = z.object( {
-	meta,
+export const user_embed = z.object( {
 	avatar_urls: z.record( z.string().url() ),
-	capabilities: z.record( z.boolean() ),
 	description: z.string(),
-	email: z.string().email(),
-	extra_capabilities: z.record( z.boolean() ),
-	first_name: z.string(),
 	id: z.number().min( 1 ),
-	last_name: z.string(),
-	link: z.string().url(),
-	locale: z.string(),
 	name: z.string().min( 1 ),
-	nickname: z.string(),
-	registered_date: z.string().datetime( { offset: true } ),
-	roles: z.string().array(),
-	slug: z.string(),
 	url: z.string().url(),
-	username: z.string(),
+	slug: z.string(),
 	_links: z.object( {
 		self: link_item,
 		collection: link_item,
 	} ),
 } );
 
-export const user_view = user_edit.omit( {
-	capabilities: true,
-	email: true,
-	extra_capabilities: true,
-	first_name: true,
-	last_name: true,
-	locale: true,
-	nickname: true,
-	registered_date: true,
-	roles: true,
-	username: true,
-} );
+export const user_view = user_embed.extend( { meta } );
 
-export const user_embed = user_view.omit( { meta: true } );
+export const user_edit = user_view.extend( {
+	capabilities: z.record( z.boolean() ),
+	email: z.string().email(),
+	extra_capabilities: z.record( z.boolean() ),
+	first_name: z.string(),
+	last_name: z.string(),
+	link: z.string().url(),
+	locale: z.string(),
+	nickname: z.string(),
+	registered_date: z.string().datetime( { offset: true } ),
+	roles: z.string().array(),
+	username: z.string(),
+} );
