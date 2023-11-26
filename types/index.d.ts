@@ -190,7 +190,6 @@ declare module '@kucrut/wp-api-helpers' {
 			type?: string | undefined;
 		}[]>;
 	}>;
-
 	export const jwt_auth_data: z.ZodObject<{
 		user_email: z.ZodString;
 		user_display_name: z.ZodString;
@@ -2319,95 +2318,6 @@ declare module '@kucrut/wp-api-helpers' {
 		roles: string[];
 		meta?: any[] | Record<string, any> | undefined;
 	}>;
-	export type Info = z.infer<z.ZodObject<{
-		desription: z.ZodString;
-		gmt_offset: z.ZodNumber;
-		home: z.ZodString;
-		name: z.ZodString;
-		namespaces: z.ZodArray<z.ZodString, "many">;
-		site_icon_url: z.ZodString;
-		site_icon: z.ZodNumber;
-		site_logo: z.ZodNumber;
-		timezone_string: z.ZodString;
-		url: z.ZodString;
-		authentication: z.ZodRecord<z.ZodString, z.ZodObject<{
-			endpoints: z.ZodObject<{
-				authorization: z.ZodString;
-			}, "strip", z.ZodTypeAny, {
-				authorization: string;
-			}, {
-				authorization: string;
-			}>;
-		}, "strip", z.ZodTypeAny, {
-			endpoints: {
-				authorization: string;
-			};
-		}, {
-			endpoints: {
-				authorization: string;
-			};
-		}>>;
-		_links: z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
-			embeddable: z.ZodOptional<z.ZodBoolean>;
-			href: z.ZodString;
-			templated: z.ZodOptional<z.ZodBoolean>;
-			type: z.ZodOptional<z.ZodString>;
-		}, "strip", z.ZodTypeAny, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}>, "many">>;
-	}, "strip", z.ZodTypeAny, {
-		url: string;
-		name: string;
-		home: string;
-		desription: string;
-		gmt_offset: number;
-		namespaces: string[];
-		site_icon_url: string;
-		site_icon: number;
-		site_logo: number;
-		timezone_string: string;
-		authentication: Record<string, {
-			endpoints: {
-				authorization: string;
-			};
-		}>;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
-	}, {
-		url: string;
-		name: string;
-		home: string;
-		desription: string;
-		gmt_offset: number;
-		namespaces: string[];
-		site_icon_url: string;
-		site_icon: number;
-		site_logo: number;
-		timezone_string: string;
-		authentication: Record<string, {
-			endpoints: {
-				authorization: string;
-			};
-		}>;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
-	}>>;
 	export type Media = z.infer<z.ZodObject<{
 		link: z.ZodString;
 		type: z.ZodString;

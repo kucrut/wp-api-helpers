@@ -63,8 +63,6 @@ export const info = z.object( {
 	_links: z.record( link_item ),
 } );
 
-/** @typedef {z.infer<info>} Info */
-
 export const jwt_auth_data = z.object( {
 	user_email: z.string().email(),
 	user_display_name: z.string(),
