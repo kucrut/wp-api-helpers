@@ -195,16 +195,20 @@ export const taxonomies_embed = z.record( taxonomy_embed );
 export const taxonomies_view = z.record( taxonomy_view );
 export const taxonomies_edit = z.record( taxonomy_edit );
 
-export const term = z.object( {
-	count: z.number(),
-	description: z.string(),
+export const term_embed = z.object( {
 	id: z.number().min( 1 ),
 	link: z.string(),
 	name: z.string(),
-	parent: z.number(),
 	slug: z.string(),
 	taxonomy: z.string(),
 	_links: z.record( link_item ),
+} );
+
+export const term_view = term_embed.extend( {
+	meta,
+	count: z.number(),
+	description: z.string(),
+	parent: z.number(),
 } );
 
 export const user_embed = z.object( {
