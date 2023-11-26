@@ -207,8 +207,6 @@ export const term = z.object( {
 	_links: z.record( link_item ),
 } );
 
-/** @typedef {z.infer<term>} Term */
-
 export const user_embed = z.object( {
 	avatar_urls: z.record( z.string().url() ),
 	description: z.string(),
