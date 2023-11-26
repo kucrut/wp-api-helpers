@@ -128,18 +128,21 @@ export const rest_error = z.object( {
 
 /** @typedef {z.infer<rest_error>} Rest_Error */
 
-export const taxonomy = z.object( {
-	hierarchical: z.boolean(),
-	description: z.string(),
+export const taxonomy_embed = z.object( {
 	name: z.string(),
 	rest_base: z.string(),
 	rest_namespace: z.string(),
 	slug: z.string(),
-	types: z.string().array(),
 	_links: z.object( {
 		'collection': link_item,
 		'wp:items': link_item,
 	} ),
+} );
+
+export const taxonomy_view = taxonomy_embed.extend( {
+	description: z.string(),
+	hierarchical: z.boolean(),
+	types: z.string().array(),
 } );
 
 export const term = z.object( {
