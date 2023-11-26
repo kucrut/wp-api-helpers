@@ -17,7 +17,7 @@ describe( 'JWT Login', () => {
 			token: 'token',
 		};
 
-		const make_request = () => get_jwt_auth( { url, username, password } );
+		const make_request = () => get_jwt_auth( url, username, password );
 		const fake_response = () => {
 			fetch.mockReturnValueOnce(
 				new Response( JSON.stringify( data ), {
