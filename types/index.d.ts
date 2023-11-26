@@ -1,21 +1,6 @@
 declare module '@kucrut/wp-api-helpers' {
 	import type { z } from 'zod';
 	/**
-	 * Fetch JWT authentication
-	 *
-	 * @since 0.1.0
-	 *
-	 * @see {@link https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/}
-	 *
-	 * @param {Object} credentials Credentials.
-	 * @return Fetch response.
-	 */
-	export function fetch_jwt_auth(credentials: {
-		url: string;
-		username: string;
-		password: string;
-	}): Promise<Response>;
-	/**
 	 * Get JWT authentication
 	 *
 	 * @since 0.1.0
