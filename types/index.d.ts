@@ -2454,18 +2454,6 @@ declare module '@kucrut/wp-api-helpers' {
 		taxonomy: string;
 	}>>;
 	/**
-	 * Fetch taxonomies
-	 *
-	 * @since 0.1.0
-	 *
-	 * @param url WordPress API root URL.
-	 * @param auth Autorization header.
-	 * @param args Request arguments.
-	 *
-	 * @return Fetch response.
-	 */
-	export function fetch_taxonomies(url: string, auth: string, args?: FetchTaxonomiesArgs | undefined): Promise<Response>;
-	/**
 	 * Get taxonomies
 	 *
 	 * @since 0.1.0
