@@ -1,5 +1,5 @@
 import { jwt_auth_data, jwt_valid_token } from './schema.js';
-import { fetch_and_parse, make_response_handler } from '../utils/index.js';
+import { fetch_and_parse } from '../utils/index.js';
 
 /**
  * Get JWT authentication
@@ -51,10 +51,18 @@ export function fetch_jwt_validate_token( url, token ) {
  *
  * @since 0.1.0
  *
- * @type {import('$types').HandledFetch<fetch_jwt_validate_token, import('./schema').JWT_Valid_Token>}
+ * @param {string} url WordPress API root URL.
+ * @param {string} token JWT token.
+ *
+ * @return {Promise<import('zod').infer<typeof jwt_valid_token>>} Valid token data.
  */
-export async function get_jwt_validate_token( ...args ) {
-	return make_response_handler( async data => jwt_valid_token.parse( data ) )(
-		await fetch_jwt_validate_token( ...args ),
-	);
+export async function get_jwt_validate_token( url, token ) {
+	return fetch_and_parse( jwt_valid_token, () => {
+		return fetch( `${ url }/jwt-auth/v1/token/validate`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${ token }`,
+			},
+		} );
+	} );
 }
