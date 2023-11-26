@@ -201,7 +201,12 @@ export const term_embed = z.object( {
 	name: z.string(),
 	slug: z.string(),
 	taxonomy: z.string(),
-	_links: z.record( link_item ),
+	_links: z.object( {
+		'about': link_item,
+		'collection': link_item,
+		'self': link_item,
+		'wp:post_type': link_item,
+	} ),
 } );
 
 export const term_view = term_embed.extend( {
