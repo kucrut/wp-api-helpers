@@ -79,8 +79,6 @@ export const jwt_valid_token = z.object( {
 	} ),
 } );
 
-/** @typedef {z.infer<jwt_valid_token>} JWT_Valid_Token */
-
 export const media = post_base.extend( {
 	alt_text: z.string(),
 	caption: renderable_item,

@@ -227,7 +227,6 @@ declare module '@kucrut/wp-api-helpers' {
 			status: number;
 		};
 	}>;
-
 	export const media: z.ZodObject<{
 		link: z.ZodString;
 		type: z.ZodString;
@@ -2408,26 +2407,6 @@ declare module '@kucrut/wp-api-helpers' {
 			templated?: boolean | undefined;
 			type?: string | undefined;
 		}[]>;
-	}>>;
-	export type JWT_Valid_Token = z.infer<z.ZodObject<{
-		code: z.ZodEffects<z.ZodString, string, string>;
-		data: z.ZodObject<{
-			status: z.ZodEffects<z.ZodNumber, number, number>;
-		}, "strip", z.ZodTypeAny, {
-			status: number;
-		}, {
-			status: number;
-		}>;
-	}, "strip", z.ZodTypeAny, {
-		code: string;
-		data: {
-			status: number;
-		};
-	}, {
-		code: string;
-		data: {
-			status: number;
-		};
 	}>>;
 	export type Media = z.infer<z.ZodObject<{
 		link: z.ZodString;
