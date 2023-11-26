@@ -15,16 +15,18 @@ declare module '@kucrut/wp-api-helpers' {
 		username: string;
 		password: string;
 	}): Promise<Response>;
-	export function get_jwt_auth(credentials: {
-		url: string;
-		username: string;
-		password: string;
-	}): Promise<{
-		user_email: string;
-		user_display_name: string;
-		user_nicename: string;
-		token: string;
-	}>;
+	/**
+	 * Get JWT authentication
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param url WordPress API root URL.
+	 * @param username Username or email.
+	 * @param password Password.
+	 *
+	 * @return Auth data.
+	 */
+	export function get_jwt_auth(url: string, username: string, password: string): Promise<import('zod').infer<typeof jwt_auth_data>>;
 	/**
 	 * Validate JWT token (fetch only)
 	 *
@@ -226,7 +228,6 @@ declare module '@kucrut/wp-api-helpers' {
 		user_nicename: string;
 		token: string;
 	}>;
-
 	export const jwt_valid_token: z.ZodObject<{
 		code: z.ZodEffects<z.ZodString, string, string>;
 		data: z.ZodObject<{
@@ -2428,22 +2429,6 @@ declare module '@kucrut/wp-api-helpers' {
 			templated?: boolean | undefined;
 			type?: string | undefined;
 		}[]>;
-	}>>;
-	export type JWT_Auth_Data = z.infer<z.ZodObject<{
-		user_email: z.ZodString;
-		user_display_name: z.ZodString;
-		user_nicename: z.ZodString;
-		token: z.ZodString;
-	}, "strip", z.ZodTypeAny, {
-		user_email: string;
-		user_display_name: string;
-		user_nicename: string;
-		token: string;
-	}, {
-		user_email: string;
-		user_display_name: string;
-		user_nicename: string;
-		token: string;
 	}>>;
 	export type JWT_Valid_Token = z.infer<z.ZodObject<{
 		code: z.ZodEffects<z.ZodString, string, string>;
