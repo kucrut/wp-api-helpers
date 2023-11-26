@@ -142,8 +142,6 @@ export const taxonomy = z.object( {
 	} ),
 } );
 
-/** @typedef {z.infer<taxonomy>} Taxonomy */
-
 export const term = z.object( {
 	count: z.number(),
 	description: z.string(),
