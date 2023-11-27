@@ -128,10 +128,19 @@ export const media_embed = post_embed
 		source_url: z.string().url(),
 	} );
 
-export const media = post_view.extend( {
-	description: renderable_item,
-	post: z.number().nullable(),
-} );
+export const media_view = z
+	.object( {
+		description: renderable_item,
+		post: z.number().nullable(),
+	} )
+	.merge( media_embed )
+	.merge( post_view )
+	.omit( {
+		content: true,
+		menu_order: true,
+		sticky: true,
+		template: true,
+	} );
 
 export const rest_error = z.object( {
 	code: z.string(),
