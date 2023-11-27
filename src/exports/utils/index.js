@@ -16,7 +16,10 @@ import { ZodError } from 'zod';
  * @return {ReturnType<import('$types').HandleResponse<import('zod').infer<T>>>} Parsed data.
  */
 export async function fetch_and_parse( schema, fetcher ) {
-	return make_response_handler( async data => schema.parse( data ) )( await fetcher() );
+	const handler = make_response_handler( async data => schema.parse( data ) );
+	const response = await fetcher();
+
+	return handler( response );
 }
 
 /**
