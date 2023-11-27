@@ -665,6 +665,229 @@ declare module '@kucrut/wp-api-helpers' {
 		menu_order?: number | undefined;
 		sticky?: boolean | undefined;
 	}>;
+	export const media_embed: z.ZodObject<{
+		link: z.ZodString;
+		type: z.ZodString;
+		id: z.ZodNumber;
+		title: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		date: z.ZodDate;
+		_links: z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
+			embeddable: z.ZodOptional<z.ZodBoolean>;
+			href: z.ZodString;
+			templated: z.ZodOptional<z.ZodBoolean>;
+			type: z.ZodOptional<z.ZodString>;
+		}, "strip", z.ZodTypeAny, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}>, "many">>;
+		author: z.ZodNumber;
+		slug: z.ZodString;
+		alt_text: z.ZodString;
+		caption: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		media_type: z.ZodString;
+		media_details: z.ZodObject<{
+			bitrate: z.ZodOptional<z.ZodNumber>;
+			dataformat: z.ZodOptional<z.ZodString>;
+			file: z.ZodOptional<z.ZodString>;
+			fileformat: z.ZodOptional<z.ZodString>;
+			filesize: z.ZodNumber;
+			height: z.ZodOptional<z.ZodNumber>;
+			image_meta: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+			length: z.ZodOptional<z.ZodNumber>;
+			length_formatted: z.ZodOptional<z.ZodString>;
+			width: z.ZodOptional<z.ZodNumber>;
+			sizes: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
+				file: z.ZodString;
+				height: z.ZodNumber;
+				mime_type: z.ZodString;
+				source_url: z.ZodString;
+				width: z.ZodNumber;
+			}, "strip", z.ZodTypeAny, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}>>>;
+		}, "strip", z.ZodTypeAny, {
+			filesize: number;
+			bitrate?: number | undefined;
+			dataformat?: string | undefined;
+			file?: string | undefined;
+			fileformat?: string | undefined;
+			height?: number | undefined;
+			image_meta?: Record<string, any> | undefined;
+			length?: number | undefined;
+			length_formatted?: string | undefined;
+			width?: number | undefined;
+			sizes?: Record<string, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}> | undefined;
+		}, {
+			filesize: number;
+			bitrate?: number | undefined;
+			dataformat?: string | undefined;
+			file?: string | undefined;
+			fileformat?: string | undefined;
+			height?: number | undefined;
+			image_meta?: Record<string, any> | undefined;
+			length?: number | undefined;
+			length_formatted?: string | undefined;
+			width?: number | undefined;
+			sizes?: Record<string, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}> | undefined;
+		}>;
+		mime_type: z.ZodString;
+		source_url: z.ZodString;
+	}, "strip", z.ZodTypeAny, {
+		link: string;
+		type: string;
+		id: number;
+		caption: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		title: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		date: Date;
+		mime_type: string;
+		source_url: string;
+		_links: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]>;
+		author: number;
+		slug: string;
+		alt_text: string;
+		media_type: string;
+		media_details: {
+			filesize: number;
+			bitrate?: number | undefined;
+			dataformat?: string | undefined;
+			file?: string | undefined;
+			fileformat?: string | undefined;
+			height?: number | undefined;
+			image_meta?: Record<string, any> | undefined;
+			length?: number | undefined;
+			length_formatted?: string | undefined;
+			width?: number | undefined;
+			sizes?: Record<string, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}> | undefined;
+		};
+	}, {
+		link: string;
+		type: string;
+		id: number;
+		caption: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		title: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		date: Date;
+		mime_type: string;
+		source_url: string;
+		_links: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]>;
+		author: number;
+		slug: string;
+		alt_text: string;
+		media_type: string;
+		media_details: {
+			filesize: number;
+			bitrate?: number | undefined;
+			dataformat?: string | undefined;
+			file?: string | undefined;
+			fileformat?: string | undefined;
+			height?: number | undefined;
+			image_meta?: Record<string, any> | undefined;
+			length?: number | undefined;
+			length_formatted?: string | undefined;
+			width?: number | undefined;
+			sizes?: Record<string, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}> | undefined;
+		};
+	}>;
 	export const media: z.ZodObject<{
 		link: z.ZodString;
 		type: z.ZodString;
@@ -759,23 +982,6 @@ declare module '@kucrut/wp-api-helpers' {
 			rendered: string;
 			raw?: string | undefined;
 		}>;
-		alt_text: z.ZodString;
-		caption: z.ZodObject<{
-			block_version: z.ZodOptional<z.ZodNumber>;
-			protected: z.ZodOptional<z.ZodBoolean>;
-			raw: z.ZodOptional<z.ZodString>;
-			rendered: z.ZodString;
-		}, "strip", z.ZodTypeAny, {
-			rendered: string;
-			block_version?: number | undefined;
-			protected?: boolean | undefined;
-			raw?: string | undefined;
-		}, {
-			rendered: string;
-			block_version?: number | undefined;
-			protected?: boolean | undefined;
-			raw?: string | undefined;
-		}>;
 		description: z.ZodObject<{
 			block_version: z.ZodOptional<z.ZodNumber>;
 			protected: z.ZodOptional<z.ZodBoolean>;
@@ -792,88 +998,12 @@ declare module '@kucrut/wp-api-helpers' {
 			protected?: boolean | undefined;
 			raw?: string | undefined;
 		}>;
-		media_type: z.ZodString;
-		mime_type: z.ZodString;
 		post: z.ZodNullable<z.ZodNumber>;
-		source_url: z.ZodString;
-		media_details: z.ZodObject<{
-			bitrate: z.ZodOptional<z.ZodNumber>;
-			dataformat: z.ZodOptional<z.ZodString>;
-			file: z.ZodOptional<z.ZodString>;
-			fileformat: z.ZodOptional<z.ZodString>;
-			filesize: z.ZodNumber;
-			height: z.ZodOptional<z.ZodNumber>;
-			image_meta: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
-			length: z.ZodOptional<z.ZodNumber>;
-			length_formatted: z.ZodOptional<z.ZodString>;
-			width: z.ZodOptional<z.ZodNumber>;
-			sizes: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
-				file: z.ZodString;
-				height: z.ZodNumber;
-				mime_type: z.ZodString;
-				source_url: z.ZodString;
-				width: z.ZodNumber;
-			}, "strip", z.ZodTypeAny, {
-				file: string;
-				height: number;
-				width: number;
-				mime_type: string;
-				source_url: string;
-			}, {
-				file: string;
-				height: number;
-				width: number;
-				mime_type: string;
-				source_url: string;
-			}>>>;
-		}, "strip", z.ZodTypeAny, {
-			filesize: number;
-			bitrate?: number | undefined;
-			dataformat?: string | undefined;
-			file?: string | undefined;
-			fileformat?: string | undefined;
-			height?: number | undefined;
-			image_meta?: Record<string, any> | undefined;
-			length?: number | undefined;
-			length_formatted?: string | undefined;
-			width?: number | undefined;
-			sizes?: Record<string, {
-				file: string;
-				height: number;
-				width: number;
-				mime_type: string;
-				source_url: string;
-			}> | undefined;
-		}, {
-			filesize: number;
-			bitrate?: number | undefined;
-			dataformat?: string | undefined;
-			file?: string | undefined;
-			fileformat?: string | undefined;
-			height?: number | undefined;
-			image_meta?: Record<string, any> | undefined;
-			length?: number | undefined;
-			length_formatted?: string | undefined;
-			width?: number | undefined;
-			sizes?: Record<string, {
-				file: string;
-				height: number;
-				width: number;
-				mime_type: string;
-				source_url: string;
-			}> | undefined;
-		}>;
 	}, "strip", z.ZodTypeAny, {
 		link: string;
 		type: string;
 		id: number;
 		content: {
-			rendered: string;
-			block_version?: number | undefined;
-			protected?: boolean | undefined;
-			raw?: string | undefined;
-		};
-		caption: {
 			rendered: string;
 			block_version?: number | undefined;
 			protected?: boolean | undefined;
@@ -894,8 +1024,6 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		status: string;
 		date: Date;
-		mime_type: string;
-		source_url: string;
 		_links: Record<string, {
 			href: string;
 			embeddable?: boolean | undefined;
@@ -920,28 +1048,7 @@ declare module '@kucrut/wp-api-helpers' {
 			rendered: string;
 			raw?: string | undefined;
 		};
-		alt_text: string;
-		media_type: string;
 		post: number | null;
-		media_details: {
-			filesize: number;
-			bitrate?: number | undefined;
-			dataformat?: string | undefined;
-			file?: string | undefined;
-			fileformat?: string | undefined;
-			height?: number | undefined;
-			image_meta?: Record<string, any> | undefined;
-			length?: number | undefined;
-			length_formatted?: string | undefined;
-			width?: number | undefined;
-			sizes?: Record<string, {
-				file: string;
-				height: number;
-				width: number;
-				mime_type: string;
-				source_url: string;
-			}> | undefined;
-		};
 		meta?: any[] | Record<string, any> | undefined;
 		parent?: number | undefined;
 		format?: string | undefined;
@@ -957,12 +1064,6 @@ declare module '@kucrut/wp-api-helpers' {
 			protected?: boolean | undefined;
 			raw?: string | undefined;
 		};
-		caption: {
-			rendered: string;
-			block_version?: number | undefined;
-			protected?: boolean | undefined;
-			raw?: string | undefined;
-		};
 		template: string;
 		title: {
 			rendered: string;
@@ -978,8 +1079,6 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		status: string;
 		date: Date;
-		mime_type: string;
-		source_url: string;
 		_links: Record<string, {
 			href: string;
 			embeddable?: boolean | undefined;
@@ -1004,28 +1103,7 @@ declare module '@kucrut/wp-api-helpers' {
 			rendered: string;
 			raw?: string | undefined;
 		};
-		alt_text: string;
-		media_type: string;
 		post: number | null;
-		media_details: {
-			filesize: number;
-			bitrate?: number | undefined;
-			dataformat?: string | undefined;
-			file?: string | undefined;
-			fileformat?: string | undefined;
-			height?: number | undefined;
-			image_meta?: Record<string, any> | undefined;
-			length?: number | undefined;
-			length_formatted?: string | undefined;
-			width?: number | undefined;
-			sizes?: Record<string, {
-				file: string;
-				height: number;
-				width: number;
-				mime_type: string;
-				source_url: string;
-			}> | undefined;
-		};
 		meta?: any[] | Record<string, any> | undefined;
 		parent?: number | undefined;
 		format?: string | undefined;

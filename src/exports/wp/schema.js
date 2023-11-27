@@ -102,27 +102,35 @@ export const post_edit = post_view.extend( {
 	generated_slug: z.string(),
 } );
 
+export const media_embed = post_embed
+	.omit( {
+		excerpt: true,
+		featured_media: true,
+	} )
+	.extend( {
+		alt_text: z.string(),
+		caption: renderable_item,
+		media_type: z.string(),
+		media_details: z.object( {
+			bitrate: z.number().optional(), // Video.
+			dataformat: z.string().optional(), // Video.
+			file: z.string().optional(), // Image.
+			fileformat: z.string().optional(), // Video.
+			filesize: z.number(), // Image.
+			height: z.number().optional(), // Image.
+			image_meta: z.record( z.any() ).optional(), // Image.
+			length: z.number().optional(), // Video.
+			length_formatted: z.string().optional(), // Video.
+			width: z.number().optional(), // Image.
+			sizes: z.record( image_size ).optional(), // Image.
+		} ),
+		mime_type: z.string(),
+		source_url: z.string().url(),
+	} );
+
 export const media = post_view.extend( {
-	alt_text: z.string(),
-	caption: renderable_item,
 	description: renderable_item,
-	media_type: z.string(),
-	mime_type: z.string(),
 	post: z.number().nullable(),
-	source_url: z.string().url(),
-	media_details: z.object( {
-		bitrate: z.number().optional(), // Video.
-		dataformat: z.string().optional(), // Video.
-		file: z.string().optional(), // Image.
-		fileformat: z.string().optional(), // Video.
-		filesize: z.number(), // Image.
-		height: z.number().optional(), // Image.
-		image_meta: z.record( z.any() ).optional(), // Image.
-		length: z.number().optional(), // Video.
-		length_formatted: z.string().optional(), // Video.
-		width: z.number().optional(), // Image.
-		sizes: z.record( image_size ).optional(), // Image.
-	} ),
 } );
 
 export const rest_error = z.object( {
