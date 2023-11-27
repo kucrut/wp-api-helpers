@@ -11,7 +11,7 @@ import { ZodError } from 'zod';
  * @param {T} schema Zod schema to parse the response with.
  * @param {() => ReturnType<typeof fetch>} fetcher Fetch function.
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|ZodError}
  *
  * @return {ReturnType<import('$types').HandleResponse<import('zod').infer<T>>>} Parsed data.
  */
