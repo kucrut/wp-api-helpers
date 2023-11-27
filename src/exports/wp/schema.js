@@ -146,6 +146,8 @@ export const media_view = z
 		sticky: true,
 	} );
 
+export const media_edit = media_view.merge( post_edit_base );
+
 export const rest_error = z.object( {
 	code: z.string(),
 	message: z.string(),
