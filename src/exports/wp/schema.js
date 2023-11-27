@@ -24,26 +24,42 @@ const link_item = z.array(
 const meta = z.record( z.any() ).or( z.array( z.any() ) ).optional();
 
 const renderable_item = z.object( {
+	protected: z.boolean().optional(),
 	raw: z.string().optional(),
 	rendered: z.string(),
 } );
 
-const post_base = z.object( {
-	meta,
+export const post_embed = z.object( {
 	author: z.number().min( 1 ),
-	comment_status: comment_ping_status,
-	date_gmt: date_item,
 	date: date_item,
+	featured_media: z.number(),
 	id: z.number(),
 	link: z.string().url(),
+	slug: z.string(),
+	title: renderable_item,
+	type: z.string(),
+	_links: z.object( {
+		'about': link_item,
+		'author': link_item,
+		'collection': link_item,
+		'predecessor-version': link_item,
+		'replies': link_item,
+		'self': link_item,
+		'version-history': link_item,
+		'wp:attachment': link_item,
+		'wp:term': link_item.optional(),
+	} ),
+} );
+
+const post_base = z.object( {
+	meta,
+	comment_status: comment_ping_status,
+	date_gmt: date_item,
 	modified: date_item,
 	modified_gmt: date_item,
 	ping_status: comment_ping_status,
-	slug: z.string(),
 	status: z.string(),
 	template: z.string(),
-	title: renderable_item,
-	type: z.string(),
 	guid: z.object( {
 		raw: z.string().url().optional(),
 		rendered: z.string().url(),
