@@ -25,6 +25,8 @@ export async function fetch_and_parse( schema, fetcher ) {
 /**
  * Fetch data
  *
+ * @since 0.1.0
+ *
  * @param {string} endpoint Data endpoint.
  * @param {string=} auth Authentication header.
  * @param {Record<string,any>=} args Arguments.

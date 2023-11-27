@@ -3498,6 +3498,8 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	/**
 	 * Fetch data
 	 *
+	 * @since 0.1.0
+	 *
 	 * @param endpoint Data endpoint.
 	 * @param auth Authentication header.
 	 * @param args Arguments.
