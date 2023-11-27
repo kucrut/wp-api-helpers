@@ -136,11 +136,12 @@ export const media_view = z
 		description: renderable_item,
 		post: z.number().nullable(),
 	} )
-	.merge( media_embed )
 	.merge( post_view )
+	.merge( media_embed )
 	.omit( {
 		content: true,
 		excerpt: true,
+		featured_media: true,
 		menu_order: true,
 		parent: true,
 		sticky: true,
