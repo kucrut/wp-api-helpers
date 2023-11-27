@@ -51,14 +51,19 @@ export const post_embed = z.object( {
 	} ),
 } );
 
-const post_base = z.object( {
+export const post_view = z.object( {
 	meta,
 	comment_status: comment_ping_status,
+	content: renderable_item,
 	date_gmt: date_item,
+	format: z.string().optional(),
+	menu_order: z.number().optional(),
 	modified: date_item,
 	modified_gmt: date_item,
+	parent: z.number().optional(),
 	ping_status: comment_ping_status,
 	status: z.string(),
+	sticky: z.boolean().optional(),
 	template: z.string(),
 	guid: z.object( {
 		raw: z.string().url().optional(),
@@ -101,7 +106,7 @@ export const jwt_valid_token = z.object( {
 	} ),
 } );
 
-export const media = post_base.extend( {
+export const media = post_view.extend( {
 	alt_text: z.string(),
 	caption: renderable_item,
 	description: renderable_item,

@@ -462,6 +462,87 @@ declare module '@kucrut/wp-api-helpers' {
 			}[] | undefined;
 		};
 	}>;
+	export const post_view: z.ZodObject<{
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
+		comment_status: z.ZodEnum<["open", "closed"]>;
+		content: z.ZodObject<{
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		date_gmt: z.ZodDate;
+		format: z.ZodOptional<z.ZodString>;
+		menu_order: z.ZodOptional<z.ZodNumber>;
+		modified: z.ZodDate;
+		modified_gmt: z.ZodDate;
+		parent: z.ZodOptional<z.ZodNumber>;
+		ping_status: z.ZodEnum<["open", "closed"]>;
+		status: z.ZodString;
+		sticky: z.ZodOptional<z.ZodBoolean>;
+		template: z.ZodString;
+		guid: z.ZodObject<{
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			raw?: string | undefined;
+		}>;
+	}, "strip", z.ZodTypeAny, {
+		content: {
+			rendered: string;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		template: string;
+		status: string;
+		comment_status: "closed" | "open";
+		date_gmt: Date;
+		modified: Date;
+		modified_gmt: Date;
+		ping_status: "closed" | "open";
+		guid: {
+			rendered: string;
+			raw?: string | undefined;
+		};
+		meta?: any[] | Record<string, any> | undefined;
+		format?: string | undefined;
+		menu_order?: number | undefined;
+		parent?: number | undefined;
+		sticky?: boolean | undefined;
+	}, {
+		content: {
+			rendered: string;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		template: string;
+		status: string;
+		comment_status: "closed" | "open";
+		date_gmt: Date;
+		modified: Date;
+		modified_gmt: Date;
+		ping_status: "closed" | "open";
+		guid: {
+			rendered: string;
+			raw?: string | undefined;
+		};
+		meta?: any[] | Record<string, any> | undefined;
+		format?: string | undefined;
+		menu_order?: number | undefined;
+		parent?: number | undefined;
+		sticky?: boolean | undefined;
+	}>;
 	export const info: z.ZodObject<{
 		desription: z.ZodString;
 		gmt_offset: z.ZodNumber;
@@ -588,14 +669,31 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 	}>;
 	export const media: z.ZodObject<{
+		content: z.ZodObject<{
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
 		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
 		template: z.ZodString;
+		parent: z.ZodOptional<z.ZodNumber>;
 		status: z.ZodString;
 		comment_status: z.ZodEnum<["open", "closed"]>;
 		date_gmt: z.ZodDate;
+		format: z.ZodOptional<z.ZodString>;
+		menu_order: z.ZodOptional<z.ZodNumber>;
 		modified: z.ZodDate;
 		modified_gmt: z.ZodDate;
 		ping_status: z.ZodEnum<["open", "closed"]>;
+		sticky: z.ZodOptional<z.ZodBoolean>;
 		guid: z.ZodObject<{
 			raw: z.ZodOptional<z.ZodString>;
 			rendered: z.ZodString;
@@ -705,6 +803,11 @@ declare module '@kucrut/wp-api-helpers' {
 			}> | undefined;
 		}>;
 	}, "strip", z.ZodTypeAny, {
+		content: {
+			rendered: string;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
 		caption: {
 			rendered: string;
 			protected?: boolean | undefined;
@@ -751,7 +854,16 @@ declare module '@kucrut/wp-api-helpers' {
 			}> | undefined;
 		};
 		meta?: any[] | Record<string, any> | undefined;
+		parent?: number | undefined;
+		format?: string | undefined;
+		menu_order?: number | undefined;
+		sticky?: boolean | undefined;
 	}, {
+		content: {
+			rendered: string;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
 		caption: {
 			rendered: string;
 			protected?: boolean | undefined;
@@ -798,6 +910,10 @@ declare module '@kucrut/wp-api-helpers' {
 			}> | undefined;
 		};
 		meta?: any[] | Record<string, any> | undefined;
+		parent?: number | undefined;
+		format?: string | undefined;
+		menu_order?: number | undefined;
+		sticky?: boolean | undefined;
 	}>;
 	export const rest_error: z.ZodObject<{
 		code: z.ZodString;
