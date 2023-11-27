@@ -68,6 +68,7 @@ export const jwt_valid_token = z.object( {
 export const post_embed = z.object( {
 	author: z.number().min( 1 ),
 	date: date_item,
+	excerpt: renderable_item,
 	featured_media: z.number(),
 	id: z.number(),
 	link: z.string().url(),
