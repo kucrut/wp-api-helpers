@@ -140,7 +140,9 @@ export const media_view = z
 	.merge( post_view )
 	.omit( {
 		content: true,
+		excerpt: true,
 		menu_order: true,
+		parent: true,
 		sticky: true,
 	} );
 

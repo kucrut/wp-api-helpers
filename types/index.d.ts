@@ -1089,7 +1089,7 @@ declare module '@kucrut/wp-api-helpers' {
 			rendered: string;
 			raw?: string | undefined;
 		}>;
-	}, "content" | "menu_order" | "sticky">, "strip", z.ZodTypeAny, {
+	}, "content" | "parent" | "excerpt" | "menu_order" | "sticky">, "strip", z.ZodTypeAny, {
 		link: string;
 		type: string;
 		id: number;
@@ -1123,12 +1123,6 @@ declare module '@kucrut/wp-api-helpers' {
 			type?: string | undefined;
 		}[]>;
 		author: number;
-		excerpt: {
-			rendered: string;
-			block_version?: number | undefined;
-			protected?: boolean | undefined;
-			raw?: string | undefined;
-		};
 		featured_media: number;
 		slug: string;
 		comment_status: "closed" | "open";
@@ -1163,7 +1157,6 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		post: number | null;
 		meta?: any[] | Record<string, any> | undefined;
-		parent?: number | undefined;
 		format?: string | undefined;
 	}, {
 		link: string;
@@ -1199,12 +1192,6 @@ declare module '@kucrut/wp-api-helpers' {
 			type?: string | undefined;
 		}[]>;
 		author: number;
-		excerpt: {
-			rendered: string;
-			block_version?: number | undefined;
-			protected?: boolean | undefined;
-			raw?: string | undefined;
-		};
 		featured_media: number;
 		slug: string;
 		comment_status: "closed" | "open";
@@ -1239,7 +1226,6 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		post: number | null;
 		meta?: any[] | Record<string, any> | undefined;
-		parent?: number | undefined;
 		format?: string | undefined;
 	}>;
 	export const rest_error: z.ZodObject<{
