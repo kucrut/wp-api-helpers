@@ -110,8 +110,6 @@ export const media = post_base.extend( {
 	} ),
 } );
 
-/** @typedef {z.infer<media>} Media */
-
 export const rest_error = z.object( {
 	code: z.string(),
 	message: z.string(),
