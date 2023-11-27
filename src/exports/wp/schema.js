@@ -39,17 +39,7 @@ export const post_embed = z.object( {
 	slug: z.string(),
 	title: renderable_item,
 	type: z.string(),
-	_links: z.object( {
-		'about': link_item,
-		'author': link_item,
-		'collection': link_item,
-		'predecessor-version': link_item,
-		'replies': link_item,
-		'self': link_item,
-		'version-history': link_item,
-		'wp:attachment': link_item,
-		'wp:term': link_item.optional(),
-	} ),
+	_links: z.record( link_item ),
 } );
 
 export const post_view = post_embed.extend( {
