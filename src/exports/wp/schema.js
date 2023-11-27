@@ -157,8 +157,6 @@ export const rest_error = z.object( {
 	} ),
 } );
 
-/** @typedef {z.infer<rest_error>} Rest_Error */
-
 export const taxonomy_embed = z.object( {
 	name: z.string(),
 	rest_base: z.string(),

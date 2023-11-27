@@ -1553,7 +1553,6 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		message: string;
 	}>;
-
 	export const taxonomy_embed: z.ZodObject<{
 		name: z.ZodString;
 		rest_base: z.ZodString;
@@ -3383,29 +3382,6 @@ declare module '@kucrut/wp-api-helpers' {
 		roles: string[];
 		meta?: any[] | Record<string, any> | undefined;
 	}>;
-	export type Rest_Error = z.infer<z.ZodObject<{
-		code: z.ZodString;
-		message: z.ZodString;
-		data: z.ZodObject<{
-			status: z.ZodNumber;
-		}, "strip", z.ZodTypeAny, {
-			status: number;
-		}, {
-			status: number;
-		}>;
-	}, "strip", z.ZodTypeAny, {
-		code: string;
-		data: {
-			status: number;
-		};
-		message: string;
-	}, {
-		code: string;
-		data: {
-			status: number;
-		};
-		message: string;
-	}>>;
 	/**
 	 * Get taxonomies
 	 *
