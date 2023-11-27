@@ -24,6 +24,7 @@ const link_item = z.array(
 const meta = z.record( z.any() ).or( z.array( z.any() ) ).optional();
 
 const renderable_item = z.object( {
+	block_version: z.number().optional(),
 	protected: z.boolean().optional(),
 	raw: z.string().optional(),
 	rendered: z.string(),
@@ -51,7 +52,7 @@ export const post_embed = z.object( {
 	} ),
 } );
 
-export const post_view = z.object( {
+export const post_view = post_embed.extend( {
 	meta,
 	comment_status: comment_ping_status,
 	content: renderable_item,
