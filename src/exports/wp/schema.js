@@ -72,6 +72,10 @@ export const post_view = post_embed.extend( {
 	} ),
 } );
 
+export const post_edit = post_view.extend( {
+	generated_slug: z.string(),
+} );
+
 export const info = z.object( {
 	desription: z.string(),
 	gmt_offset: z.number(),
