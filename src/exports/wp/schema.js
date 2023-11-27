@@ -30,6 +30,41 @@ const renderable_item = z.object( {
 	rendered: z.string(),
 } );
 
+export const info = z.object( {
+	desription: z.string(),
+	gmt_offset: z.number(),
+	home: z.string().url(),
+	name: z.string(),
+	namespaces: z.string().array(),
+	site_icon_url: z.string(),
+	site_icon: z.number(),
+	site_logo: z.number(),
+	timezone_string: z.string(),
+	url: z.string().url(),
+	authentication: z.record(
+		z.object( {
+			endpoints: z.object( {
+				authorization: z.string().url(),
+			} ),
+		} ),
+	),
+	_links: z.record( link_item ),
+} );
+
+export const jwt_auth_data = z.object( {
+	user_email: z.string().email(),
+	user_display_name: z.string(),
+	user_nicename: z.string(),
+	token: z.string(),
+} );
+
+export const jwt_valid_token = z.object( {
+	code: z.string().refine( val => val === 'jwt_auth_valid_token' ),
+	data: z.object( {
+		status: z.number().refine( val => val === 200 ),
+	} ),
+} );
+
 export const post_embed = z.object( {
 	author: z.number().min( 1 ),
 	date: date_item,
@@ -64,41 +99,6 @@ export const post_view = post_embed.extend( {
 
 export const post_edit = post_view.extend( {
 	generated_slug: z.string(),
-} );
-
-export const info = z.object( {
-	desription: z.string(),
-	gmt_offset: z.number(),
-	home: z.string().url(),
-	name: z.string(),
-	namespaces: z.string().array(),
-	site_icon_url: z.string(),
-	site_icon: z.number(),
-	site_logo: z.number(),
-	timezone_string: z.string(),
-	url: z.string().url(),
-	authentication: z.record(
-		z.object( {
-			endpoints: z.object( {
-				authorization: z.string().url(),
-			} ),
-		} ),
-	),
-	_links: z.record( link_item ),
-} );
-
-export const jwt_auth_data = z.object( {
-	user_email: z.string().email(),
-	user_display_name: z.string(),
-	user_nicename: z.string(),
-	token: z.string(),
-} );
-
-export const jwt_valid_token = z.object( {
-	code: z.string().refine( val => val === 'jwt_auth_valid_token' ),
-	data: z.object( {
-		status: z.number().refine( val => val === 200 ),
-	} ),
 } );
 
 export const media = post_view.extend( {
