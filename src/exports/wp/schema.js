@@ -100,6 +100,7 @@ export const post_view = post_embed.extend( {
 
 export const post_edit = post_view.extend( {
 	generated_slug: z.string(),
+	permalink_template: z.string(),
 } );
 
 export const media_embed = post_embed
@@ -139,7 +140,6 @@ export const media_view = z
 		content: true,
 		menu_order: true,
 		sticky: true,
-		template: true,
 	} );
 
 export const rest_error = z.object( {

@@ -566,6 +566,7 @@ declare module '@kucrut/wp-api-helpers' {
 			raw?: string | undefined;
 		}>;
 		generated_slug: z.ZodString;
+		permalink_template: z.ZodString;
 	}, "strip", z.ZodTypeAny, {
 		link: string;
 		type: string;
@@ -610,6 +611,7 @@ declare module '@kucrut/wp-api-helpers' {
 			raw?: string | undefined;
 		};
 		generated_slug: string;
+		permalink_template: string;
 		meta?: any[] | Record<string, any> | undefined;
 		parent?: number | undefined;
 		format?: string | undefined;
@@ -659,6 +661,7 @@ declare module '@kucrut/wp-api-helpers' {
 			raw?: string | undefined;
 		};
 		generated_slug: string;
+		permalink_template: string;
 		meta?: any[] | Record<string, any> | undefined;
 		parent?: number | undefined;
 		format?: string | undefined;
@@ -1086,7 +1089,7 @@ declare module '@kucrut/wp-api-helpers' {
 			rendered: string;
 			raw?: string | undefined;
 		}>;
-	}, "content" | "template" | "menu_order" | "sticky">, "strip", z.ZodTypeAny, {
+	}, "content" | "menu_order" | "sticky">, "strip", z.ZodTypeAny, {
 		link: string;
 		type: string;
 		id: number;
@@ -1096,6 +1099,7 @@ declare module '@kucrut/wp-api-helpers' {
 			protected?: boolean | undefined;
 			raw?: string | undefined;
 		};
+		template: string;
 		title: {
 			rendered: string;
 			block_version?: number | undefined;
@@ -1171,6 +1175,7 @@ declare module '@kucrut/wp-api-helpers' {
 			protected?: boolean | undefined;
 			raw?: string | undefined;
 		};
+		template: string;
 		title: {
 			rendered: string;
 			block_version?: number | undefined;
