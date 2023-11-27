@@ -23,6 +23,11 @@ const link_item = z.array(
 
 const meta = z.record( z.any() ).or( z.array( z.any() ) ).optional();
 
+const post_edit_base = z.object( {
+	generated_slug: z.string(),
+	permalink_template: z.string(),
+} );
+
 const renderable_item = z.object( {
 	block_version: z.number().optional(),
 	protected: z.boolean().optional(),
@@ -98,10 +103,7 @@ export const post_view = post_embed.extend( {
 	} ),
 } );
 
-export const post_edit = post_view.extend( {
-	generated_slug: z.string(),
-	permalink_template: z.string(),
-} );
+export const post_edit = post_view.merge( post_edit_base );
 
 export const media_embed = post_embed
 	.omit( {

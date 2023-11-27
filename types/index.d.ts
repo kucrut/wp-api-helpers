@@ -586,6 +586,8 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		status: string;
 		date: Date;
+		generated_slug: string;
+		permalink_template: string;
 		_links: Record<string, {
 			href: string;
 			embeddable?: boolean | undefined;
@@ -610,8 +612,6 @@ declare module '@kucrut/wp-api-helpers' {
 			rendered: string;
 			raw?: string | undefined;
 		};
-		generated_slug: string;
-		permalink_template: string;
 		meta?: any[] | Record<string, any> | undefined;
 		parent?: number | undefined;
 		format?: string | undefined;
@@ -636,6 +636,8 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		status: string;
 		date: Date;
+		generated_slug: string;
+		permalink_template: string;
 		_links: Record<string, {
 			href: string;
 			embeddable?: boolean | undefined;
@@ -660,8 +662,6 @@ declare module '@kucrut/wp-api-helpers' {
 			rendered: string;
 			raw?: string | undefined;
 		};
-		generated_slug: string;
-		permalink_template: string;
 		meta?: any[] | Record<string, any> | undefined;
 		parent?: number | undefined;
 		format?: string | undefined;
