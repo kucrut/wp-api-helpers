@@ -42,10 +42,9 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param auth Autorization header.
 	 * @param data Form data.
 	 *
-	 * @return Fetch response.
+	 * @return Media (edit) data.
 	 */
-	export function create_media(url: string, auth: string, data: FormData): Promise<Response>;
-	export function create_media_parsed(url: string, auth: string, data: FormData): Promise<any>;
+	export function create_media(url: string, auth: string, data: FormData): Promise<import('zod').infer<typeof media_edit>>;
 	export const info: z.ZodObject<{
 		desription: z.ZodString;
 		gmt_offset: z.ZodNumber;
@@ -892,7 +891,7 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 	}>;
 	export const media_view: z.ZodObject<Omit<{
-		caption: z.ZodObject<{
+		content: z.ZodObject<{
 			block_version: z.ZodOptional<z.ZodNumber>;
 			protected: z.ZodOptional<z.ZodBoolean>;
 			raw: z.ZodOptional<z.ZodString>;
@@ -908,6 +907,8 @@ declare module '@kucrut/wp-api-helpers' {
 			protected?: boolean | undefined;
 			raw?: string | undefined;
 		}>;
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
+		template: z.ZodString;
 		description: z.ZodObject<{
 			block_version: z.ZodOptional<z.ZodNumber>;
 			protected: z.ZodOptional<z.ZodBoolean>;
@@ -924,9 +925,99 @@ declare module '@kucrut/wp-api-helpers' {
 			protected?: boolean | undefined;
 			raw?: string | undefined;
 		}>;
-		mime_type: z.ZodString;
-		source_url: z.ZodString;
+		parent: z.ZodOptional<z.ZodNumber>;
+		status: z.ZodString;
+		excerpt: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		featured_media: z.ZodNumber;
+		comment_status: z.ZodEnum<["open", "closed"]>;
+		date_gmt: z.ZodDate;
+		format: z.ZodOptional<z.ZodString>;
+		menu_order: z.ZodOptional<z.ZodNumber>;
+		modified: z.ZodDate;
+		modified_gmt: z.ZodDate;
+		ping_status: z.ZodEnum<["open", "closed"]>;
+		sticky: z.ZodOptional<z.ZodBoolean>;
+		guid: z.ZodObject<{
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			raw?: string | undefined;
+		}>;
+		post: z.ZodNullable<z.ZodNumber>;
+		link: z.ZodString;
+		type: z.ZodString;
+		id: z.ZodNumber;
+		title: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		date: z.ZodDate;
+		_links: z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
+			embeddable: z.ZodOptional<z.ZodBoolean>;
+			href: z.ZodString;
+			templated: z.ZodOptional<z.ZodBoolean>;
+			type: z.ZodOptional<z.ZodString>;
+		}, "strip", z.ZodTypeAny, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}>, "many">>;
+		author: z.ZodNumber;
+		slug: z.ZodString;
 		alt_text: z.ZodString;
+		caption: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
 		media_type: z.ZodString;
 		media_details: z.ZodObject<{
 			bitrate: z.ZodOptional<z.ZodNumber>;
@@ -995,101 +1086,9 @@ declare module '@kucrut/wp-api-helpers' {
 				source_url: string;
 			}> | undefined;
 		}>;
-		post: z.ZodNullable<z.ZodNumber>;
-		link: z.ZodString;
-		type: z.ZodString;
-		id: z.ZodNumber;
-		title: z.ZodObject<{
-			block_version: z.ZodOptional<z.ZodNumber>;
-			protected: z.ZodOptional<z.ZodBoolean>;
-			raw: z.ZodOptional<z.ZodString>;
-			rendered: z.ZodString;
-		}, "strip", z.ZodTypeAny, {
-			rendered: string;
-			block_version?: number | undefined;
-			protected?: boolean | undefined;
-			raw?: string | undefined;
-		}, {
-			rendered: string;
-			block_version?: number | undefined;
-			protected?: boolean | undefined;
-			raw?: string | undefined;
-		}>;
-		date: z.ZodDate;
-		_links: z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
-			embeddable: z.ZodOptional<z.ZodBoolean>;
-			href: z.ZodString;
-			templated: z.ZodOptional<z.ZodBoolean>;
-			type: z.ZodOptional<z.ZodString>;
-		}, "strip", z.ZodTypeAny, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}>, "many">>;
-		author: z.ZodNumber;
-		excerpt: z.ZodObject<{
-			block_version: z.ZodOptional<z.ZodNumber>;
-			protected: z.ZodOptional<z.ZodBoolean>;
-			raw: z.ZodOptional<z.ZodString>;
-			rendered: z.ZodString;
-		}, "strip", z.ZodTypeAny, {
-			rendered: string;
-			block_version?: number | undefined;
-			protected?: boolean | undefined;
-			raw?: string | undefined;
-		}, {
-			rendered: string;
-			block_version?: number | undefined;
-			protected?: boolean | undefined;
-			raw?: string | undefined;
-		}>;
-		featured_media: z.ZodNumber;
-		slug: z.ZodString;
-		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
-		comment_status: z.ZodEnum<["open", "closed"]>;
-		content: z.ZodObject<{
-			block_version: z.ZodOptional<z.ZodNumber>;
-			protected: z.ZodOptional<z.ZodBoolean>;
-			raw: z.ZodOptional<z.ZodString>;
-			rendered: z.ZodString;
-		}, "strip", z.ZodTypeAny, {
-			rendered: string;
-			block_version?: number | undefined;
-			protected?: boolean | undefined;
-			raw?: string | undefined;
-		}, {
-			rendered: string;
-			block_version?: number | undefined;
-			protected?: boolean | undefined;
-			raw?: string | undefined;
-		}>;
-		date_gmt: z.ZodDate;
-		format: z.ZodOptional<z.ZodString>;
-		menu_order: z.ZodOptional<z.ZodNumber>;
-		modified: z.ZodDate;
-		modified_gmt: z.ZodDate;
-		parent: z.ZodOptional<z.ZodNumber>;
-		ping_status: z.ZodEnum<["open", "closed"]>;
-		status: z.ZodString;
-		sticky: z.ZodOptional<z.ZodBoolean>;
-		template: z.ZodString;
-		guid: z.ZodObject<{
-			raw: z.ZodOptional<z.ZodString>;
-			rendered: z.ZodString;
-		}, "strip", z.ZodTypeAny, {
-			rendered: string;
-			raw?: string | undefined;
-		}, {
-			rendered: string;
-			raw?: string | undefined;
-		}>;
-	}, "content" | "parent" | "excerpt" | "menu_order" | "sticky">, "strip", z.ZodTypeAny, {
+		mime_type: z.ZodString;
+		source_url: z.ZodString;
+	}, "content" | "parent" | "excerpt" | "featured_media" | "menu_order" | "sticky">, "strip", z.ZodTypeAny, {
 		link: string;
 		type: string;
 		id: number;
@@ -1123,7 +1122,6 @@ declare module '@kucrut/wp-api-helpers' {
 			type?: string | undefined;
 		}[]>;
 		author: number;
-		featured_media: number;
 		slug: string;
 		comment_status: "closed" | "open";
 		date_gmt: Date;
@@ -1192,7 +1190,6 @@ declare module '@kucrut/wp-api-helpers' {
 			type?: string | undefined;
 		}[]>;
 		author: number;
-		featured_media: number;
 		slug: string;
 		comment_status: "closed" | "open";
 		date_gmt: Date;
@@ -1303,7 +1300,6 @@ declare module '@kucrut/wp-api-helpers' {
 			type?: string | undefined;
 		}>, "many">>;
 		author: z.ZodNumber;
-		featured_media: z.ZodNumber;
 		slug: z.ZodString;
 		comment_status: z.ZodEnum<["open", "closed"]>;
 		date_gmt: z.ZodDate;
@@ -1429,7 +1425,6 @@ declare module '@kucrut/wp-api-helpers' {
 			type?: string | undefined;
 		}[]>;
 		author: number;
-		featured_media: number;
 		slug: string;
 		comment_status: "closed" | "open";
 		date_gmt: Date;
@@ -1500,7 +1495,6 @@ declare module '@kucrut/wp-api-helpers' {
 			type?: string | undefined;
 		}[]>;
 		author: number;
-		featured_media: number;
 		slug: string;
 		comment_status: "closed" | "open";
 		date_gmt: Date;
