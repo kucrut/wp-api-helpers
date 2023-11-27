@@ -317,6 +317,8 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		status: string;
 		date: Date;
+		mime_type: string;
+		source_url: string;
 		author: number;
 		comment_status: "closed" | "open";
 		date_gmt: Date;
@@ -330,9 +332,7 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		alt_text: string;
 		media_type: string;
-		mime_type: string;
 		post: number | null;
-		source_url: string;
 		media_details: {
 			filesize: number;
 			bitrate?: number | undefined;
@@ -372,6 +372,8 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		status: string;
 		date: Date;
+		mime_type: string;
+		source_url: string;
 		author: number;
 		comment_status: "closed" | "open";
 		date_gmt: Date;
@@ -385,9 +387,7 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		alt_text: string;
 		media_type: string;
-		mime_type: string;
 		post: number | null;
-		source_url: string;
 		media_details: {
 			filesize: number;
 			bitrate?: number | undefined;

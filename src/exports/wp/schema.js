@@ -4,6 +4,14 @@ const comment_ping_status = z.enum( [ 'open', 'closed' ] );
 
 const date_item = z.coerce.date();
 
+const image_size = z.object( {
+	file: z.string(),
+	height: z.number(),
+	mime_type: z.string(),
+	source_url: z.string(),
+	width: z.number(),
+} );
+
 const link_item = z.array(
 	z.object( {
 		embeddable: z.boolean().optional(),
@@ -96,17 +104,7 @@ export const media = post_base.extend( {
 		length: z.number().optional(), // Video.
 		length_formatted: z.string().optional(), // Video.
 		width: z.number().optional(), // Image.
-		sizes: z
-			.record(
-				z.object( {
-					file: z.string(),
-					height: z.number(),
-					mime_type: z.string(),
-					source_url: z.string(),
-					width: z.number(),
-				} ),
-			)
-			.optional(), // Image.
+		sizes: z.record( image_size ).optional(), // Image.
 	} ),
 } );
 
