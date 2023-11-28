@@ -3408,16 +3408,17 @@ declare module '@kucrut/wp-api-helpers' {
 	 */
 	export function get_terms(url: string, taxonomy: string, auth?: string | undefined, args?: FetchTermsArgs | undefined): Promise<import('zod').infer<typeof term_view>[]>;
 	/**
-	 * Get self user data
+	 * Get user data
 	 *
 	 * @since 0.1.0
 	 *
 	 * @param url WordPress API root URL.
-	 * @param auth Authorization header.
+	 * @param id User ID or 'me'.
+	 * @param auth Authorization header (required when `id` is `me`).
 	 *
 	 * @return User (view) data.
 	 */
-	export function get_me(url: string, auth: string): Promise<import('zod').infer<typeof user_view>>;
+	export function get_user(url: string, id: number | 'me', auth?: string | undefined): Promise<import('zod').infer<typeof user_view>>;
 	type ContextArg = 'view' | 'embed' | 'edit';
 	type OrderArg = 'asc' | 'desc';
 	interface FetchArgs {
