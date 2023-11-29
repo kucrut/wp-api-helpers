@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 
-export type ContextArg = 'view' | 'embed' | 'edit';
+import type { ZodTypeAny } from 'zod';
+
+export type ContextArg = undefined | 'view' | 'embed' | 'edit';
 export type OrderArg = 'asc' | 'desc';
 
 export interface FetchArgs {
@@ -74,3 +76,10 @@ export type HandleResponse< T > = ( data: unknown ) => Promise< T >;
 export type HandledFetch< F extends ( ...args: any ) => any, T > = (
 	...args: Parameters< F >
 ) => ReturnType< HandleResponse< T > >;
+
+export type Schema_By_Context<
+	C extends ContextArg,
+	X extends ZodTypeAny,
+	Y extends ZodTypeAny,
+	Z extends ZodTypeAny,
+> = C extends undefined | 'view' ? X : C extends 'embed' ? Y : C extends 'edit' ? Z : never;
