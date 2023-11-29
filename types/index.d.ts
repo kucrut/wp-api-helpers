@@ -1,5 +1,5 @@
 declare module '@kucrut/wp-api-helpers' {
-	import type { z } from 'zod';
+	import type { z, ZodTypeAny } from 'zod';
 	/**
 	 * Get JWT authentication
 	 *
@@ -3415,11 +3415,378 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param url WordPress API root URL.
 	 * @param id User ID or 'me'.
 	 * @param auth Authorization header (required when `id` is `me`).
+	 * @param context Request context, defaults to 'view'.
 	 *
-	 * @return User (view) data.
+	 * @return User data.
 	 */
-	export function get_user(url: string, id: number | 'me', auth?: string | undefined): Promise<import('zod').infer<typeof user_view>>;
-	type ContextArg = 'view' | 'embed' | 'edit';
+	export function get_user<C extends ContextArg>(url: string, id: number | 'me', auth?: string | undefined, context?: C | undefined): Promise<import("zod").TypeOf<Schema_By_Context<C, import("zod").ZodObject<{
+		id: import("zod").ZodNumber;
+		url: import("zod").ZodString;
+		name: import("zod").ZodString;
+		description: import("zod").ZodString;
+		_links: import("zod").ZodObject<{
+			self: import("zod").ZodArray<import("zod").ZodObject<{
+				embeddable: import("zod").ZodOptional<import("zod").ZodBoolean>;
+				href: import("zod").ZodString;
+				templated: import("zod").ZodOptional<import("zod").ZodBoolean>;
+				type: import("zod").ZodOptional<import("zod").ZodString>;
+			}, "strip", import("zod").ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+			collection: import("zod").ZodArray<import("zod").ZodObject<{
+				embeddable: import("zod").ZodOptional<import("zod").ZodBoolean>;
+				href: import("zod").ZodString;
+				templated: import("zod").ZodOptional<import("zod").ZodBoolean>;
+				type: import("zod").ZodOptional<import("zod").ZodString>;
+			}, "strip", import("zod").ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+		}, "strip", import("zod").ZodTypeAny, {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}, {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}>;
+		slug: import("zod").ZodString;
+		avatar_urls: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+		meta: import("zod").ZodOptional<import("zod").ZodUnion<[import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodAny>, import("zod").ZodArray<import("zod").ZodAny, "many">]>>;
+	}, "strip", import("zod").ZodTypeAny, {
+		id: number;
+		url: string;
+		name: string;
+		description: string;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		slug: string;
+		avatar_urls: Record<string, string>;
+		meta?: any[] | Record<string, any> | undefined;
+	}, {
+		id: number;
+		url: string;
+		name: string;
+		description: string;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		slug: string;
+		avatar_urls: Record<string, string>;
+		meta?: any[] | Record<string, any> | undefined;
+	}>, import("zod").ZodObject<{
+		avatar_urls: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+		description: import("zod").ZodString;
+		id: import("zod").ZodNumber;
+		name: import("zod").ZodString;
+		url: import("zod").ZodString;
+		slug: import("zod").ZodString;
+		_links: import("zod").ZodObject<{
+			self: import("zod").ZodArray<import("zod").ZodObject<{
+				embeddable: import("zod").ZodOptional<import("zod").ZodBoolean>;
+				href: import("zod").ZodString;
+				templated: import("zod").ZodOptional<import("zod").ZodBoolean>;
+				type: import("zod").ZodOptional<import("zod").ZodString>;
+			}, "strip", import("zod").ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+			collection: import("zod").ZodArray<import("zod").ZodObject<{
+				embeddable: import("zod").ZodOptional<import("zod").ZodBoolean>;
+				href: import("zod").ZodString;
+				templated: import("zod").ZodOptional<import("zod").ZodBoolean>;
+				type: import("zod").ZodOptional<import("zod").ZodString>;
+			}, "strip", import("zod").ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+		}, "strip", import("zod").ZodTypeAny, {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}, {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}>;
+	}, "strip", import("zod").ZodTypeAny, {
+		id: number;
+		url: string;
+		name: string;
+		description: string;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		slug: string;
+		avatar_urls: Record<string, string>;
+	}, {
+		id: number;
+		url: string;
+		name: string;
+		description: string;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		slug: string;
+		avatar_urls: Record<string, string>;
+	}>, import("zod").ZodObject<{
+		id: import("zod").ZodNumber;
+		url: import("zod").ZodString;
+		name: import("zod").ZodString;
+		meta: import("zod").ZodOptional<import("zod").ZodUnion<[import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodAny>, import("zod").ZodArray<import("zod").ZodAny, "many">]>>;
+		description: import("zod").ZodString;
+		_links: import("zod").ZodObject<{
+			self: import("zod").ZodArray<import("zod").ZodObject<{
+				embeddable: import("zod").ZodOptional<import("zod").ZodBoolean>;
+				href: import("zod").ZodString;
+				templated: import("zod").ZodOptional<import("zod").ZodBoolean>;
+				type: import("zod").ZodOptional<import("zod").ZodString>;
+			}, "strip", import("zod").ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+			collection: import("zod").ZodArray<import("zod").ZodObject<{
+				embeddable: import("zod").ZodOptional<import("zod").ZodBoolean>;
+				href: import("zod").ZodString;
+				templated: import("zod").ZodOptional<import("zod").ZodBoolean>;
+				type: import("zod").ZodOptional<import("zod").ZodString>;
+			}, "strip", import("zod").ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+		}, "strip", import("zod").ZodTypeAny, {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}, {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}>;
+		slug: import("zod").ZodString;
+		avatar_urls: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+		capabilities: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodBoolean>;
+		email: import("zod").ZodString;
+		extra_capabilities: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodBoolean>;
+		first_name: import("zod").ZodString;
+		last_name: import("zod").ZodString;
+		link: import("zod").ZodString;
+		locale: import("zod").ZodString;
+		nickname: import("zod").ZodString;
+		registered_date: import("zod").ZodString;
+		roles: import("zod").ZodArray<import("zod").ZodString, "many">;
+		username: import("zod").ZodString;
+	}, "strip", import("zod").ZodTypeAny, {
+		link: string;
+		id: number;
+		url: string;
+		name: string;
+		username: string;
+		email: string;
+		description: string;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		slug: string;
+		capabilities: Record<string, boolean>;
+		avatar_urls: Record<string, string>;
+		extra_capabilities: Record<string, boolean>;
+		first_name: string;
+		last_name: string;
+		locale: string;
+		nickname: string;
+		registered_date: string;
+		roles: string[];
+		meta?: any[] | Record<string, any> | undefined;
+	}, {
+		link: string;
+		id: number;
+		url: string;
+		name: string;
+		username: string;
+		email: string;
+		description: string;
+		_links: {
+			self: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		slug: string;
+		capabilities: Record<string, boolean>;
+		avatar_urls: Record<string, string>;
+		extra_capabilities: Record<string, boolean>;
+		first_name: string;
+		last_name: string;
+		locale: string;
+		nickname: string;
+		registered_date: string;
+		roles: string[];
+		meta?: any[] | Record<string, any> | undefined;
+	}>>>>;
+	type ContextArg = undefined | 'view' | 'embed' | 'edit';
 	type OrderArg = 'asc' | 'desc';
 	interface FetchArgs {
 		/**
@@ -3482,6 +3849,7 @@ declare module '@kucrut/wp-api-helpers' {
 		 */
 		slug?: string[];
 	}
+	type Schema_By_Context<C extends ContextArg, X extends ZodTypeAny, Y extends ZodTypeAny, Z extends ZodTypeAny> = C extends undefined | 'view' ? X : C extends 'embed' ? Y : C extends 'edit' ? Z : never;
 }
 
 declare module '@kucrut/wp-api-helpers/utils' {
@@ -3553,6 +3921,18 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @return Pairs of key and value strings.
 	 */
 	export function normalize_fetch_args(args: Record<string, any>): [string, string][];
+	/**
+	 * Pick schema based on passed context
+	 *
+	 * @param view_schema View schema.
+	 * @param embed_schema Embed schema.
+	 * @param edit_schema Edit schema.
+	 * @param context Context.
+	 *
+	 * @return Schema.
+	 */
+	export function pick_schema<C extends ContextArg, S extends import("zod").ZodTypeAny>(view_schema: S, embed_schema: S, edit_schema: S, context?: C | undefined): S;
+	type ContextArg = undefined | 'view' | 'embed' | 'edit';
 	type HandleResponse<T> = (data: unknown) => Promise<T>;
 }
 
