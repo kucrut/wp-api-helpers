@@ -8,7 +8,7 @@ import { taxonomies_view } from './schema.js';
  *
  * @param {string} url WordPress API root URL.
  * @param {string=} auth Authorization header.
- * @param {import("$types").FetchTaxonomiesArgs=} args Request arguments.
+ * @param {import("$types").Fetch_Taxonomies_Args=} args Request arguments.
  *
  * @throws {Error|import('zod').ZodError}
  *

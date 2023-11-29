@@ -3393,7 +3393,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 *
 	 * @return Taxonomies (view) data.
 	 */
-	export function get_taxonomies(url: string, auth?: string | undefined, args?: FetchTaxonomiesArgs | undefined): Promise<import('zod').infer<typeof taxonomies_view>>;
+	export function get_taxonomies(url: string, auth?: string | undefined, args?: Fetch_Taxonomies_Args | undefined): Promise<import('zod').infer<typeof taxonomies_view>>;
 	/**
 	 * Get taxonomy terms
 	 *
@@ -3406,7 +3406,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 *
 	 * @return Terms (view) data.
 	 */
-	export function get_terms(url: string, taxonomy: string, auth?: string | undefined, args?: FetchTermsArgs | undefined): Promise<import('zod').infer<typeof term_view>[]>;
+	export function get_terms(url: string, taxonomy: string, auth?: string | undefined, args?: Fetch_Terms_Args | undefined): Promise<import('zod').infer<typeof term_view>[]>;
 	/**
 	 * Get user data
 	 *
@@ -3419,7 +3419,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 *
 	 * @return User data.
 	 */
-	export function get_user<C extends ContextArg>(url: string, id: number | 'me', auth?: string | undefined, context?: C | undefined): Promise<import("zod").TypeOf<Schema_By_Context<C, import("zod").ZodObject<{
+	export function get_user<C extends Context_Arg>(url: string, id: number | 'me', auth?: string | undefined, context?: C | undefined): Promise<import("zod").TypeOf<Schema_By_Context<C, import("zod").ZodObject<{
 		id: import("zod").ZodNumber;
 		url: import("zod").ZodString;
 		name: import("zod").ZodString;
@@ -3786,16 +3786,16 @@ declare module '@kucrut/wp-api-helpers' {
 		roles: string[];
 		meta?: any[] | Record<string, any> | undefined;
 	}>>>>;
-	type ContextArg = undefined | 'view' | 'embed' | 'edit';
-	type OrderArg = 'asc' | 'desc';
-	interface FetchArgs {
+	type Context_Arg = undefined | 'view' | 'embed' | 'edit';
+	type Order_Arg = 'asc' | 'desc';
+	interface Fetch_Args {
 		/**
 		 * Scope under which the request is made; determines fields present in response.
 		 * @default 'view'
 		 */
-		context?: ContextArg;
+		context?: Context_Arg;
 	}
-	interface FetchCollectionArgs {
+	interface Fetch_Collection_Args {
 		/**
 		 * "Current page of the collection."
 		 * @default 1
@@ -3821,15 +3821,15 @@ declare module '@kucrut/wp-api-helpers' {
 		/**
 		 * Order sort attribute ascending or descending.
 		 */
-		order?: OrderArg;
+		order?: Order_Arg;
 	}
-	interface FetchTaxonomiesArgs extends FetchArgs {
+	interface Fetch_Taxonomies_Args extends Fetch_Args {
 		/**
 		 * Limit results to taxonomies associated with a specific post type.
 		 */
 		type?: string;
 	}
-	interface FetchTermsArgs extends FetchArgs, FetchCollectionArgs {
+	interface Fetch_Terms_Args extends Fetch_Args, Fetch_Collection_Args {
 		/**
 		 * Whether to hide terms not assigned to any posts.
 		 * @default false
@@ -3849,7 +3849,7 @@ declare module '@kucrut/wp-api-helpers' {
 		 */
 		slug?: string[];
 	}
-	type Schema_By_Context<C extends ContextArg, X extends ZodTypeAny, Y extends ZodTypeAny, Z extends ZodTypeAny> = C extends undefined | 'view' ? X : C extends 'embed' ? Y : C extends 'edit' ? Z : never;
+	type Schema_By_Context<C extends Context_Arg, X extends ZodTypeAny, Y extends ZodTypeAny, Z extends ZodTypeAny> = C extends undefined | 'view' ? X : C extends 'embed' ? Y : C extends 'edit' ? Z : never;
 }
 
 declare module '@kucrut/wp-api-helpers/utils' {
@@ -3902,7 +3902,7 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 *
 	 * @return Whatever the callback returns.
 	 */
-	export function handle_response<T>(response: Response, callback: HandleResponse<T>): Promise<T>;
+	export function handle_response<T>(response: Response, callback: Handle_Response<T>): Promise<T>;
 	/**
 	 * Make response handler
 	 *
@@ -3911,7 +3911,7 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @param handler Handler function.
 	 * @return Bleh
 	 */
-	export function make_response_handler<T>(handler: HandleResponse<T>): (resp: Response) => Promise<T>;
+	export function make_response_handler<T>(handler: Handle_Response<T>): (resp: Response) => Promise<T>;
 	/**
 	 * Normalize fetch arguments
 	 *
@@ -3931,9 +3931,9 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 *
 	 * @return Schema.
 	 */
-	export function pick_schema<C extends ContextArg, S extends import("zod").ZodTypeAny>(view_schema: S, embed_schema: S, edit_schema: S, context?: C | undefined): S;
-	type ContextArg = undefined | 'view' | 'embed' | 'edit';
-	type HandleResponse<T> = (data: unknown) => Promise<T>;
+	export function pick_schema<C extends Context_Arg, S extends import("zod").ZodTypeAny>(view_schema: S, embed_schema: S, edit_schema: S, context?: C | undefined): S;
+	type Context_Arg = undefined | 'view' | 'embed' | 'edit';
+	type Handle_Response<T> = (data: unknown) => Promise<T>;
 }
 
 //# sourceMappingURL=index.d.ts.map

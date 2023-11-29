@@ -13,7 +13,7 @@ import { ZodError } from 'zod';
  *
  * @throws {Error|ZodError}
  *
- * @return {ReturnType<import('$types').HandleResponse<import('zod').infer<T>>>} Parsed data.
+ * @return {ReturnType<import('$types').Handle_Response<import('zod').infer<T>>>} Parsed data.
  */
 export async function fetch_and_parse( schema, fetcher ) {
 	const handler = make_response_handler( async data => schema.parse( data ) );
@@ -95,7 +95,7 @@ export function get_error_message( error, fallback, dump = true ) {
  * @template T
  *
  * @param {Response} response Fetch response object.
- * @param {import('$types').HandleResponse<T>} callback Callback to run when json is valid.
+ * @param {import('$types').Handle_Response<T>} callback Callback to run when json is valid.
  *
  * @throws {Error} JSON.parse error.
  *
@@ -141,7 +141,7 @@ export async function handle_response( response, callback ) {
  *
  * @template T
  *
- * @param {import('$types').HandleResponse<T>} handler Handler function.
+ * @param {import('$types').Handle_Response<T>} handler Handler function.
  * @return {(resp: Response) => Promise<T>} Bleh
  */
 export function make_response_handler( handler ) {
@@ -188,7 +188,7 @@ export function normalize_fetch_args( args ) {
 /**
  * Pick schema based on passed context
  *
- * @template {import('$types').ContextArg} C
+ * @template {import('$types').Context_Arg} C
  * @template {import('zod').ZodTypeAny} S
  *
  * @param {S} view_schema View schema.

@@ -6,7 +6,7 @@ import { user_edit, user_embed, user_view } from './schema.js';
  *
  * @since 0.1.0
  *
- * @template {import('../../types.ts').ContextArg} C
+ * @template {import('../../types.ts').Context_Arg} C
  *
  * @param {string} url WordPress API root URL.
  * @param {number|'me'} id User ID or 'me'.

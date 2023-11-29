@@ -9,7 +9,7 @@ import { term_view } from './schema.js';
  * @param {string} url WordPress API root URL.
  * @param {string} taxonomy Taxonomy's rest_base.
  * @param {string=} auth Authorization header.
- * @param {import("$types").FetchTermsArgs=} args Request arguments.
+ * @param {import("$types").Fetch_Terms_Args=} args Request arguments.
  *
  * @throws {Error|import('zod').ZodError}
  *

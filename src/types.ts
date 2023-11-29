@@ -2,18 +2,18 @@
 
 import type { ZodTypeAny } from 'zod';
 
-export type ContextArg = undefined | 'view' | 'embed' | 'edit';
-export type OrderArg = 'asc' | 'desc';
+export type Context_Arg = undefined | 'view' | 'embed' | 'edit';
+export type Order_Arg = 'asc' | 'desc';
 
-export interface FetchArgs {
+export interface Fetch_Args {
 	/**
 	 * Scope under which the request is made; determines fields present in response.
 	 * @default 'view'
 	 */
-	context?: ContextArg;
+	context?: Context_Arg;
 }
 
-export interface FetchCollectionArgs {
+export interface Fetch_Collection_Args {
 	/**
 	 * "Current page of the collection."
 	 * @default 1
@@ -39,17 +39,17 @@ export interface FetchCollectionArgs {
 	/**
 	 * Order sort attribute ascending or descending.
 	 */
-	order?: OrderArg;
+	order?: Order_Arg;
 }
 
-export interface FetchTaxonomiesArgs extends FetchArgs {
+export interface Fetch_Taxonomies_Args extends Fetch_Args {
 	/**
 	 * Limit results to taxonomies associated with a specific post type.
 	 */
 	type?: string;
 }
 
-export interface FetchTermsArgs extends FetchArgs, FetchCollectionArgs {
+export interface Fetch_Terms_Args extends Fetch_Args, Fetch_Collection_Args {
 	/**
 	 * Whether to hide terms not assigned to any posts.
 	 * @default false
@@ -70,15 +70,15 @@ export interface FetchTermsArgs extends FetchArgs, FetchCollectionArgs {
 	slug?: string[];
 }
 
-export type HandleResponse< T > = ( data: unknown ) => Promise< T >;
+export type Handle_Response< T > = ( data: unknown ) => Promise< T >;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type HandledFetch< F extends ( ...args: any ) => any, T > = (
+export type Handled_Fetch< F extends ( ...args: any ) => any, T > = (
 	...args: Parameters< F >
-) => ReturnType< HandleResponse< T > >;
+) => ReturnType< Handle_Response< T > >;
 
 export type Schema_By_Context<
-	C extends ContextArg,
+	C extends Context_Arg,
 	X extends ZodTypeAny,
 	Y extends ZodTypeAny,
 	Z extends ZodTypeAny,
