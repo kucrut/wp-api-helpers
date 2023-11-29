@@ -335,7 +335,7 @@ declare module '@kucrut/wp-api-helpers' {
 		}>;
 		featured_media: z.ZodNumber;
 		slug: z.ZodString;
-		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodNever, "many">]>>;
 		comment_status: z.ZodEnum<["open", "closed"]>;
 		content: z.ZodObject<{
 			block_version: z.ZodOptional<z.ZodNumber>;
@@ -416,7 +416,7 @@ declare module '@kucrut/wp-api-helpers' {
 			rendered: string;
 			raw?: string | undefined;
 		};
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 		format?: string | undefined;
 		menu_order?: number | undefined;
 		parent?: number | undefined;
@@ -464,7 +464,7 @@ declare module '@kucrut/wp-api-helpers' {
 			rendered: string;
 			raw?: string | undefined;
 		};
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 		format?: string | undefined;
 		menu_order?: number | undefined;
 		parent?: number | undefined;
@@ -490,7 +490,7 @@ declare module '@kucrut/wp-api-helpers' {
 			protected?: boolean | undefined;
 			raw?: string | undefined;
 		}>;
-		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodNever, "many">]>>;
 		template: z.ZodString;
 		title: z.ZodObject<{
 			block_version: z.ZodOptional<z.ZodNumber>;
@@ -611,7 +611,7 @@ declare module '@kucrut/wp-api-helpers' {
 			rendered: string;
 			raw?: string | undefined;
 		};
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 		parent?: number | undefined;
 		format?: string | undefined;
 		menu_order?: number | undefined;
@@ -661,7 +661,7 @@ declare module '@kucrut/wp-api-helpers' {
 			rendered: string;
 			raw?: string | undefined;
 		};
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 		parent?: number | undefined;
 		format?: string | undefined;
 		menu_order?: number | undefined;
@@ -907,7 +907,7 @@ declare module '@kucrut/wp-api-helpers' {
 			protected?: boolean | undefined;
 			raw?: string | undefined;
 		}>;
-		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodNever, "many">]>>;
 		template: z.ZodString;
 		description: z.ZodObject<{
 			block_version: z.ZodOptional<z.ZodNumber>;
@@ -1154,7 +1154,7 @@ declare module '@kucrut/wp-api-helpers' {
 			}> | undefined;
 		};
 		post: number | null;
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 		format?: string | undefined;
 	}, {
 		link: string;
@@ -1222,7 +1222,7 @@ declare module '@kucrut/wp-api-helpers' {
 			}> | undefined;
 		};
 		post: number | null;
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 		format?: string | undefined;
 	}>;
 	export const media_edit: z.ZodObject<{
@@ -1245,7 +1245,7 @@ declare module '@kucrut/wp-api-helpers' {
 			protected?: boolean | undefined;
 			raw?: string | undefined;
 		}>;
-		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodNever, "many">]>>;
 		template: z.ZodString;
 		title: z.ZodObject<{
 			block_version: z.ZodOptional<z.ZodNumber>;
@@ -1457,7 +1457,7 @@ declare module '@kucrut/wp-api-helpers' {
 			}> | undefined;
 		};
 		post: number | null;
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 		format?: string | undefined;
 	}, {
 		link: string;
@@ -1527,7 +1527,7 @@ declare module '@kucrut/wp-api-helpers' {
 			}> | undefined;
 		};
 		post: number | null;
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 		format?: string | undefined;
 	}>;
 	export const rest_error: z.ZodObject<{
@@ -2936,7 +2936,7 @@ declare module '@kucrut/wp-api-helpers' {
 		}>;
 		slug: z.ZodString;
 		taxonomy: z.ZodString;
-		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodNever, "many">]>>;
 		count: z.ZodNumber;
 		description: z.ZodString;
 		parent: z.ZodNumber;
@@ -2975,7 +2975,7 @@ declare module '@kucrut/wp-api-helpers' {
 		slug: string;
 		taxonomy: string;
 		count: number;
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 	}, {
 		link: string;
 		id: number;
@@ -3011,7 +3011,7 @@ declare module '@kucrut/wp-api-helpers' {
 		slug: string;
 		taxonomy: string;
 		count: number;
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 	}>;
 	export const user_embed: z.ZodObject<{
 		avatar_urls: z.ZodRecord<z.ZodString, z.ZodString>;
@@ -3190,7 +3190,7 @@ declare module '@kucrut/wp-api-helpers' {
 		}>;
 		slug: z.ZodString;
 		avatar_urls: z.ZodRecord<z.ZodString, z.ZodString>;
-		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodNever, "many">]>>;
 	}, "strip", z.ZodTypeAny, {
 		id: number;
 		url: string;
@@ -3212,7 +3212,7 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		slug: string;
 		avatar_urls: Record<string, string>;
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 	}, {
 		id: number;
 		url: string;
@@ -3234,13 +3234,13 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		slug: string;
 		avatar_urls: Record<string, string>;
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 	}>;
 	export const user_edit: z.ZodObject<{
 		id: z.ZodNumber;
 		url: z.ZodString;
 		name: z.ZodString;
-		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodAny, "many">]>>;
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodNever, "many">]>>;
 		description: z.ZodString;
 		_links: z.ZodObject<{
 			self: z.ZodArray<z.ZodObject<{
@@ -3347,7 +3347,7 @@ declare module '@kucrut/wp-api-helpers' {
 		nickname: string;
 		registered_date: string;
 		roles: string[];
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 	}, {
 		link: string;
 		id: number;
@@ -3380,7 +3380,7 @@ declare module '@kucrut/wp-api-helpers' {
 		nickname: string;
 		registered_date: string;
 		roles: string[];
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 	}>;
 	/**
 	 * Get taxonomies
@@ -3486,7 +3486,7 @@ declare module '@kucrut/wp-api-helpers' {
 		}>;
 		slug: import("zod").ZodString;
 		avatar_urls: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
-		meta: import("zod").ZodOptional<import("zod").ZodUnion<[import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodAny>, import("zod").ZodArray<import("zod").ZodAny, "many">]>>;
+		meta: import("zod").ZodOptional<import("zod").ZodUnion<[import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodAny>, import("zod").ZodArray<import("zod").ZodNever, "many">]>>;
 	}, "strip", import("zod").ZodTypeAny, {
 		id: number;
 		url: string;
@@ -3508,7 +3508,7 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		slug: string;
 		avatar_urls: Record<string, string>;
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 	}, {
 		id: number;
 		url: string;
@@ -3530,7 +3530,7 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		slug: string;
 		avatar_urls: Record<string, string>;
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 	}>, import("zod").ZodObject<{
 		avatar_urls: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
 		description: import("zod").ZodString;
@@ -3644,7 +3644,7 @@ declare module '@kucrut/wp-api-helpers' {
 		id: import("zod").ZodNumber;
 		url: import("zod").ZodString;
 		name: import("zod").ZodString;
-		meta: import("zod").ZodOptional<import("zod").ZodUnion<[import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodAny>, import("zod").ZodArray<import("zod").ZodAny, "many">]>>;
+		meta: import("zod").ZodOptional<import("zod").ZodUnion<[import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodAny>, import("zod").ZodArray<import("zod").ZodNever, "many">]>>;
 		description: import("zod").ZodString;
 		_links: import("zod").ZodObject<{
 			self: import("zod").ZodArray<import("zod").ZodObject<{
@@ -3751,7 +3751,7 @@ declare module '@kucrut/wp-api-helpers' {
 		nickname: string;
 		registered_date: string;
 		roles: string[];
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 	}, {
 		link: string;
 		id: number;
@@ -3784,7 +3784,7 @@ declare module '@kucrut/wp-api-helpers' {
 		nickname: string;
 		registered_date: string;
 		roles: string[];
-		meta?: any[] | Record<string, any> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
 	}>>>>;
 	type Context_Arg = undefined | 'view' | 'embed' | 'edit';
 	type Order_Arg = 'asc' | 'desc';

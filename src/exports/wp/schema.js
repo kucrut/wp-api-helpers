@@ -21,7 +21,8 @@ const link_item = z.array(
 	} ),
 );
 
-const meta = z.record( z.any() ).or( z.array( z.any() ) ).optional();
+// NOTE: When meta is an array it shouldn't have any value, hence the never type.
+const meta = z.record( z.any() ).or( z.array( z.never() ) ).optional();
 
 const post_edit_base = z.object( {
 	generated_slug: z.string(),
