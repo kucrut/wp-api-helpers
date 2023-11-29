@@ -184,3 +184,28 @@ export function normalize_fetch_args( args ) {
 		return [ name, to_string( value ).trim() ];
 	} );
 }
+
+/**
+ * Pick schema based on passed context
+ *
+ * @template {import('$types').ContextArg} C
+ * @template {import('zod').ZodTypeAny} S
+ *
+ * @param {S} view_schema View schema.
+ * @param {S} embed_schema Embed schema.
+ * @param {S} edit_schema Edit schema.
+ * @param {C=} context Context.
+ *
+ * @return {S} Schema.
+ */
+export function pick_schema( view_schema, embed_schema, edit_schema, context = undefined ) {
+	if ( context === 'edit' ) {
+		return edit_schema;
+	}
+
+	if ( context === 'embed' ) {
+		return embed_schema;
+	}
+
+	return view_schema;
+}
