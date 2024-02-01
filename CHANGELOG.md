@@ -1,5 +1,11 @@
 # @kucrut/wp-api-helpers
 
+## 0.1.1
+
+### Patch Changes
+
+- 0a63a9c: Fix release workflow
+
 ## 0.1.0
 
 ### Minor Changes
