@@ -81,7 +81,7 @@ export const post_embed = z.object( {
 	slug: z.string(),
 	title: renderable_item,
 	type: z.string(),
-	_links: z.record( link_item ),
+	_links: z.record( link_item ).optional(),
 } );
 
 export const post_view = post_embed.extend( {
