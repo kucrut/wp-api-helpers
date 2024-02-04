@@ -33,6 +33,7 @@ export async function get_post( id, url, auth = '', type = 'posts' ) {
  * @param {string} url WordPress API root URL.
  * @param {string=} auth Authorization header.
  * @param {string=} type Post type, defaults to 'posts'.
+ * @param {import('$types').Fetch_Posts_Args=} args Request arguments
  *
  * @todo Add args parameter.
  *
@@ -40,8 +41,8 @@ export async function get_post( id, url, auth = '', type = 'posts' ) {
  *
  * @return {Promise<import('zod').infer<typeof post_view>[]>} Post data.
  */
-export async function get_posts( url, auth = '', type = 'posts' ) {
-	return fetch_and_parse( post_view.array(), () => fetch_data( `${ url }/wp/v2/${ type }`, auth ) );
+export async function get_posts( url, auth = '', type = 'posts', args = undefined ) {
+	return fetch_and_parse( post_view.array(), () => fetch_data( `${ url }/wp/v2/${ type }`, auth, args ) );
 }
 
 /**
