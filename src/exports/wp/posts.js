@@ -35,8 +35,6 @@ export async function get_post( id, url, auth = '', type = 'posts' ) {
  * @param {string=} type Post type, defaults to 'posts'.
  * @param {import('$types').Fetch_Posts_Args=} args Request arguments
  *
- * @todo Add args parameter.
- *
  * @throws {Error|import('zod').ZodError}
  *
  * @return {Promise<import('zod').infer<typeof post_view>[]>} Post data.
