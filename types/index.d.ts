@@ -95,8 +95,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param type Post type, defaults to 'posts'.
 	 * @param args Request arguments
 	 *
-	 * @todo Add args parameter.
-	 *
 	 * @return {Promise<import('zod').infer<typeof post_view>[]>} Post data.
 	 */
 	export function get_posts(url: string, auth?: string | undefined, type?: string | undefined, args?: Fetch_Posts_Args | undefined): Promise<import('zod').infer<typeof post_view>[]>;
@@ -3539,6 +3537,18 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @return {Promise<import('zod').infer<typeof taxonomies_view>>} Taxonomies (view) data.
 	 */
 	export function get_taxonomies(url: string, auth?: string | undefined, args?: Fetch_Taxonomies_Args | undefined): Promise<import('zod').infer<typeof taxonomies_view>>;
+	/**
+	 * Get single taxonomy
+	 *
+	 * @since 0.2.0
+	 *
+	 * @param name Taxonomy name.
+	 * @param url  WordPress API root URL.
+	 * @param auth Authorization header.
+	 *
+	 * @return {Promise<import('zod').infer<typeof taxonomy_view>>} Taxonomies (view) data.
+	 */
+	export function get_taxonomy(name: string, url: string, auth?: string | undefined): Promise<import('zod').infer<typeof taxonomy_view>>;
 	/**
 	 * Get taxonomy terms
 	 *
