@@ -88,18 +88,17 @@ declare module '@kucrut/wp-api-helpers' {
 	/**
 	 * Get posts
 	 *
-	 * @since 0.1.0
+	 * @since 0.2.0
 	 *
 	 * @param url WordPress API root URL.
 	 * @param auth Authorization header.
 	 * @param type Post type, defaults to 'posts'.
-	 * @param id Post ID (optional).
 	 *
 	 * @todo Add args parameter.
 	 *
-	 * @return {Promise<import('zod').infer<typeof post_view>>} Post data.
+	 * @return {Promise<import('zod').infer<typeof post_view>[]>} Post data.
 	 */
-	export function get_posts(url: string, auth?: string | undefined, type?: string | undefined, id?: number | undefined): Promise<import('zod').infer<typeof post_view>>;
+	export function get_posts(url: string, auth?: string | undefined, type?: string | undefined): Promise<import('zod').infer<typeof post_view>[]>;
 	export const info: z.ZodObject<{
 		description: z.ZodString;
 		gmt_offset: z.ZodNumber;

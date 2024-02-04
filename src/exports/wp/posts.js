@@ -24,25 +24,18 @@ export async function get_post( id, url, auth = '', type = 'posts' ) {
 /**
  * Get posts
  *
- * @since 0.1.0
+ * @since 0.2.0
  *
  * @param {string} url WordPress API root URL.
  * @param {string=} auth Authorization header.
  * @param {string=} type Post type, defaults to 'posts'.
- * @param {number=} id Post ID (optional).
  *
  * @todo Add args parameter.
  *
  * @throws {Error|import('zod').ZodError}
  *
- * @return {Promise<import('zod').infer<typeof post_view>>} Post data.
+ * @return {Promise<import('zod').infer<typeof post_view>[]>} Post data.
  */
-export async function get_posts( url, auth = '', type = 'posts', id = undefined ) {
-	let endpoint = `${ url }/wp/v2/${ type }`;
-
-	if ( typeof id === 'number' && id > 0 ) {
-		endpoint = `${ endpoint }/${ id }`;
-	}
-
-	return fetch_and_parse( post_view, () => fetch_data( endpoint, auth ) );
+export async function get_posts( url, auth = '', type = 'posts' ) {
+	return fetch_and_parse( post_view.array(), () => fetch_data( `${ url }/wp/v2/${ type }`, auth ) );
 }
