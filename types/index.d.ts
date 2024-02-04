@@ -71,6 +71,21 @@ declare module '@kucrut/wp-api-helpers' {
 	 */
 	export function get_media(url: string, auth?: string | undefined, id?: number | undefined): Promise<import('zod').infer<typeof media_view>>;
 	/**
+	 * Get single post
+	 *
+	 * @since 0.2.0
+	 *
+	 * @param id Post ID (optional).
+	 * @param url WordPress API root URL.
+	 * @param auth Authorization header.
+	 * @param type Post type, defaults to 'posts'.
+	 *
+	 * @todo Add args parameter.
+	 *
+	 * @return {Promise<import('zod').infer<typeof post_view>>} Post data.
+	 */
+	export function get_post(id: number, url: string, auth?: string | undefined, type?: string | undefined): Promise<import('zod').infer<typeof post_view>>;
+	/**
 	 * Get posts
 	 *
 	 * @since 0.1.0
