@@ -39,7 +39,7 @@ export async function discover( url ) {
 /**
  * Get site info
  *
- * @since 0.1.0
+ * @since 0.2.0
  *
  * @param {string} url WordPress API root URL.
  * @param {string=} auth Authorization header.
