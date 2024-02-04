@@ -69,6 +69,18 @@ declare module '@kucrut/wp-api-helpers' {
 	 */
 	export function get_media(url: string, auth?: string | undefined, args?: Fetch_Media_Args | undefined): Promise<import('zod').infer<typeof media_view>[]>;
 	/**
+	 * Get single media
+	 *
+	 * @since 0.2.0
+	 *
+	 * @param id Media ID.
+	 * @param url WordPress API root URL.
+	 * @param auth Authorization header.
+	 *
+	 * @return {Promise<import('zod').infer<typeof media_view>>} Media data.
+	 */
+	export function get_single_media(id: number, url: string, auth?: string | undefined): Promise<import('zod').infer<typeof media_view>>;
+	/**
 	 * Get single post
 	 *
 	 * @since 0.2.0
