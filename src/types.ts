@@ -134,6 +134,25 @@ export interface Fetch_Posts_Args extends Fetch_Collection_Args {
 	sticky?: boolean;
 }
 
+export interface Fetch_Media_Args extends Fetch_Posts_Args {
+	/**
+	 * Limit result set to attachments of a particular media type.
+	 */
+	media_type?: 'application' | 'audio' | 'image' | 'text' | 'video';
+	/**
+	 * Limit result set to attachments of a particular MIME type.
+	 */
+	mime_type?: string;
+	/**
+	 * Limit result set to items with particular parent IDs.
+	 */
+	parent?: number[];
+	/**
+	 * Limit result set to all items except those of a particular parent ID.
+	 */
+	parent_exclude?: number[];
+}
+
 export interface Fetch_Taxonomies_Args extends Fetch_Args {
 	/**
 	 * Limit results to taxonomies associated with a specific post type.
