@@ -1,5 +1,11 @@
 # @kucrut/wp-api-helpers
 
+## 0.2.0
+
+### Minor Changes
+
+- 37bcc04: Add more helpers: get_info, get_post, get_posts, get_post_terms, get_media, get_settings
+
 ## 0.1.1
 
 ### Patch Changes
