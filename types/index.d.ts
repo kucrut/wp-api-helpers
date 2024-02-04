@@ -9,7 +9,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param username Username or email.
 	 * @param password Password.
 	 *
-	 * @return Auth data.
+	 * @return {Promise<import('zod').infer<typeof jwt_auth_data>>} Auth data.
 	 */
 	export function get_jwt_auth(url: string, username: string, password: string): Promise<import('zod').infer<typeof jwt_auth_data>>;
 	/**
@@ -20,7 +20,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param url WordPress API root URL.
 	 * @param token JWT token.
 	 *
-	 * @return Valid token data.
+	 * @return {Promise<import('zod').infer<typeof jwt_valid_token>>} Valid token data.
 	 */
 	export function get_jwt_validate_token(url: string, token: string): Promise<import('zod').infer<typeof jwt_valid_token>>;
 	/**
@@ -30,9 +30,20 @@ declare module '@kucrut/wp-api-helpers' {
 	 *
 	 * @param url WordPress URL.
 	 *
-	 * @return WordPress API root URL.
+	 * @return {Promise<string>} WordPress API root URL.
 	 */
 	export function discover(url: string): Promise<string>;
+	/**
+	 * Get site info
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param url WordPress API root URL.
+	 * @param auth Authorization header.
+	 *
+	 * @return {Promise<import('zod').infer<typeof info>>} Site info data.
+	 */
+	export function get_info(url: string, auth?: string | undefined): Promise<import('zod').infer<typeof info>>;
 	/**
 	 * Create media
 	 *
@@ -42,11 +53,26 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param auth Autorization header.
 	 * @param data Form data.
 	 *
-	 * @return Media (edit) data.
+	 * @return {Promise<import('zod').infer<typeof media_edit>>} Media (edit) data.
 	 */
 	export function create_media(url: string, auth: string, data: FormData): Promise<import('zod').infer<typeof media_edit>>;
+	/**
+	 * Get posts
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param url WordPress API root URL.
+	 * @param auth Authorization header.
+	 * @param type Post type, defaults to 'posts'.
+	 * @param id Post ID (optional).
+	 *
+	 * @todo Add args parameter.
+	 *
+	 * @return {Promise<import('zod').infer<typeof post_view>>} Post data.
+	 */
+	export function get_posts(url: string, auth?: string | undefined, type?: string | undefined, id?: number | undefined): Promise<import('zod').infer<typeof post_view>>;
 	export const info: z.ZodObject<{
-		desription: z.ZodString;
+		description: z.ZodString;
 		gmt_offset: z.ZodNumber;
 		home: z.ZodString;
 		name: z.ZodString;
@@ -93,7 +119,7 @@ declare module '@kucrut/wp-api-helpers' {
 		url: string;
 		name: string;
 		home: string;
-		desription: string;
+		description: string;
 		gmt_offset: number;
 		namespaces: string[];
 		site_icon_url: string;
@@ -115,7 +141,7 @@ declare module '@kucrut/wp-api-helpers' {
 		url: string;
 		name: string;
 		home: string;
-		desription: string;
+		description: string;
 		gmt_offset: number;
 		namespaces: string[];
 		site_icon_url: string;
@@ -210,7 +236,7 @@ declare module '@kucrut/wp-api-helpers' {
 			raw?: string | undefined;
 		}>;
 		type: z.ZodString;
-		_links: z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
+		_links: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
 			embeddable: z.ZodOptional<z.ZodBoolean>;
 			href: z.ZodString;
 			templated: z.ZodOptional<z.ZodBoolean>;
@@ -225,7 +251,7 @@ declare module '@kucrut/wp-api-helpers' {
 			embeddable?: boolean | undefined;
 			templated?: boolean | undefined;
 			type?: string | undefined;
-		}>, "many">>;
+		}>, "many">>>;
 	}, "strip", z.ZodTypeAny, {
 		link: string;
 		type: string;
@@ -237,12 +263,6 @@ declare module '@kucrut/wp-api-helpers' {
 			raw?: string | undefined;
 		};
 		date: Date;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
 		author: number;
 		excerpt: {
 			rendered: string;
@@ -252,6 +272,12 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		featured_media: number;
 		slug: string;
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
 	}, {
 		link: string;
 		type: string;
@@ -263,12 +289,6 @@ declare module '@kucrut/wp-api-helpers' {
 			raw?: string | undefined;
 		};
 		date: Date;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
 		author: number;
 		excerpt: {
 			rendered: string;
@@ -278,6 +298,12 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		featured_media: number;
 		slug: string;
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
 	}>;
 	export const post_view: z.ZodObject<{
 		link: z.ZodString;
@@ -300,7 +326,7 @@ declare module '@kucrut/wp-api-helpers' {
 			raw?: string | undefined;
 		}>;
 		date: z.ZodDate;
-		_links: z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
+		_links: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
 			embeddable: z.ZodOptional<z.ZodBoolean>;
 			href: z.ZodString;
 			templated: z.ZodOptional<z.ZodBoolean>;
@@ -315,7 +341,7 @@ declare module '@kucrut/wp-api-helpers' {
 			embeddable?: boolean | undefined;
 			templated?: boolean | undefined;
 			type?: string | undefined;
-		}>, "many">>;
+		}>, "many">>>;
 		author: z.ZodNumber;
 		excerpt: z.ZodObject<{
 			block_version: z.ZodOptional<z.ZodNumber>;
@@ -392,12 +418,6 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		status: string;
 		date: Date;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
 		author: number;
 		excerpt: {
 			rendered: string;
@@ -416,6 +436,12 @@ declare module '@kucrut/wp-api-helpers' {
 			rendered: string;
 			raw?: string | undefined;
 		};
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
 		meta?: never[] | Record<string, any> | undefined;
 		format?: string | undefined;
 		menu_order?: number | undefined;
@@ -440,12 +466,6 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		status: string;
 		date: Date;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
 		author: number;
 		excerpt: {
 			rendered: string;
@@ -464,6 +484,12 @@ declare module '@kucrut/wp-api-helpers' {
 			rendered: string;
 			raw?: string | undefined;
 		};
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
 		meta?: never[] | Record<string, any> | undefined;
 		format?: string | undefined;
 		menu_order?: number | undefined;
@@ -511,7 +537,7 @@ declare module '@kucrut/wp-api-helpers' {
 		parent: z.ZodOptional<z.ZodNumber>;
 		status: z.ZodString;
 		date: z.ZodDate;
-		_links: z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
+		_links: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
 			embeddable: z.ZodOptional<z.ZodBoolean>;
 			href: z.ZodString;
 			templated: z.ZodOptional<z.ZodBoolean>;
@@ -526,7 +552,7 @@ declare module '@kucrut/wp-api-helpers' {
 			embeddable?: boolean | undefined;
 			templated?: boolean | undefined;
 			type?: string | undefined;
-		}>, "many">>;
+		}>, "many">>>;
 		author: z.ZodNumber;
 		excerpt: z.ZodObject<{
 			block_version: z.ZodOptional<z.ZodNumber>;
@@ -587,12 +613,6 @@ declare module '@kucrut/wp-api-helpers' {
 		date: Date;
 		generated_slug: string;
 		permalink_template: string;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
 		author: number;
 		excerpt: {
 			rendered: string;
@@ -613,6 +633,12 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		meta?: never[] | Record<string, any> | undefined;
 		parent?: number | undefined;
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
 		format?: string | undefined;
 		menu_order?: number | undefined;
 		sticky?: boolean | undefined;
@@ -637,12 +663,6 @@ declare module '@kucrut/wp-api-helpers' {
 		date: Date;
 		generated_slug: string;
 		permalink_template: string;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
 		author: number;
 		excerpt: {
 			rendered: string;
@@ -663,6 +683,12 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		meta?: never[] | Record<string, any> | undefined;
 		parent?: number | undefined;
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
 		format?: string | undefined;
 		menu_order?: number | undefined;
 		sticky?: boolean | undefined;
@@ -688,7 +714,7 @@ declare module '@kucrut/wp-api-helpers' {
 			raw?: string | undefined;
 		}>;
 		date: z.ZodDate;
-		_links: z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
+		_links: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
 			embeddable: z.ZodOptional<z.ZodBoolean>;
 			href: z.ZodString;
 			templated: z.ZodOptional<z.ZodBoolean>;
@@ -703,7 +729,7 @@ declare module '@kucrut/wp-api-helpers' {
 			embeddable?: boolean | undefined;
 			templated?: boolean | undefined;
 			type?: string | undefined;
-		}>, "many">>;
+		}>, "many">>>;
 		author: z.ZodNumber;
 		slug: z.ZodString;
 		alt_text: z.ZodString;
@@ -812,12 +838,6 @@ declare module '@kucrut/wp-api-helpers' {
 		date: Date;
 		mime_type: string;
 		source_url: string;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
 		author: number;
 		slug: string;
 		alt_text: string;
@@ -841,6 +861,12 @@ declare module '@kucrut/wp-api-helpers' {
 				source_url: string;
 			}> | undefined;
 		};
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
 	}, {
 		link: string;
 		type: string;
@@ -860,12 +886,6 @@ declare module '@kucrut/wp-api-helpers' {
 		date: Date;
 		mime_type: string;
 		source_url: string;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
 		author: number;
 		slug: string;
 		alt_text: string;
@@ -889,6 +909,12 @@ declare module '@kucrut/wp-api-helpers' {
 				source_url: string;
 			}> | undefined;
 		};
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
 	}>;
 	export const media_view: z.ZodObject<Omit<{
 		content: z.ZodObject<{
@@ -983,7 +1009,7 @@ declare module '@kucrut/wp-api-helpers' {
 			raw?: string | undefined;
 		}>;
 		date: z.ZodDate;
-		_links: z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
+		_links: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
 			embeddable: z.ZodOptional<z.ZodBoolean>;
 			href: z.ZodString;
 			templated: z.ZodOptional<z.ZodBoolean>;
@@ -998,7 +1024,7 @@ declare module '@kucrut/wp-api-helpers' {
 			embeddable?: boolean | undefined;
 			templated?: boolean | undefined;
 			type?: string | undefined;
-		}>, "many">>;
+		}>, "many">>>;
 		author: z.ZodNumber;
 		slug: z.ZodString;
 		alt_text: z.ZodString;
@@ -1115,12 +1141,6 @@ declare module '@kucrut/wp-api-helpers' {
 		date: Date;
 		mime_type: string;
 		source_url: string;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
 		author: number;
 		slug: string;
 		comment_status: "closed" | "open";
@@ -1155,6 +1175,12 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		post: number | null;
 		meta?: never[] | Record<string, any> | undefined;
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
 		format?: string | undefined;
 	}, {
 		link: string;
@@ -1183,12 +1209,6 @@ declare module '@kucrut/wp-api-helpers' {
 		date: Date;
 		mime_type: string;
 		source_url: string;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
 		author: number;
 		slug: string;
 		comment_status: "closed" | "open";
@@ -1223,6 +1243,12 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		post: number | null;
 		meta?: never[] | Record<string, any> | undefined;
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
 		format?: string | undefined;
 	}>;
 	export const media_edit: z.ZodObject<{
@@ -1283,7 +1309,7 @@ declare module '@kucrut/wp-api-helpers' {
 		date: z.ZodDate;
 		mime_type: z.ZodString;
 		source_url: z.ZodString;
-		_links: z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
+		_links: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
 			embeddable: z.ZodOptional<z.ZodBoolean>;
 			href: z.ZodString;
 			templated: z.ZodOptional<z.ZodBoolean>;
@@ -1298,7 +1324,7 @@ declare module '@kucrut/wp-api-helpers' {
 			embeddable?: boolean | undefined;
 			templated?: boolean | undefined;
 			type?: string | undefined;
-		}>, "many">>;
+		}>, "many">>>;
 		author: z.ZodNumber;
 		slug: z.ZodString;
 		comment_status: z.ZodEnum<["open", "closed"]>;
@@ -1418,12 +1444,6 @@ declare module '@kucrut/wp-api-helpers' {
 		source_url: string;
 		generated_slug: string;
 		permalink_template: string;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
 		author: number;
 		slug: string;
 		comment_status: "closed" | "open";
@@ -1458,6 +1478,12 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		post: number | null;
 		meta?: never[] | Record<string, any> | undefined;
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
 		format?: string | undefined;
 	}, {
 		link: string;
@@ -1488,12 +1514,6 @@ declare module '@kucrut/wp-api-helpers' {
 		source_url: string;
 		generated_slug: string;
 		permalink_template: string;
-		_links: Record<string, {
-			href: string;
-			embeddable?: boolean | undefined;
-			templated?: boolean | undefined;
-			type?: string | undefined;
-		}[]>;
 		author: number;
 		slug: string;
 		comment_status: "closed" | "open";
@@ -1528,6 +1548,12 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		post: number | null;
 		meta?: never[] | Record<string, any> | undefined;
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
 		format?: string | undefined;
 	}>;
 	export const rest_error: z.ZodObject<{
@@ -3391,7 +3417,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param auth Authorization header.
 	 * @param args Request arguments.
 	 *
-	 * @return Taxonomies (view) data.
+	 * @return {Promise<import('zod').infer<typeof taxonomies_view>>} Taxonomies (view) data.
 	 */
 	export function get_taxonomies(url: string, auth?: string | undefined, args?: Fetch_Taxonomies_Args | undefined): Promise<import('zod').infer<typeof taxonomies_view>>;
 	/**
@@ -3404,7 +3430,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param auth Authorization header.
 	 * @param args Request arguments.
 	 *
-	 * @return Terms (view) data.
+	 * @return {Promise<import('zod').infer<typeof term_view>[]>} Terms (view) data.
 	 */
 	export function get_terms(url: string, taxonomy: string, auth?: string | undefined, args?: Fetch_Terms_Args | undefined): Promise<import('zod').infer<typeof term_view>[]>;
 	/**
@@ -3417,7 +3443,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param auth Authorization header (required when `id` is `me`).
 	 * @param context Request context, defaults to 'view'.
 	 *
-	 * @return User data.
+	 * @return {Promise<import('zod').infer<import('../../types.ts').Schema_By_Context<C, typeof user_view, typeof user_embed, typeof user_edit>>>} User data.
 	 */
 	export function get_user<C extends Context_Arg>(url: string, id: number | 'me', auth?: string | undefined, context?: C | undefined): Promise<import("zod").TypeOf<Schema_By_Context<C, import("zod").ZodObject<{
 		id: import("zod").ZodNumber;
@@ -3861,7 +3887,7 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @param schema Zod schema to parse the response with.
 	 * @param fetcher Fetch function.
 	 *
-	 * @return Parsed data.
+	 * @return {ReturnType<import('../../types.ts').Handle_Response<import('zod').infer<T>>>} Parsed data.
 	 */
 	export function fetch_and_parse<T extends import("zod").ZodTypeAny>(schema: T, fetcher: () => ReturnType<typeof fetch>): Promise<import("zod").TypeOf<T>>;
 	/**
@@ -3873,7 +3899,7 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @param auth Authentication header.
 	 * @param args Arguments.
 	 *
-	 * @return Response.
+	 * @return {ReturnType<typeof fetch>} Response.
 	 */
 	export function fetch_data(endpoint: string, auth?: string | undefined, args?: Record<string, any> | undefined): ReturnType<typeof fetch>;
 	/**
@@ -3885,7 +3911,7 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @param fallback Fallback message if the error is unrecognized.
 	 * @param dump     Whether to dump error if the error is unrecognized. (Defaults to true).
 	 *
-	 * @return Error message.
+	 * @return {string} Error message.
 	 */
 	export function get_error_message(error: unknown, fallback: string, dump?: boolean | undefined): string;
 	/**
@@ -3898,9 +3924,9 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @param response Fetch response object.
 	 * @param callback Callback to run when json is valid.
 	 *
-	 * @throws JSON.parse error.
+	 * @throws {Error} JSON.parse error.
 	 *
-	 * @return Whatever the callback returns.
+	 * @return {Promise<T>} Whatever the callback returns.
 	 */
 	export function handle_response<T>(response: Response, callback: Handle_Response<T>): Promise<T>;
 	/**
@@ -3909,7 +3935,7 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @since 0.1.0
 	 *
 	 * @param handler Handler function.
-	 * @return Bleh
+	 * @return {(resp: Response) => Promise<T>} Bleh
 	 */
 	export function make_response_handler<T>(handler: Handle_Response<T>): (resp: Response) => Promise<T>;
 	/**
@@ -3918,7 +3944,7 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @since 0.1.0
 	 *
 	 * @param args Fetch arguments.
-	 * @return Pairs of key and value strings.
+	 * @return {[string, string][]} Pairs of key and value strings.
 	 */
 	export function normalize_fetch_args(args: Record<string, any>): [string, string][];
 	/**
@@ -3929,7 +3955,7 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @param edit_schema Edit schema.
 	 * @param context Context.
 	 *
-	 * @return Schema.
+	 * @return {S} Schema.
 	 */
 	export function pick_schema<C extends Context_Arg, S extends import("zod").ZodTypeAny>(view_schema: S, embed_schema: S, edit_schema: S, context?: C | undefined): S;
 	type Context_Arg = undefined | 'view' | 'embed' | 'edit';
