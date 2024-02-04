@@ -36,7 +36,7 @@ declare module '@kucrut/wp-api-helpers' {
 	/**
 	 * Get site info
 	 *
-	 * @since 0.1.0
+	 * @since 0.2.0
 	 *
 	 * @param url WordPress API root URL.
 	 * @param auth Authorization header.
@@ -56,6 +56,20 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @return {Promise<import('zod').infer<typeof media_edit>>} Media (edit) data.
 	 */
 	export function create_media(url: string, auth: string, data: FormData): Promise<import('zod').infer<typeof media_edit>>;
+	/**
+	 * Get media
+	 *
+	 * @since 0.2.0
+	 *
+	 * @param url WordPress API root URL.
+	 * @param auth Authorization header.
+	 * @param id Post ID (optional).
+	 *
+	 * @todo Add args parameter.
+	 *
+	 * @return {Promise<import('zod').infer<typeof media_view>>} Media data.
+	 */
+	export function get_media(url: string, auth?: string | undefined, id?: number | undefined): Promise<import('zod').infer<typeof media_view>>;
 	/**
 	 * Get posts
 	 *
@@ -3475,7 +3489,7 @@ declare module '@kucrut/wp-api-helpers' {
 	/**
 	 * Get settings
 	 *
-	 * @since 0.1.0
+	 * @since 0.2.0
 	 *
 	 * @param url WordPress API root URL.
 	 * @param auth Authorization header.
