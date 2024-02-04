@@ -37,7 +37,7 @@ const renderable_item = z.object( {
 } );
 
 export const info = z.object( {
-	desription: z.string(),
+	description: z.string(),
 	gmt_offset: z.number(),
 	home: z.string().url(),
 	name: z.string(),
