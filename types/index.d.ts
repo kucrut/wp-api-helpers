@@ -63,13 +63,11 @@ declare module '@kucrut/wp-api-helpers' {
 	 *
 	 * @param url WordPress API root URL.
 	 * @param auth Authorization header.
-	 * @param id Post ID (optional).
+	 * @param args Request arguments.
 	 *
-	 * @todo Add args parameter.
-	 *
-	 * @return {Promise<import('zod').infer<typeof media_view>>} Media data.
+	 * @return {Promise<import('zod').infer<typeof media_view>[]>} Media data.
 	 */
-	export function get_media(url: string, auth?: string | undefined, id?: number | undefined): Promise<import('zod').infer<typeof media_view>>;
+	export function get_media(url: string, auth?: string | undefined, args?: Fetch_Media_Args | undefined): Promise<import('zod').infer<typeof media_view>[]>;
 	/**
 	 * Get single post
 	 *
@@ -4057,6 +4055,24 @@ declare module '@kucrut/wp-api-helpers' {
 		 * @default false
 		 */
 		sticky?: boolean;
+	}
+	interface Fetch_Media_Args extends Fetch_Posts_Args {
+		/**
+		 * Limit result set to attachments of a particular media type.
+		 */
+		media_type?: 'application' | 'audio' | 'image' | 'text' | 'video';
+		/**
+		 * Limit result set to attachments of a particular MIME type.
+		 */
+		mime_type?: string;
+		/**
+		 * Limit result set to items with particular parent IDs.
+		 */
+		parent?: number[];
+		/**
+		 * Limit result set to all items except those of a particular parent ID.
+		 */
+		parent_exclude?: number[];
 	}
 	interface Fetch_Taxonomies_Args extends Fetch_Args {
 		/**

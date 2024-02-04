@@ -32,20 +32,12 @@ export function create_media( url, auth, data ) {
  *
  * @param {string} url WordPress API root URL.
  * @param {string=} auth Authorization header.
- * @param {number=} id Post ID (optional).
- *
- * @todo Add args parameter.
+ * @param {import('$types').Fetch_Media_Args=} args Request arguments.
  *
  * @throws {Error|import('zod').ZodError}
  *
- * @return {Promise<import('zod').infer<typeof media_view>>} Media data.
+ * @return {Promise<import('zod').infer<typeof media_view>[]>} Media data.
  */
-export async function get_media( url, auth = '', id = undefined ) {
-	let endpoint = `${ url }/wp/v2/media`;
-
-	if ( typeof id === 'number' && id > 0 ) {
-		endpoint = `${ endpoint }/${ id }`;
-	}
-
-	return fetch_and_parse( media_view, () => fetch_data( endpoint, auth ) );
+export async function get_media( url, auth = '', args = undefined ) {
+	return fetch_and_parse( media_view.array(), () => fetch_data( `${ url }/wp/v2/media`, auth, args ) );
 }
