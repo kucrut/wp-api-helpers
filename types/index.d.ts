@@ -1579,6 +1579,70 @@ declare module '@kucrut/wp-api-helpers' {
 		};
 		message: string;
 	}>;
+	export const settings: z.ZodObject<{
+		date_format: z.ZodString;
+		default_category: z.ZodNumber;
+		default_comment_status: z.ZodEnum<["open", "closed"]>;
+		default_ping_status: z.ZodEnum<["open", "closed"]>;
+		default_post_format: z.ZodString;
+		description: z.ZodString;
+		email: z.ZodString;
+		language: z.ZodString;
+		page_for_posts: z.ZodNumber;
+		page_on_front: z.ZodNumber;
+		posts_per_page: z.ZodNumber;
+		show_on_front: z.ZodEnum<["page", "posts"]>;
+		site_icon: z.ZodNullable<z.ZodNumber>;
+		site_logo: z.ZodNullable<z.ZodNumber>;
+		start_of_week: z.ZodNumber;
+		time_format: z.ZodString;
+		timezone: z.ZodString;
+		title: z.ZodString;
+		url: z.ZodString;
+		use_smilies: z.ZodBoolean;
+	}, "strip", z.ZodTypeAny, {
+		url: string;
+		title: string;
+		email: string;
+		description: string;
+		language: string;
+		site_icon: number | null;
+		site_logo: number | null;
+		date_format: string;
+		default_category: number;
+		default_comment_status: "closed" | "open";
+		default_ping_status: "closed" | "open";
+		default_post_format: string;
+		page_for_posts: number;
+		page_on_front: number;
+		posts_per_page: number;
+		show_on_front: "page" | "posts";
+		start_of_week: number;
+		time_format: string;
+		timezone: string;
+		use_smilies: boolean;
+	}, {
+		url: string;
+		title: string;
+		email: string;
+		description: string;
+		language: string;
+		site_icon: number | null;
+		site_logo: number | null;
+		date_format: string;
+		default_category: number;
+		default_comment_status: "closed" | "open";
+		default_ping_status: "closed" | "open";
+		default_post_format: string;
+		page_for_posts: number;
+		page_on_front: number;
+		posts_per_page: number;
+		show_on_front: "page" | "posts";
+		start_of_week: number;
+		time_format: string;
+		timezone: string;
+		use_smilies: boolean;
+	}>;
 	export const taxonomy_embed: z.ZodObject<{
 		name: z.ZodString;
 		rest_base: z.ZodString;
@@ -3408,6 +3472,17 @@ declare module '@kucrut/wp-api-helpers' {
 		roles: string[];
 		meta?: never[] | Record<string, any> | undefined;
 	}>;
+	/**
+	 * Get settings
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param url WordPress API root URL.
+	 * @param auth Authorization header.
+	 *
+	 * @return {Promise<import('zod').infer<typeof settings>>} Settings data.
+	 */
+	export function get_settings(url: string, auth: string): Promise<import('zod').infer<typeof settings>>;
 	/**
 	 * Get taxonomies
 	 *
