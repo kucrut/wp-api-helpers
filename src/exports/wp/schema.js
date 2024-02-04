@@ -37,7 +37,7 @@ const renderable_item = z.object( {
 } );
 
 export const info = z.object( {
-	desription: z.string(),
+	description: z.string(),
 	gmt_offset: z.number(),
 	home: z.string().url(),
 	name: z.string(),
@@ -156,6 +156,29 @@ export const rest_error = z.object( {
 	data: z.object( {
 		status: z.number(),
 	} ),
+} );
+
+export const settings = z.object( {
+	date_format: z.string(),
+	default_category: z.number(),
+	default_comment_status: z.enum( [ 'open', 'closed' ] ),
+	default_ping_status: z.enum( [ 'open', 'closed' ] ),
+	default_post_format: z.string(),
+	description: z.string(),
+	email: z.string().email(),
+	language: z.string(),
+	page_for_posts: z.number(),
+	page_on_front: z.number(),
+	posts_per_page: z.number(),
+	show_on_front: z.enum( [ 'page', 'posts' ] ),
+	site_icon: z.number().nullable(),
+	site_logo: z.number().nullable(),
+	start_of_week: z.number(),
+	time_format: z.string(),
+	timezone: z.string(),
+	title: z.string(),
+	url: z.string(),
+	use_smilies: z.boolean(),
 } );
 
 export const taxonomy_embed = z.object( {
