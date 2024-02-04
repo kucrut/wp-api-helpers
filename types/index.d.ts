@@ -99,6 +99,21 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @return {Promise<import('zod').infer<typeof post_view>[]>} Post data.
 	 */
 	export function get_posts(url: string, auth?: string | undefined, type?: string | undefined): Promise<import('zod').infer<typeof post_view>[]>;
+	/**
+	 * Get post terms
+	 *
+	 * @since 0.2.0
+	 *
+	 * @param post Post object.
+	 * @param auth Authorization header (optional).
+	 *
+	 * @return {Promise<Post_Terms[]|null>} Array of post terms.
+	 */
+	export function get_post_terms(post: import('zod').infer<typeof post_view>, auth?: string | undefined): Promise<Post_Terms[] | null>;
+	export type Post_Terms = {
+		taxonomy: import('zod').infer<typeof taxonomy_view>;
+		terms: import('zod').infer<typeof term_view>[];
+	};
 	export const info: z.ZodObject<{
 		description: z.ZodString;
 		gmt_offset: z.ZodNumber;
