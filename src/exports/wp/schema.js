@@ -36,6 +36,22 @@ const renderable_item = z.object( {
 	rendered: z.string(),
 } );
 
+export const application_password_embed = z.object( {
+	app_id: z.string(),
+	name: z.string(),
+	uuid: z.string(),
+} );
+
+export const application_password_view = z.object( {
+	created: date_item,
+	last_ip: date_item,
+	last_used: z.string().ip(),
+} );
+
+export const application_password_edit = application_password_view.extend( {
+	password: z.string(),
+} );
+
 export const info = z.object( {
 	description: z.string(),
 	gmt_offset: z.number(),
@@ -297,3 +313,9 @@ export const user_edit = user_view.extend( {
 	roles: z.string().array(),
 	username: z.string(),
 } );
+
+/**
+ * @typedef {z.infer<application_password_edit>} WP_Application_Password_Edit
+ * @typedef {z.infer<application_password_embed>} WP_Application_Password_Embed
+ * @typedef {z.infer<application_password_view>} WP_Application_Password_View
+ */
