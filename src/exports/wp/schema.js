@@ -315,7 +315,7 @@ export const user_edit = user_view.extend( {
 } );
 
 /**
- * @typedef {z.infer<application_password_edit>} WP_Application_Password_Edit
- * @typedef {z.infer<application_password_embed>} WP_Application_Password_Embed
- * @typedef {z.infer<application_password_view>} WP_Application_Password_View
+ * @typedef {z.infer<typeof application_password_edit>} WP_Application_Password_Edit
+ * @typedef {z.infer<typeof application_password_embed>} WP_Application_Password_Embed
+ * @typedef {z.infer<typeof application_password_view>} WP_Application_Password_View
  */
