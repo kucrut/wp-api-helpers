@@ -2,6 +2,19 @@ import { rest_error } from '../wp/schema.js';
 import { ZodError } from 'zod';
 
 /**
+ * Create basic auth string
+ *
+ * @since 0.3.0
+ *
+ * @param {string} username Username.
+ * @param {*} password Password
+ * @return {string} Base64-encoded basic auth;
+ */
+export function create_basic_auth_string( username, password ) {
+	return `Basic ${ Buffer.from( `${ username }:${ password }` ).toString( 'base64' ) }`;
+}
+
+/**
  * Fetch and parse response
  *
  * @since 0.1.0
