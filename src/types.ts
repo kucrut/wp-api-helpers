@@ -181,6 +181,29 @@ export interface Fetch_Terms_Args extends Fetch_Args, Fetch_Collection_Args {
 	slug?: string[];
 }
 
+export interface Fetch_Users_Args extends Fetch_Args, Fetch_Collection_Args {
+	/**
+	 * Limit result set to users matching at least one specific capability provided. Accepts csv list or single capability.
+	 */
+	capabilities?: string[];
+	/**
+	 * Limit result set to users who have published posts.
+	 */
+	has_published_posts?: boolean | string[];
+	/**
+	 * Limit result set to users matching at least one specific role provided. Accepts csv list or single role.
+	 */
+	roles?: string[];
+	/**
+	 * Limit result set to terms with one or more specific slugs.
+	 */
+	slug?: string[];
+	/**
+	 * Limit result set to users who are considered authors.
+	 */
+	who?: 'authors';
+}
+
 export type Handle_Response< T > = ( data: unknown ) => Promise< T >;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
