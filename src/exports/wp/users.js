@@ -1,4 +1,4 @@
-import { fetch_and_parse, pick_schema } from '../utils/index.js';
+import { fetch_and_parse, fetch_data, pick_schema } from '../utils/index.js';
 import { user_edit, user_embed, user_view } from './schema.js';
 
 /**
@@ -45,4 +45,31 @@ export function get_user( url, id, auth = undefined, context = undefined ) {
 	}
 
 	return fetch_and_parse( schema, () => fetch( endpoint, { headers } ) );
+}
+
+/**
+ * Get users
+ *
+ * @since 0.1.0
+ *
+ * @template {import('../../types.ts').Context_Arg} C
+ *
+ * @param {string} url WordPress API root URL.
+ * @param {string=} auth Authorization header (required when `id` is `me`).
+ * @param {C=} context Request context, defaults to 'view'.
+ * @param {import('../../types.ts').Fetch_Users_Args} args Request arguments.
+ *
+ * @throws {Error|import('zod').ZodError}
+ *
+ * @return {Promise<import('zod').infer<import('../../types.ts').Schema_By_Context<C, typeof user_view, typeof user_embed, typeof user_edit>>[]>} Users data.
+ */
+export function get_users( url, auth = '', context = undefined, args = {} ) {
+	const fetch_args = args || {};
+	const schema = pick_schema( user_view, user_embed, user_edit, context ).array();
+
+	if ( context && context !== 'view' ) {
+		fetch_args.context = context;
+	}
+
+	return fetch_and_parse( schema, () => fetch_data( `${ url }/wp/v2/users`, auth, fetch_args ) );
 }
