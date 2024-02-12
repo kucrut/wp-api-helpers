@@ -34,9 +34,9 @@ export const settings = z.object( {
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|z.ZodError}
  *
- * @return {Promise<import('zod').infer<typeof settings>>} Settings data.
+ * @return {Promise<WP_Settings>} Settings data.
  */
 export async function get_settings( url, auth ) {
 	return fetch_and_parse( settings, () => fetch_data( `${ url }/wp/v2/settings`, auth ) );
