@@ -55,6 +55,13 @@ export const media_view = z
 export const media_edit = media_view.merge( post_edit_base );
 
 /**
+ * @typedef {z.infer<typeof image_size>} WP_Image_Size
+ * @typedef {z.infer<typeof media_view>} WP_Media
+ * @typedef {z.infer<typeof media_edit>} WP_Media_Edit
+ * @typedef {z.infer<typeof media_embed>} WP_Media_Embed
+ */
+
+/**
  * Create media
  *
  * @since 0.1.0
@@ -63,7 +70,7 @@ export const media_edit = media_view.merge( post_edit_base );
  * @param {string}   auth Autorization header.
  * @param {FormData} data Form data.
  *
- * @return {Promise<import('zod').infer<typeof media_edit>>} Media (edit) data.
+ * @return {Promise<WP_Media_Edit>} Media (edit) data.
  */
 export function create_media( url, auth, data ) {
 	return fetch_and_parse( media_edit, () => {
@@ -89,7 +96,7 @@ export function create_media( url, auth, data ) {
  *
  * @throws {Error|import('zod').ZodError}
  *
- * @return {Promise<import('zod').infer<typeof media_view>[]>} Media data.
+ * @return {Promise<WP_Media[]>} Media data.
  */
 export async function get_media( url, auth = '', args = undefined ) {
 	return fetch_and_parse( media_view.array(), () => fetch_data( `${ url }/wp/v2/media`, auth, args ) );
@@ -106,7 +113,7 @@ export async function get_media( url, auth = '', args = undefined ) {
  *
  * @throws {Error|import('zod').ZodError}
  *
- * @return {Promise<import('zod').infer<typeof media_view>>} Media data.
+ * @return {Promise<WP_Media>} Media data.
  */
 export async function get_single_media( id, url, auth = '' ) {
 	return fetch_and_parse( media_view, () => fetch_data( `${ url }/wp/v2/media/${ id }`, auth ) );
