@@ -23,7 +23,7 @@ export const info = z.object( {
 	_links: z.record( link_item ),
 } );
 
-/** @typedef {import('zod').infer<typeof info>} WP_Info */
+/** @typedef {z.infer<typeof info>} WP_Info */
 
 /**
  * Discover WordPress API root URL
