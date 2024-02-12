@@ -120,7 +120,7 @@ export function create_media( url, auth, data ) {
  * @param {C=} context Request context, defaults to 'view'.
  * @param {import('$types').Fetch_Media_Args=} args Request arguments.
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|z.ZodError}
  *
  * @return {Promise<z.infer<import('$types').Schema_By_Context<C, WP_Media, WP_Media_Embed, WP_Media_Edit>[]>>} Media collection data.
  */
@@ -142,7 +142,7 @@ export async function get_media( url, auth = '', context = undefined, args = und
  * @param {string=} auth Authorization header.
  * @param {C=} context Request context, defaults to 'view'.
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|z.ZodError}
  *
  * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof media_view, typeof media_embed, typeof media_edit>>>} Single media data.
  */
