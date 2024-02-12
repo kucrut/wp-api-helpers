@@ -21,10 +21,10 @@ export const application_password_deleted = z.object( {
 } );
 
 /**
+ * @typedef {z.infer<typeof application_password_view>} WP_Application_Password
  * @typedef {z.infer<typeof application_password_deleted>} WP_Application_Password_Deleted
  * @typedef {z.infer<typeof application_password_view>} WP_Application_Password_Edit
  * @typedef {z.infer<typeof application_password_embed>} WP_Application_Password_Embed
- * @typedef {z.infer<typeof application_password_view>} WP_Application_Password_View
  */
 
 /**
