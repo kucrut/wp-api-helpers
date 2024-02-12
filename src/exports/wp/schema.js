@@ -30,24 +30,3 @@ export const rest_error = z.object( {
 		status: z.number(),
 	} ),
 } );
-
-export const term_embed = z.object( {
-	id: z.number().min( 1 ),
-	link: z.string(),
-	name: z.string(),
-	slug: z.string(),
-	taxonomy: z.string(),
-	_links: z.object( {
-		'about': link_item,
-		'collection': link_item,
-		'self': link_item,
-		'wp:post_type': link_item,
-	} ),
-} );
-
-export const term_view = term_embed.extend( {
-	meta,
-	count: z.number(),
-	description: z.string(),
-	parent: z.number(),
-} );
