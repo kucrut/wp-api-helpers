@@ -113,16 +113,21 @@ export function create_media( url, auth, data ) {
  *
  * @since 0.2.0
  *
+ * @template {import('../../types.ts').Context_Arg} C
+ *
  * @param {string} url WordPress API root URL.
  * @param {string=} auth Authorization header.
+ * @param {C=} context Request context, defaults to 'view'.
  * @param {import('$types').Fetch_Media_Args=} args Request arguments.
  *
  * @throws {Error|import('zod').ZodError}
  *
- * @return {Promise<WP_Media[]>} Media data.
+ * @return {Promise<z.infer<import('../../types.ts').Schema_By_Context<C, WP_Media, WP_Media_Embed, WP_Media_Edit>[]>>} Media collection data.
  */
-export async function get_media( url, auth = '', args = undefined ) {
-	return fetch_and_parse( media_view.array(), () => fetch_data( `${ url }/wp/v2/media`, auth, args ) );
+export async function get_media( url, auth = '', context = undefined, args = undefined ) {
+	const schema = pick_schema( media_view, media_embed, media_edit, context ).array();
+
+	return fetch_and_parse( schema, () => fetch_data( generate_url( url, context ), auth, args ) );
 }
 
 /**
