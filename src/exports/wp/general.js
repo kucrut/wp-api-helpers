@@ -23,6 +23,8 @@ export const info = z.object( {
 	_links: z.record( link_item ),
 } );
 
+/** @typedef {import('zod').infer<typeof info>} WP_Info */
+
 /**
  * Discover WordPress API root URL
  *
@@ -68,7 +70,7 @@ export async function discover( url ) {
  *
  * @throws {Error|import('zod').ZodError}
  *
- * @return {Promise<import('zod').infer<typeof info>>} Site info data.
+ * @return {Promise<WP_Info>} Site info data.
  */
 export async function get_info( url, auth = '' ) {
 	return fetch_and_parse( info, () => fetch_data( `${ url }/`, auth ) );
