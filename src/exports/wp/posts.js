@@ -135,7 +135,7 @@ export async function get_posts( url, auth = '', type = 'posts', context = undef
  *
  * @since 0.2.0
  *
- * @param {import('zod').infer<typeof post_view>} post Post object.
+ * @param {WP_Post} post Post object.
  * @param {string=} auth Authorization header (optional).
  *
  * @return {Promise<WP_Post_Terms[]|null>} Array of post terms.
