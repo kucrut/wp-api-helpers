@@ -68,6 +68,33 @@ export function fetch_data( endpoint, auth = '', args = undefined ) {
 }
 
 /**
+ * Generate endpoint URL
+ *
+ * @since 0.3.0
+ *
+ * @param {string} base Base endpoint URL.
+ * @param {import('$types').Context_Arg=} context Request context, defaults to 'view'.
+ * @param {string|number=} suffix Endpoint suffix.
+ *
+ * @return {URL} URL object
+ */
+export function generate_endpoint_url( base, context = undefined, suffix = undefined ) {
+	let endpoint = base;
+
+	if ( suffix ) {
+		endpoint = `${ endpoint }/${ suffix }`;
+	}
+
+	const endpoint_url = new URL( endpoint );
+
+	if ( context ) {
+		endpoint_url.searchParams.append( 'context', context );
+	}
+
+	return endpoint_url;
+}
+
+/**
  * Get error message
  *
  * @since 0.1.0

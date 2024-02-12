@@ -16,7 +16,7 @@
 		"check-js": "eslint --ext .cjs,.js,.ts .",
 		"generate-types": "node scripts/generate-types.js",
 		"lint": "pnpm check-format && pnpm check-js && tsc",
-		"test": "vitest"
+		"test": "vitest --run"
 	},
 	"exports": {
 		"./package.json": "./package.json",
@@ -32,9 +32,9 @@
 	"devDependencies": {
 		"@changesets/cli": "^2.27.1",
 		"@types/node": "^20.11.17",
-		"@typescript-eslint/eslint-plugin": "^6.20.0",
-		"@typescript-eslint/parser": "^6.20.0",
-		"@wordpress/eslint-plugin": "^17.7.0",
+		"@typescript-eslint/eslint-plugin": "^6.21.0",
+		"@typescript-eslint/parser": "^6.21.0",
+		"@wordpress/eslint-plugin": "^17.8.0",
 		"dts-buddy": "^0.4.4",
 		"eslint": "^8.56.0",
 		"eslint-plugin-prettier": "^5.1.3",

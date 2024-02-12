@@ -1,5 +1,5 @@
 import { date_item } from './schema';
-import { fetch_and_parse, fetch_data, pick_schema } from '../utils';
+import { fetch_and_parse, fetch_data, generate_endpoint_url, pick_schema } from '../utils';
 import { get_info } from './general';
 import { z } from 'zod';
 
@@ -20,37 +20,23 @@ export const application_password_deleted = z.object( {
 	previous: application_password_view,
 } );
 
-/**
- * @typedef {z.infer<typeof application_password_deleted>} WP_Application_Password_Deleted
- * @typedef {z.infer<typeof application_password_view>} WP_Application_Password_Edit
- * @typedef {z.infer<typeof application_password_embed>} WP_Application_Password_Embed
- * @typedef {z.infer<typeof application_password_view>} WP_Application_Password_View
- */
+/** @typedef {z.infer<typeof application_password_view>} WP_Application_Password */
+/** @typedef {z.infer<typeof application_password_deleted>} WP_Application_Password_Deleted */
+/** @typedef {z.infer<typeof application_password_view>} WP_Application_Password_Edit */
+/** @typedef {z.infer<typeof application_password_embed>} WP_Application_Password_Embed */
 
 /**
  * Generate URL for application password requests
  *
  * @param {string} url WP API root URL.
- * @param {import('../../types.ts').User_ID_Arg} user_id User ID.
- * @param {import('../../types.ts').Context_Arg} context Request context.
+ * @param {import('$types').User_ID_Arg} user_id User ID.
+ * @param {import('$types').Context_Arg=} context Request context, defaults to 'view'
  * @param {string=} uuid Application password UUID.
  *
  * @return {URL} Endpoint URL.
  */
 function generate_url( url, user_id, context = undefined, uuid = '' ) {
-	let endpoint = `${ url }/wp/v2/users/${ user_id }/application-passwords`;
-
-	if ( uuid ) {
-		endpoint = `${ endpoint }/${ uuid }`;
-	}
-
-	const endpoint_url = new URL( endpoint );
-
-	if ( context ) {
-		endpoint_url.searchParams.append( 'context', context );
-	}
-
-	return endpoint_url;
+	return generate_endpoint_url( `${ url }/wp/v2/users/${ user_id }/application-passwords`, context, uuid );
 }
 
 /**
@@ -61,7 +47,7 @@ function generate_url( url, user_id, context = undefined, uuid = '' ) {
  * @param {string} url WP API root URL.
  * @return {Promise<string>} Application password authorization route.
  *
- * @throws {Error|import('z').ZodError}
+ * @throws {Error|z.ZodError}
  */
 export async function get_app_password_auth_endpoint( url ) {
 	const info = await get_info( url );
@@ -78,16 +64,16 @@ export async function get_app_password_auth_endpoint( url ) {
  *
  * @since 0.1.0
  *
- * @template {import('../../types.ts').Context_Arg} C
+ * @template {import('$types').Context_Arg} C
  *
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
- * @param {import('../../types.ts').User_ID_Arg} user_id User ID or 'me'.
+ * @param {import('$types').User_ID_Arg} user_id User ID or 'me'.
  * @param {C=} context Request context, defaults to 'view'.
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|z.ZodError}
  *
- * @return {Promise<import('zod').infer<import('../../types.ts').Schema_By_Context<C, typeof application_password_view, typeof application_password_embed, typeof application_password_view>>[]>} Application passwords data.
+ * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof application_password_view, typeof application_password_embed, typeof application_password_view>>[]>} Application password collection.
  */
 export function get_app_passwords( url, auth, user_id, context = undefined ) {
 	const schema = pick_schema(
@@ -107,7 +93,7 @@ export function get_app_passwords( url, auth, user_id, context = undefined ) {
  *
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
- * @param {import('../../types.ts').User_ID_Arg} user_id User ID or 'me'.
+ * @param {import('$types').User_ID_Arg} user_id User ID or 'me'.
  * @param {string} uuid Application password UUID.
  *
  * @throws {Error|import('zod').ZodError}
