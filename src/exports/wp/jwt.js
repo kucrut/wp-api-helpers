@@ -29,7 +29,7 @@ export const jwt_valid_token = z.object( {
  * @param {string} username Username or email.
  * @param {string} password Password.
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|z.ZodError}
  *
  * @return {Promise<JWT_Auth>} Auth data.
  */
