@@ -1,5 +1,11 @@
 # @kucrut/wp-api-helpers
 
+## 0.3.1
+
+### Patch Changes
+
+- 07a1b48: Fix imports
+
 ## 0.3.0
 
 ### Minor Changes
