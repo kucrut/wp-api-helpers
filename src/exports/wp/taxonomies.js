@@ -1,4 +1,4 @@
-import { fetch_and_parse, fetch_data } from '../utils/index.js';
+import { fetch_and_parse, fetch_data, generate_endpoint_url } from '../utils/index.js';
 import { link_item } from './schema.js';
 import { z } from 'zod';
 
@@ -72,6 +72,8 @@ export const taxonomy_edit = taxonomy_view.extend( {
 /**
  * Generate URL for taxonomy requests
  *
+ * @since 0.3.0
+ *
  * @param {string} url WP API root URL.
  * @param {import('$types').Context_Arg} context Request context.
  * @param {string=} name Taxonomy name.
@@ -79,19 +81,7 @@ export const taxonomy_edit = taxonomy_view.extend( {
  * @return {URL} Endpoint URL.
  */
 function generate_url( url, context = undefined, name = '' ) {
-	let endpoint = `${ url }/wp/v2/taxonomies`;
-
-	if ( name ) {
-		endpoint = `${ endpoint }/${ name }`;
-	}
-
-	const endpoint_url = new URL( endpoint );
-
-	if ( context ) {
-		endpoint_url.searchParams.append( 'context', context );
-	}
-
-	return endpoint_url;
+	return generate_endpoint_url( `${ url }/wp/v2/taxonomies`, context, name );
 }
 
 /**
