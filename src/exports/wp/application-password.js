@@ -1,5 +1,5 @@
 import { date_item } from './schema';
-import { fetch_and_parse, fetch_data, pick_schema } from '../utils';
+import { fetch_and_parse, fetch_data, generate_endpoint_url, pick_schema } from '../utils';
 import { get_info } from './general';
 import { z } from 'zod';
 
@@ -36,19 +36,7 @@ export const application_password_deleted = z.object( {
  * @return {URL} Endpoint URL.
  */
 function generate_url( url, user_id, context = undefined, uuid = '' ) {
-	let endpoint = `${ url }/wp/v2/users/${ user_id }/application-passwords`;
-
-	if ( uuid ) {
-		endpoint = `${ endpoint }/${ uuid }`;
-	}
-
-	const endpoint_url = new URL( endpoint );
-
-	if ( context ) {
-		endpoint_url.searchParams.append( 'context', context );
-	}
-
-	return endpoint_url;
+	return generate_endpoint_url( `${ url }/wp/v2/users/${ user_id }/application-passwords`, context, uuid );
 }
 
 /**
