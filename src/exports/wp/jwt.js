@@ -1,5 +1,19 @@
-import { jwt_auth_data, jwt_valid_token } from './schema.js';
 import { fetch_and_parse } from '../utils/index.js';
+import { z } from 'zod';
+
+export const jwt_auth_data = z.object( {
+	user_email: z.string().email(),
+	user_display_name: z.string(),
+	user_nicename: z.string(),
+	token: z.string(),
+} );
+
+export const jwt_valid_token = z.object( {
+	code: z.string().refine( val => val === 'jwt_auth_valid_token' ),
+	data: z.object( {
+		status: z.number().refine( val => val === 200 ),
+	} ),
+} );
 
 /**
  * Get JWT authentication

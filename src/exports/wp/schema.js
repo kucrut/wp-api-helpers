@@ -57,20 +57,6 @@ export const info = z.object( {
 	_links: z.record( link_item ),
 } );
 
-export const jwt_auth_data = z.object( {
-	user_email: z.string().email(),
-	user_display_name: z.string(),
-	user_nicename: z.string(),
-	token: z.string(),
-} );
-
-export const jwt_valid_token = z.object( {
-	code: z.string().refine( val => val === 'jwt_auth_valid_token' ),
-	data: z.object( {
-		status: z.number().refine( val => val === 200 ),
-	} ),
-} );
-
 export const post_embed = z.object( {
 	author: z.number().min( 1 ),
 	date: date_item,
