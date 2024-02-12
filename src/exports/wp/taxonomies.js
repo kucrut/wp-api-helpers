@@ -65,6 +65,10 @@ export const taxonomy_edit = taxonomy_view.extend( {
 	} ),
 } );
 
+/** @typedef {z.infer<taxonomy_view>} WP_Taxonomy */
+/** @typedef {z.infer<taxonomy_edit>} WP_Taxonomy_Edit */
+/** @typedef {z.infer<taxonomy_embed>} WP_Taxonomy_Embed */
+
 /**
  * Get taxonomies
  *
