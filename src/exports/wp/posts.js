@@ -54,7 +54,7 @@ export const post_edit = post_view.merge( post_edit_base );
  *
  * @param {string} url WP API root URL.
  * @param {string=} type Post type, defaults to 'posts'.
- * @param {import('$types').Context_Arg} context Request context.
+ * @param {import('$types').Context_Arg=} context Request context, defaults to 'view'
  * @param {number=} id Media ID.
  *
  * @return {URL} Endpoint URL.

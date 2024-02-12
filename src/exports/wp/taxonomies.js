@@ -75,7 +75,7 @@ export const taxonomy_edit = taxonomy_view.extend( {
  * @since 0.3.0
  *
  * @param {string} url WP API root URL.
- * @param {import('$types').Context_Arg} context Request context.
+ * @param {import('$types').Context_Arg=} context Request context, defaults to 'view'
  * @param {string=} name Taxonomy name.
  *
  * @return {URL} Endpoint URL.

@@ -30,7 +30,7 @@ export const application_password_deleted = z.object( {
  *
  * @param {string} url WP API root URL.
  * @param {import('$types').User_ID_Arg} user_id User ID.
- * @param {import('$types').Context_Arg} context Request context.
+ * @param {import('$types').Context_Arg=} context Request context, defaults to 'view'
  * @param {string=} uuid Application password UUID.
  *
  * @return {URL} Endpoint URL.
