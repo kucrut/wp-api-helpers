@@ -1,4 +1,4 @@
-import { fetch_and_parse, fetch_data } from '../utils/index.js';
+import { fetch_and_parse, fetch_data, pick_schema } from '../utils/index.js';
 import { post_edit_base, post_embed, post_view, renderable_item } from './schema.js';
 import { z } from 'zod';
 
@@ -58,6 +58,31 @@ export const media_edit = media_view.merge( post_edit_base );
 /** @typedef {z.infer<typeof media_view>} WP_Media */
 /** @typedef {z.infer<typeof media_edit>} WP_Media_Edit */
 /** @typedef {z.infer<typeof media_embed>} WP_Media_Embed */
+
+/**
+ * Generate URL for media requests
+ *
+ * @param {string} url WP API root URL.
+ * @param {import('../../types.ts').Context_Arg} context Request context.
+ * @param {number=} id Media ID.
+ *
+ * @return {URL} Endpoint URL.
+ */
+function generate_url( url, context = undefined, id = undefined ) {
+	let endpoint = `${ url }/wp/v2/media`;
+
+	if ( id ) {
+		endpoint = `${ endpoint }/${ id }`;
+	}
+
+	const endpoint_url = new URL( endpoint );
+
+	if ( context ) {
+		endpoint_url.searchParams.append( 'context', context );
+	}
+
+	return endpoint_url;
+}
 
 /**
  * Create media
