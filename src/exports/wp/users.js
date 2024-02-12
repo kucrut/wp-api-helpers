@@ -96,7 +96,7 @@ export function get_single_user( id, url, auth = '', context = undefined ) {
  *
  * @throws {Error|z.ZodError}
  *
- * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof user_view, typeof user_embed, typeof user_edit>>[]>} Users data.
+ * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof user_view, typeof user_embed, typeof user_edit>>[]>} User collection.
  */
 export function get_users( url, auth = '', context = undefined, args = {} ) {
 	const schema = pick_schema( user_view, user_embed, user_edit, context ).array();

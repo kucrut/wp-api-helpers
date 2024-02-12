@@ -111,7 +111,7 @@ export function create_media( url, auth, data ) {
  *
  * @throws {Error|z.ZodError}
  *
- * @return {Promise<z.infer<import('$types').Schema_By_Context<C, WP_Media, WP_Media_Embed, WP_Media_Edit>[]>>} Media collection data.
+ * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof media_view, typeof media_embed, typeof media_view>>[]>} Media collection.
  */
 export async function get_media( url, auth = '', context = undefined, args = undefined ) {
 	const schema = pick_schema( media_view, media_embed, media_edit, context ).array();

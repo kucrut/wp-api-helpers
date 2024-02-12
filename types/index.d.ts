@@ -20,9 +20,63 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param user_id User ID or 'me'.
 	 * @param context Request context, defaults to 'view'.
 	 *
-	 * @return {Promise<z.infer<import('../../types.ts').Schema_By_Context<C, WP_Application_Password, WP_Application_Password_Embed, WP_Application_Password_Edit>[]>>} Application passwords data.
+	 * @return {Promise<z.infer<import('../../types.ts').Schema_By_Context<C, typeof application_password_view, typeof application_password_embed, typeof application_password_view>>[]>} Application password collection.
 	 */
-	export function get_app_passwords<C extends Context_Arg>(url: string, auth: string, user_id: User_ID_Arg, context?: C | undefined): Promise<unknown>;
+	export function get_app_passwords<C extends Context_Arg>(url: string, auth: string, user_id: User_ID_Arg, context?: C | undefined): Promise<z.TypeOf<Schema_By_Context<C, z.ZodObject<{
+		name: z.ZodString;
+		uuid: z.ZodString;
+		app_id: z.ZodString;
+		created: z.ZodDate;
+		last_ip: z.ZodString;
+		last_used: z.ZodDate;
+	}, "strip", z.ZodTypeAny, {
+		name: string;
+		uuid: string;
+		app_id: string;
+		created: Date;
+		last_ip: string;
+		last_used: Date;
+	}, {
+		name: string;
+		uuid: string;
+		app_id: string;
+		created: Date;
+		last_ip: string;
+		last_used: Date;
+	}>, z.ZodObject<{
+		app_id: z.ZodString;
+		name: z.ZodString;
+		uuid: z.ZodString;
+	}, "strip", z.ZodTypeAny, {
+		name: string;
+		uuid: string;
+		app_id: string;
+	}, {
+		name: string;
+		uuid: string;
+		app_id: string;
+	}>, z.ZodObject<{
+		name: z.ZodString;
+		uuid: z.ZodString;
+		app_id: z.ZodString;
+		created: z.ZodDate;
+		last_ip: z.ZodString;
+		last_used: z.ZodDate;
+	}, "strip", z.ZodTypeAny, {
+		name: string;
+		uuid: string;
+		app_id: string;
+		created: Date;
+		last_ip: string;
+		last_used: Date;
+	}, {
+		name: string;
+		uuid: string;
+		app_id: string;
+		created: Date;
+		last_ip: string;
+		last_used: Date;
+	}>>>[]>;
 	/**
 	 * Get application passwords
 	 *
@@ -314,9 +368,899 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param context Request context, defaults to 'view'.
 	 * @param args Request arguments.
 	 *
-	 * @return {Promise<z.infer<import('../../types.ts').Schema_By_Context<C, WP_Media, WP_Media_Embed, WP_Media_Edit>[]>>} Media collection data.
+	 * @return {Promise<z.infer<import('../../types.ts').Schema_By_Context<C, typeof media_view, typeof media_embed, typeof media_view>>[]>} Media collection.
 	 */
-	export function get_media<C extends Context_Arg>(url: string, auth?: string | undefined, context?: C | undefined, args?: Fetch_Media_Args | undefined): Promise<unknown>;
+	export function get_media<C extends Context_Arg>(url: string, auth?: string | undefined, context?: C | undefined, args?: Fetch_Media_Args | undefined): Promise<z.TypeOf<Schema_By_Context<C, z.ZodObject<Omit<{
+		content: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodNever, "many">]>>;
+		template: z.ZodString;
+		description: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		parent: z.ZodOptional<z.ZodNumber>;
+		status: z.ZodString;
+		sticky: z.ZodOptional<z.ZodBoolean>;
+		modified: z.ZodDate;
+		post: z.ZodNullable<z.ZodNumber>;
+		excerpt: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		featured_media: z.ZodNumber;
+		comment_status: z.ZodEnum<["open", "closed"]>;
+		date_gmt: z.ZodDate;
+		format: z.ZodOptional<z.ZodString>;
+		menu_order: z.ZodOptional<z.ZodNumber>;
+		modified_gmt: z.ZodDate;
+		ping_status: z.ZodEnum<["open", "closed"]>;
+		guid: z.ZodObject<{
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			raw?: string | undefined;
+		}>;
+		link: z.ZodString;
+		type: z.ZodString;
+		id: z.ZodNumber;
+		title: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		date: z.ZodDate;
+		slug: z.ZodString;
+		_links: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
+			embeddable: z.ZodOptional<z.ZodBoolean>;
+			href: z.ZodString;
+			templated: z.ZodOptional<z.ZodBoolean>;
+			type: z.ZodOptional<z.ZodString>;
+		}, "strip", z.ZodTypeAny, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}>, "many">>>;
+		author: z.ZodNumber;
+		alt_text: z.ZodString;
+		caption: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		media_type: z.ZodString;
+		media_details: z.ZodObject<{
+			bitrate: z.ZodOptional<z.ZodNumber>;
+			dataformat: z.ZodOptional<z.ZodString>;
+			file: z.ZodOptional<z.ZodString>;
+			fileformat: z.ZodOptional<z.ZodString>;
+			filesize: z.ZodNumber;
+			height: z.ZodOptional<z.ZodNumber>;
+			image_meta: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+			length: z.ZodOptional<z.ZodNumber>;
+			length_formatted: z.ZodOptional<z.ZodString>;
+			width: z.ZodOptional<z.ZodNumber>;
+			sizes: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
+				file: z.ZodString;
+				height: z.ZodNumber;
+				mime_type: z.ZodString;
+				source_url: z.ZodString;
+				width: z.ZodNumber;
+			}, "strip", z.ZodTypeAny, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}>>>;
+		}, "strip", z.ZodTypeAny, {
+			filesize: number;
+			bitrate?: number | undefined;
+			dataformat?: string | undefined;
+			file?: string | undefined;
+			fileformat?: string | undefined;
+			height?: number | undefined;
+			image_meta?: Record<string, any> | undefined;
+			length?: number | undefined;
+			length_formatted?: string | undefined;
+			width?: number | undefined;
+			sizes?: Record<string, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}> | undefined;
+		}, {
+			filesize: number;
+			bitrate?: number | undefined;
+			dataformat?: string | undefined;
+			file?: string | undefined;
+			fileformat?: string | undefined;
+			height?: number | undefined;
+			image_meta?: Record<string, any> | undefined;
+			length?: number | undefined;
+			length_formatted?: string | undefined;
+			width?: number | undefined;
+			sizes?: Record<string, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}> | undefined;
+		}>;
+		mime_type: z.ZodString;
+		source_url: z.ZodString;
+	}, "content" | "parent" | "sticky" | "excerpt" | "featured_media" | "menu_order">, "strip", z.ZodTypeAny, {
+		link: string;
+		type: string;
+		id: number;
+		caption: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		template: string;
+		title: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		description: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		status: string;
+		date: Date;
+		slug: string;
+		author: number;
+		modified: Date;
+		media_type: string;
+		mime_type: string;
+		post: number | null;
+		comment_status: "closed" | "open";
+		date_gmt: Date;
+		modified_gmt: Date;
+		ping_status: "closed" | "open";
+		guid: {
+			rendered: string;
+			raw?: string | undefined;
+		};
+		source_url: string;
+		alt_text: string;
+		media_details: {
+			filesize: number;
+			bitrate?: number | undefined;
+			dataformat?: string | undefined;
+			file?: string | undefined;
+			fileformat?: string | undefined;
+			height?: number | undefined;
+			image_meta?: Record<string, any> | undefined;
+			length?: number | undefined;
+			length_formatted?: string | undefined;
+			width?: number | undefined;
+			sizes?: Record<string, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}> | undefined;
+		};
+		meta?: never[] | Record<string, any> | undefined;
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
+		format?: string | undefined;
+	}, {
+		link: string;
+		type: string;
+		id: number;
+		caption: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		template: string;
+		title: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		description: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		status: string;
+		date: Date;
+		slug: string;
+		author: number;
+		modified: Date;
+		media_type: string;
+		mime_type: string;
+		post: number | null;
+		comment_status: "closed" | "open";
+		date_gmt: Date;
+		modified_gmt: Date;
+		ping_status: "closed" | "open";
+		guid: {
+			rendered: string;
+			raw?: string | undefined;
+		};
+		source_url: string;
+		alt_text: string;
+		media_details: {
+			filesize: number;
+			bitrate?: number | undefined;
+			dataformat?: string | undefined;
+			file?: string | undefined;
+			fileformat?: string | undefined;
+			height?: number | undefined;
+			image_meta?: Record<string, any> | undefined;
+			length?: number | undefined;
+			length_formatted?: string | undefined;
+			width?: number | undefined;
+			sizes?: Record<string, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}> | undefined;
+		};
+		meta?: never[] | Record<string, any> | undefined;
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
+		format?: string | undefined;
+	}>, z.ZodObject<{
+		link: z.ZodString;
+		type: z.ZodString;
+		id: z.ZodNumber;
+		title: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		date: z.ZodDate;
+		slug: z.ZodString;
+		_links: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
+			embeddable: z.ZodOptional<z.ZodBoolean>;
+			href: z.ZodString;
+			templated: z.ZodOptional<z.ZodBoolean>;
+			type: z.ZodOptional<z.ZodString>;
+		}, "strip", z.ZodTypeAny, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}>, "many">>>;
+		author: z.ZodNumber;
+		alt_text: z.ZodString;
+		caption: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		media_type: z.ZodString;
+		media_details: z.ZodObject<{
+			bitrate: z.ZodOptional<z.ZodNumber>;
+			dataformat: z.ZodOptional<z.ZodString>;
+			file: z.ZodOptional<z.ZodString>;
+			fileformat: z.ZodOptional<z.ZodString>;
+			filesize: z.ZodNumber;
+			height: z.ZodOptional<z.ZodNumber>;
+			image_meta: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+			length: z.ZodOptional<z.ZodNumber>;
+			length_formatted: z.ZodOptional<z.ZodString>;
+			width: z.ZodOptional<z.ZodNumber>;
+			sizes: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
+				file: z.ZodString;
+				height: z.ZodNumber;
+				mime_type: z.ZodString;
+				source_url: z.ZodString;
+				width: z.ZodNumber;
+			}, "strip", z.ZodTypeAny, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}>>>;
+		}, "strip", z.ZodTypeAny, {
+			filesize: number;
+			bitrate?: number | undefined;
+			dataformat?: string | undefined;
+			file?: string | undefined;
+			fileformat?: string | undefined;
+			height?: number | undefined;
+			image_meta?: Record<string, any> | undefined;
+			length?: number | undefined;
+			length_formatted?: string | undefined;
+			width?: number | undefined;
+			sizes?: Record<string, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}> | undefined;
+		}, {
+			filesize: number;
+			bitrate?: number | undefined;
+			dataformat?: string | undefined;
+			file?: string | undefined;
+			fileformat?: string | undefined;
+			height?: number | undefined;
+			image_meta?: Record<string, any> | undefined;
+			length?: number | undefined;
+			length_formatted?: string | undefined;
+			width?: number | undefined;
+			sizes?: Record<string, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}> | undefined;
+		}>;
+		mime_type: z.ZodString;
+		source_url: z.ZodString;
+	}, "strip", z.ZodTypeAny, {
+		link: string;
+		type: string;
+		id: number;
+		caption: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		title: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		date: Date;
+		slug: string;
+		author: number;
+		media_type: string;
+		mime_type: string;
+		source_url: string;
+		alt_text: string;
+		media_details: {
+			filesize: number;
+			bitrate?: number | undefined;
+			dataformat?: string | undefined;
+			file?: string | undefined;
+			fileformat?: string | undefined;
+			height?: number | undefined;
+			image_meta?: Record<string, any> | undefined;
+			length?: number | undefined;
+			length_formatted?: string | undefined;
+			width?: number | undefined;
+			sizes?: Record<string, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}> | undefined;
+		};
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
+	}, {
+		link: string;
+		type: string;
+		id: number;
+		caption: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		title: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		date: Date;
+		slug: string;
+		author: number;
+		media_type: string;
+		mime_type: string;
+		source_url: string;
+		alt_text: string;
+		media_details: {
+			filesize: number;
+			bitrate?: number | undefined;
+			dataformat?: string | undefined;
+			file?: string | undefined;
+			fileformat?: string | undefined;
+			height?: number | undefined;
+			image_meta?: Record<string, any> | undefined;
+			length?: number | undefined;
+			length_formatted?: string | undefined;
+			width?: number | undefined;
+			sizes?: Record<string, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}> | undefined;
+		};
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
+	}>, z.ZodObject<Omit<{
+		content: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodNever, "many">]>>;
+		template: z.ZodString;
+		description: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		parent: z.ZodOptional<z.ZodNumber>;
+		status: z.ZodString;
+		sticky: z.ZodOptional<z.ZodBoolean>;
+		modified: z.ZodDate;
+		post: z.ZodNullable<z.ZodNumber>;
+		excerpt: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		featured_media: z.ZodNumber;
+		comment_status: z.ZodEnum<["open", "closed"]>;
+		date_gmt: z.ZodDate;
+		format: z.ZodOptional<z.ZodString>;
+		menu_order: z.ZodOptional<z.ZodNumber>;
+		modified_gmt: z.ZodDate;
+		ping_status: z.ZodEnum<["open", "closed"]>;
+		guid: z.ZodObject<{
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			raw?: string | undefined;
+		}>;
+		link: z.ZodString;
+		type: z.ZodString;
+		id: z.ZodNumber;
+		title: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		date: z.ZodDate;
+		slug: z.ZodString;
+		_links: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
+			embeddable: z.ZodOptional<z.ZodBoolean>;
+			href: z.ZodString;
+			templated: z.ZodOptional<z.ZodBoolean>;
+			type: z.ZodOptional<z.ZodString>;
+		}, "strip", z.ZodTypeAny, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}>, "many">>>;
+		author: z.ZodNumber;
+		alt_text: z.ZodString;
+		caption: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		media_type: z.ZodString;
+		media_details: z.ZodObject<{
+			bitrate: z.ZodOptional<z.ZodNumber>;
+			dataformat: z.ZodOptional<z.ZodString>;
+			file: z.ZodOptional<z.ZodString>;
+			fileformat: z.ZodOptional<z.ZodString>;
+			filesize: z.ZodNumber;
+			height: z.ZodOptional<z.ZodNumber>;
+			image_meta: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+			length: z.ZodOptional<z.ZodNumber>;
+			length_formatted: z.ZodOptional<z.ZodString>;
+			width: z.ZodOptional<z.ZodNumber>;
+			sizes: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
+				file: z.ZodString;
+				height: z.ZodNumber;
+				mime_type: z.ZodString;
+				source_url: z.ZodString;
+				width: z.ZodNumber;
+			}, "strip", z.ZodTypeAny, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}>>>;
+		}, "strip", z.ZodTypeAny, {
+			filesize: number;
+			bitrate?: number | undefined;
+			dataformat?: string | undefined;
+			file?: string | undefined;
+			fileformat?: string | undefined;
+			height?: number | undefined;
+			image_meta?: Record<string, any> | undefined;
+			length?: number | undefined;
+			length_formatted?: string | undefined;
+			width?: number | undefined;
+			sizes?: Record<string, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}> | undefined;
+		}, {
+			filesize: number;
+			bitrate?: number | undefined;
+			dataformat?: string | undefined;
+			file?: string | undefined;
+			fileformat?: string | undefined;
+			height?: number | undefined;
+			image_meta?: Record<string, any> | undefined;
+			length?: number | undefined;
+			length_formatted?: string | undefined;
+			width?: number | undefined;
+			sizes?: Record<string, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}> | undefined;
+		}>;
+		mime_type: z.ZodString;
+		source_url: z.ZodString;
+	}, "content" | "parent" | "sticky" | "excerpt" | "featured_media" | "menu_order">, "strip", z.ZodTypeAny, {
+		link: string;
+		type: string;
+		id: number;
+		caption: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		template: string;
+		title: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		description: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		status: string;
+		date: Date;
+		slug: string;
+		author: number;
+		modified: Date;
+		media_type: string;
+		mime_type: string;
+		post: number | null;
+		comment_status: "closed" | "open";
+		date_gmt: Date;
+		modified_gmt: Date;
+		ping_status: "closed" | "open";
+		guid: {
+			rendered: string;
+			raw?: string | undefined;
+		};
+		source_url: string;
+		alt_text: string;
+		media_details: {
+			filesize: number;
+			bitrate?: number | undefined;
+			dataformat?: string | undefined;
+			file?: string | undefined;
+			fileformat?: string | undefined;
+			height?: number | undefined;
+			image_meta?: Record<string, any> | undefined;
+			length?: number | undefined;
+			length_formatted?: string | undefined;
+			width?: number | undefined;
+			sizes?: Record<string, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}> | undefined;
+		};
+		meta?: never[] | Record<string, any> | undefined;
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
+		format?: string | undefined;
+	}, {
+		link: string;
+		type: string;
+		id: number;
+		caption: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		template: string;
+		title: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		description: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		status: string;
+		date: Date;
+		slug: string;
+		author: number;
+		modified: Date;
+		media_type: string;
+		mime_type: string;
+		post: number | null;
+		comment_status: "closed" | "open";
+		date_gmt: Date;
+		modified_gmt: Date;
+		ping_status: "closed" | "open";
+		guid: {
+			rendered: string;
+			raw?: string | undefined;
+		};
+		source_url: string;
+		alt_text: string;
+		media_details: {
+			filesize: number;
+			bitrate?: number | undefined;
+			dataformat?: string | undefined;
+			file?: string | undefined;
+			fileformat?: string | undefined;
+			height?: number | undefined;
+			image_meta?: Record<string, any> | undefined;
+			length?: number | undefined;
+			length_formatted?: string | undefined;
+			width?: number | undefined;
+			sizes?: Record<string, {
+				file: string;
+				height: number;
+				width: number;
+				mime_type: string;
+				source_url: string;
+			}> | undefined;
+		};
+		meta?: never[] | Record<string, any> | undefined;
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
+		format?: string | undefined;
+	}>>>[]>;
 	/**
 	 * Get single media
 	 *
@@ -2597,9 +3541,497 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param context Request context, defaults to 'view'.
 	 * @param args Request arguments
 	 *
-	 * @return {Promise<z.infer<import('../../types.ts').Schema_By_Context<C, typeof post_view, typeof post_embed, typeof post_edit>[]>>} Post collection data.
+	 * @return {Promise<z.infer<import('../../types.ts').Schema_By_Context<C, typeof post_view, typeof post_embed, typeof post_view>>[]>} Post collection.
 	 */
-	export function get_posts<C extends Context_Arg>(url: string, auth?: string | undefined, type?: string | undefined, context?: C | undefined, args?: Fetch_Posts_Args | undefined): Promise<unknown>;
+	export function get_posts<C extends Context_Arg>(url: string, auth?: string | undefined, type?: string | undefined, context?: C | undefined, args?: Fetch_Posts_Args | undefined): Promise<z.TypeOf<Schema_By_Context<C, z.ZodObject<{
+		link: z.ZodString;
+		type: z.ZodString;
+		id: z.ZodNumber;
+		title: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		date: z.ZodDate;
+		slug: z.ZodString;
+		_links: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
+			embeddable: z.ZodOptional<z.ZodBoolean>;
+			href: z.ZodString;
+			templated: z.ZodOptional<z.ZodBoolean>;
+			type: z.ZodOptional<z.ZodString>;
+		}, "strip", z.ZodTypeAny, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}>, "many">>>;
+		author: z.ZodNumber;
+		excerpt: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		featured_media: z.ZodNumber;
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodNever, "many">]>>;
+		comment_status: z.ZodEnum<["open", "closed"]>;
+		content: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		date_gmt: z.ZodDate;
+		format: z.ZodOptional<z.ZodString>;
+		menu_order: z.ZodOptional<z.ZodNumber>;
+		modified: z.ZodDate;
+		modified_gmt: z.ZodDate;
+		parent: z.ZodOptional<z.ZodNumber>;
+		ping_status: z.ZodEnum<["open", "closed"]>;
+		status: z.ZodString;
+		sticky: z.ZodOptional<z.ZodBoolean>;
+		template: z.ZodString;
+		guid: z.ZodObject<{
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			raw?: string | undefined;
+		}>;
+	}, "strip", z.ZodTypeAny, {
+		link: string;
+		type: string;
+		id: number;
+		content: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		template: string;
+		title: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		status: string;
+		date: Date;
+		slug: string;
+		author: number;
+		modified: Date;
+		excerpt: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		featured_media: number;
+		comment_status: "closed" | "open";
+		date_gmt: Date;
+		modified_gmt: Date;
+		ping_status: "closed" | "open";
+		guid: {
+			rendered: string;
+			raw?: string | undefined;
+		};
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
+		format?: string | undefined;
+		menu_order?: number | undefined;
+		parent?: number | undefined;
+		sticky?: boolean | undefined;
+	}, {
+		link: string;
+		type: string;
+		id: number;
+		content: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		template: string;
+		title: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		status: string;
+		date: Date;
+		slug: string;
+		author: number;
+		modified: Date;
+		excerpt: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		featured_media: number;
+		comment_status: "closed" | "open";
+		date_gmt: Date;
+		modified_gmt: Date;
+		ping_status: "closed" | "open";
+		guid: {
+			rendered: string;
+			raw?: string | undefined;
+		};
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
+		format?: string | undefined;
+		menu_order?: number | undefined;
+		parent?: number | undefined;
+		sticky?: boolean | undefined;
+	}>, z.ZodObject<{
+		author: z.ZodNumber;
+		date: z.ZodDate;
+		excerpt: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		featured_media: z.ZodNumber;
+		id: z.ZodNumber;
+		link: z.ZodString;
+		slug: z.ZodString;
+		title: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		type: z.ZodString;
+		_links: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
+			embeddable: z.ZodOptional<z.ZodBoolean>;
+			href: z.ZodString;
+			templated: z.ZodOptional<z.ZodBoolean>;
+			type: z.ZodOptional<z.ZodString>;
+		}, "strip", z.ZodTypeAny, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}>, "many">>>;
+	}, "strip", z.ZodTypeAny, {
+		link: string;
+		type: string;
+		id: number;
+		title: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		date: Date;
+		slug: string;
+		author: number;
+		excerpt: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		featured_media: number;
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
+	}, {
+		link: string;
+		type: string;
+		id: number;
+		title: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		date: Date;
+		slug: string;
+		author: number;
+		excerpt: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		featured_media: number;
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
+	}>, z.ZodObject<{
+		link: z.ZodString;
+		type: z.ZodString;
+		id: z.ZodNumber;
+		title: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		date: z.ZodDate;
+		slug: z.ZodString;
+		_links: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodArray<z.ZodObject<{
+			embeddable: z.ZodOptional<z.ZodBoolean>;
+			href: z.ZodString;
+			templated: z.ZodOptional<z.ZodBoolean>;
+			type: z.ZodOptional<z.ZodString>;
+		}, "strip", z.ZodTypeAny, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}>, "many">>>;
+		author: z.ZodNumber;
+		excerpt: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		featured_media: z.ZodNumber;
+		meta: z.ZodOptional<z.ZodUnion<[z.ZodRecord<z.ZodString, z.ZodAny>, z.ZodArray<z.ZodNever, "many">]>>;
+		comment_status: z.ZodEnum<["open", "closed"]>;
+		content: z.ZodObject<{
+			block_version: z.ZodOptional<z.ZodNumber>;
+			protected: z.ZodOptional<z.ZodBoolean>;
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		}>;
+		date_gmt: z.ZodDate;
+		format: z.ZodOptional<z.ZodString>;
+		menu_order: z.ZodOptional<z.ZodNumber>;
+		modified: z.ZodDate;
+		modified_gmt: z.ZodDate;
+		parent: z.ZodOptional<z.ZodNumber>;
+		ping_status: z.ZodEnum<["open", "closed"]>;
+		status: z.ZodString;
+		sticky: z.ZodOptional<z.ZodBoolean>;
+		template: z.ZodString;
+		guid: z.ZodObject<{
+			raw: z.ZodOptional<z.ZodString>;
+			rendered: z.ZodString;
+		}, "strip", z.ZodTypeAny, {
+			rendered: string;
+			raw?: string | undefined;
+		}, {
+			rendered: string;
+			raw?: string | undefined;
+		}>;
+	}, "strip", z.ZodTypeAny, {
+		link: string;
+		type: string;
+		id: number;
+		content: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		template: string;
+		title: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		status: string;
+		date: Date;
+		slug: string;
+		author: number;
+		modified: Date;
+		excerpt: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		featured_media: number;
+		comment_status: "closed" | "open";
+		date_gmt: Date;
+		modified_gmt: Date;
+		ping_status: "closed" | "open";
+		guid: {
+			rendered: string;
+			raw?: string | undefined;
+		};
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
+		format?: string | undefined;
+		menu_order?: number | undefined;
+		parent?: number | undefined;
+		sticky?: boolean | undefined;
+	}, {
+		link: string;
+		type: string;
+		id: number;
+		content: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		template: string;
+		title: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		status: string;
+		date: Date;
+		slug: string;
+		author: number;
+		modified: Date;
+		excerpt: {
+			rendered: string;
+			block_version?: number | undefined;
+			protected?: boolean | undefined;
+			raw?: string | undefined;
+		};
+		featured_media: number;
+		comment_status: "closed" | "open";
+		date_gmt: Date;
+		modified_gmt: Date;
+		ping_status: "closed" | "open";
+		guid: {
+			rendered: string;
+			raw?: string | undefined;
+		};
+		_links?: Record<string, {
+			href: string;
+			embeddable?: boolean | undefined;
+			templated?: boolean | undefined;
+			type?: string | undefined;
+		}[]> | undefined;
+		meta?: never[] | Record<string, any> | undefined;
+		format?: string | undefined;
+		menu_order?: number | undefined;
+		parent?: number | undefined;
+		sticky?: boolean | undefined;
+	}>>>[]>;
 	/**
 	 * Get post terms
 	 *
@@ -3655,9 +5087,336 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param context Request context, defaults to 'view'.
 	 * @param args Request arguments.
 	 *
-	 * @return {Promise<z.infer<import('../../types.ts').Schema_By_Context<C, typeof taxonomy_view, typeof taxonomy_embed, typeof taxonomy_edit>[]>>} Taxonomy collection data.
+	 * @return {Promise<z.infer<import('../../types.ts').Schema_By_Context<C, typeof taxonomy_view, typeof taxonomy_embed, typeof taxonomy_view>>[]>} Taxonomy collection.
 	 */
-	export function get_taxonomies<C extends Context_Arg>(url: string, auth?: string | undefined, context?: C | undefined, args?: Fetch_Taxonomies_Args | undefined): Promise<unknown>;
+	export function get_taxonomies<C extends Context_Arg>(url: string, auth?: string | undefined, context?: C | undefined, args?: Fetch_Taxonomies_Args | undefined): Promise<z.TypeOf<Schema_By_Context<C, z.ZodObject<{
+		name: z.ZodString;
+		slug: z.ZodString;
+		_links: z.ZodObject<{
+			collection: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+			'wp:items': z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+		}, "strip", z.ZodTypeAny, {
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:items': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}, {
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:items': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}>;
+		rest_base: z.ZodString;
+		rest_namespace: z.ZodString;
+		description: z.ZodString;
+		hierarchical: z.ZodBoolean;
+		types: z.ZodArray<z.ZodString, "many">;
+	}, "strip", z.ZodTypeAny, {
+		name: string;
+		description: string;
+		slug: string;
+		_links: {
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:items': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		rest_base: string;
+		rest_namespace: string;
+		hierarchical: boolean;
+		types: string[];
+	}, {
+		name: string;
+		description: string;
+		slug: string;
+		_links: {
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:items': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		rest_base: string;
+		rest_namespace: string;
+		hierarchical: boolean;
+		types: string[];
+	}>, z.ZodObject<{
+		name: z.ZodString;
+		rest_base: z.ZodString;
+		rest_namespace: z.ZodString;
+		slug: z.ZodString;
+		_links: z.ZodObject<{
+			collection: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+			'wp:items': z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+		}, "strip", z.ZodTypeAny, {
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:items': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}, {
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:items': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}>;
+	}, "strip", z.ZodTypeAny, {
+		name: string;
+		slug: string;
+		_links: {
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:items': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		rest_base: string;
+		rest_namespace: string;
+	}, {
+		name: string;
+		slug: string;
+		_links: {
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:items': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		rest_base: string;
+		rest_namespace: string;
+	}>, z.ZodObject<{
+		name: z.ZodString;
+		slug: z.ZodString;
+		_links: z.ZodObject<{
+			collection: z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+			'wp:items': z.ZodArray<z.ZodObject<{
+				embeddable: z.ZodOptional<z.ZodBoolean>;
+				href: z.ZodString;
+				templated: z.ZodOptional<z.ZodBoolean>;
+				type: z.ZodOptional<z.ZodString>;
+			}, "strip", z.ZodTypeAny, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}, {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}>, "many">;
+		}, "strip", z.ZodTypeAny, {
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:items': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}, {
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:items': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		}>;
+		rest_base: z.ZodString;
+		rest_namespace: z.ZodString;
+		description: z.ZodString;
+		hierarchical: z.ZodBoolean;
+		types: z.ZodArray<z.ZodString, "many">;
+	}, "strip", z.ZodTypeAny, {
+		name: string;
+		description: string;
+		slug: string;
+		_links: {
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:items': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		rest_base: string;
+		rest_namespace: string;
+		hierarchical: boolean;
+		types: string[];
+	}, {
+		name: string;
+		description: string;
+		slug: string;
+		_links: {
+			collection: {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+			'wp:items': {
+				href: string;
+				embeddable?: boolean | undefined;
+				templated?: boolean | undefined;
+				type?: string | undefined;
+			}[];
+		};
+		rest_base: string;
+		rest_namespace: string;
+		hierarchical: boolean;
+		types: string[];
+	}>>>[]>;
 	/**
 	 * Get single taxonomy
 	 *
@@ -5681,7 +7440,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param context Request context, defaults to 'view'.
 	 * @param args Request arguments.
 	 *
-	 * @return {Promise<z.infer<import('../../types.ts').Schema_By_Context<C, typeof user_view, typeof user_embed, typeof user_edit>>[]>} Users data.
+	 * @return {Promise<z.infer<import('../../types.ts').Schema_By_Context<C, typeof user_view, typeof user_embed, typeof user_edit>>[]>} User collection.
 	 */
 	export function get_users<C extends Context_Arg>(url: string, auth?: string | undefined, context?: C | undefined, args?: Fetch_Users_Args): Promise<z.TypeOf<Schema_By_Context<C, z.ZodObject<{
 		id: z.ZodNumber;

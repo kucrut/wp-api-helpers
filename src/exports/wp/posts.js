@@ -103,7 +103,7 @@ export async function get_single_post( id, url, auth = '', type = 'posts', conte
  *
  * @throws {Error|z.ZodError}
  *
- * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof post_view, typeof post_embed, typeof post_edit>[]>>} Post collection data.
+ * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof post_view, typeof post_embed, typeof post_view>>[]>} Post collection.
  */
 export async function get_posts( url, auth = '', type = 'posts', context = undefined, args = undefined ) {
 	const schema = pick_schema( post_view, post_embed, post_edit, context ).array();

@@ -98,11 +98,10 @@ function generate_url( url, context = undefined, name = '' ) {
  *
  * @throws {Error|z.ZodError}
  *
- * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof taxonomy_view, typeof taxonomy_embed, typeof taxonomy_edit>[]>>} Taxonomy collection data.
+ * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof taxonomy_view, typeof taxonomy_embed, typeof taxonomy_view>>[]>} Taxonomy collection.
  */
 export async function get_taxonomies( url, auth = '', context = undefined, args = undefined ) {
 	const schema = pick_schema( taxonomy_view, taxonomy_embed, taxonomy_edit, context );
-
 	const data = await fetch_and_parse( z.record( schema ), () => {
 		return fetch_data( generate_url( url, context ), auth, args );
 	} );
