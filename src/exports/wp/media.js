@@ -1,5 +1,6 @@
 import { fetch_and_parse, fetch_data, pick_schema } from '../utils/index.js';
-import { post_edit_base, post_embed, post_view, renderable_item } from './schema.js';
+import { post_edit_base, post_embed, post_view } from './posts.js';
+import { renderable_item } from './schema.js';
 import { z } from 'zod';
 
 export const image_size = z.object( {
