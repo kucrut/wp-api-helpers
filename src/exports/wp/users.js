@@ -55,8 +55,8 @@ function generate_url( url, context = undefined, id = undefined ) {
  *
  * @template {import('$types').Context_Arg} C
  *
+ * @param {import('$types').User_ID_Arg} id User ID or 'me'.
  * @param {string} url WordPress API root URL.
- * @param {number|'me'} id User ID or 'me'.
  * @param {string=} auth Authorization header (required when `id` is `me`).
  * @param {C=} context Request context, defaults to 'view'.
  *
@@ -64,7 +64,7 @@ function generate_url( url, context = undefined, id = undefined ) {
  *
  * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof user_view, typeof user_embed, typeof user_edit>>>} User data.
  */
-export function get_user( url, id, auth = undefined, context = undefined ) {
+export function get_single_user( id, url, auth = '', context = undefined ) {
 	if ( typeof id === 'number' && id < 1 ) {
 		throw new Error( '[get_user] User ID must be greater than 0.' );
 	}
@@ -77,21 +77,9 @@ export function get_user( url, id, auth = undefined, context = undefined ) {
 		throw new Error( '[get_user] auth is required when context is set to `edit`.' );
 	}
 
-	/** @type {HeadersInit} */
-	const headers = { Accept: 'application/json' };
-
-	if ( auth ) {
-		headers.Authorization = auth;
-	}
-
-	const endpoint = new URL( `${ url }/wp/v2/users/${ id }` );
 	const schema = pick_schema( user_view, user_embed, user_edit, context );
 
-	if ( context && context !== 'view' ) {
-		endpoint.searchParams.append( 'context', context );
-	}
-
-	return fetch_and_parse( schema, () => fetch( endpoint, { headers } ) );
+	return fetch_and_parse( schema, () => fetch_data( generate_url( url, context, id ) ) );
 }
 
 /**
