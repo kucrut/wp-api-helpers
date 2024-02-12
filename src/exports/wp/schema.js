@@ -12,7 +12,7 @@ const image_size = z.object( {
 	width: z.number(),
 } );
 
-const link_item = z.array(
+export const link_item = z.array(
 	z.object( {
 		embeddable: z.boolean().optional(),
 		href: z.string().url(),
@@ -34,27 +34,6 @@ const renderable_item = z.object( {
 	protected: z.boolean().optional(),
 	raw: z.string().optional(),
 	rendered: z.string(),
-} );
-
-export const info = z.object( {
-	description: z.string(),
-	gmt_offset: z.coerce.number(), // TODO.
-	home: z.string().url(),
-	name: z.string(),
-	namespaces: z.string().array(),
-	site_icon_url: z.string(),
-	site_icon: z.number(),
-	site_logo: z.number(),
-	timezone_string: z.string(),
-	url: z.string().url(),
-	authentication: z.record(
-		z.object( {
-			endpoints: z.object( {
-				authorization: z.string().url(),
-			} ),
-		} ),
-	),
-	_links: z.record( link_item ),
 } );
 
 export const post_embed = z.object( {

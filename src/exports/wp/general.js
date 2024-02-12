@@ -1,5 +1,27 @@
 import { fetch_and_parse, fetch_data } from '../utils/index.js';
-import { info } from './schema.js';
+import { link_item } from './schema.js';
+import { z } from 'zod';
+
+export const info = z.object( {
+	description: z.string(),
+	gmt_offset: z.coerce.number(), // TODO.
+	home: z.string().url(),
+	name: z.string(),
+	namespaces: z.string().array(),
+	site_icon_url: z.string(),
+	site_icon: z.number(),
+	site_logo: z.number(),
+	timezone_string: z.string(),
+	url: z.string().url(),
+	authentication: z.record(
+		z.object( {
+			endpoints: z.object( {
+				authorization: z.string().url(),
+			} ),
+		} ),
+	),
+	_links: z.record( link_item ),
+} );
 
 /**
  * Discover WordPress API root URL
