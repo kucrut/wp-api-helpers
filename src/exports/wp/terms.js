@@ -23,6 +23,10 @@ export const term_view = term_embed.extend( {
 	parent: z.number(),
 } );
 
+/** @typedef {z.infer<term_view>} WP_Term */
+/** @typedef {z.infer<term_embed>} WP_Term_Embed */
+/** @typedef {z.infer<term_view>} WP_Term_Edit */
+
 /**
  * Get taxonomy terms
  *
