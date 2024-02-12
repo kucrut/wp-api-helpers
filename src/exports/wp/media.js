@@ -54,12 +54,10 @@ export const media_view = z
 
 export const media_edit = media_view.merge( post_edit_base );
 
-/**
- * @typedef {z.infer<typeof image_size>} WP_Image_Size
- * @typedef {z.infer<typeof media_view>} WP_Media
- * @typedef {z.infer<typeof media_edit>} WP_Media_Edit
- * @typedef {z.infer<typeof media_embed>} WP_Media_Embed
- */
+/** @typedef {z.infer<typeof image_size>} WP_Image_Size */
+/** @typedef {z.infer<typeof media_view>} WP_Media */
+/** @typedef {z.infer<typeof media_edit>} WP_Media_Edit */
+/** @typedef {z.infer<typeof media_embed>} WP_Media_Embed */
 
 /**
  * Create media
