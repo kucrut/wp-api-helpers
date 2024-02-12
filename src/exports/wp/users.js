@@ -90,7 +90,7 @@ export function get_single_user( id, url, auth = '', context = undefined ) {
  * @template {import('$types').Context_Arg} C
  *
  * @param {string} url WordPress API root URL.
- * @param {string=} auth Authorization header (required when `id` is `me`).
+ * @param {string=} auth Authorization header.
  * @param {C=} context Request context, defaults to 'view'.
  * @param {import('$types').Fetch_Users_Args} args Request arguments.
  *
@@ -99,12 +99,7 @@ export function get_single_user( id, url, auth = '', context = undefined ) {
  * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof user_view, typeof user_embed, typeof user_edit>>[]>} Users data.
  */
 export function get_users( url, auth = '', context = undefined, args = {} ) {
-	const fetch_args = args || {};
 	const schema = pick_schema( user_view, user_embed, user_edit, context ).array();
 
-	if ( context && context !== 'view' ) {
-		fetch_args.context = context;
-	}
-
-	return fetch_and_parse( schema, () => fetch_data( `${ url }/wp/v2/users`, auth, fetch_args ) );
+	return fetch_and_parse( schema, () => fetch_data( generate_url( url, context ), auth, args ) );
 }
