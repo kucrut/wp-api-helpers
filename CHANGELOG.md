@@ -1,5 +1,12 @@
 # @kucrut/wp-api-helpers
 
+## 0.3.0
+
+### Minor Changes
+
+- 6bcee89: Restructure, modernize, unify, blah blah.
+- d5cdffe: Add get_app_password_auth_endpoint(), get_app_passwords(), delete_app_password()
+
 ## 0.2.0
 
 ### Minor Changes
