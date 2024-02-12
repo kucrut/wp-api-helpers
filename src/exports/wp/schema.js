@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const comment_ping_status = z.enum( [ 'open', 'closed' ] );
 
-const date_item = z.coerce.date();
+export const date_item = z.coerce.date();
 
 const image_size = z.object( {
 	file: z.string(),
@@ -38,7 +38,7 @@ const renderable_item = z.object( {
 
 export const info = z.object( {
 	description: z.string(),
-	gmt_offset: z.number(),
+	gmt_offset: z.coerce.number(), // TODO.
 	home: z.string().url(),
 	name: z.string(),
 	namespaces: z.string().array(),

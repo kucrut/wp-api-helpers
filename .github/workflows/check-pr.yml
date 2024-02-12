@@ -10,8 +10,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint_js:
-    name: Lint JS
+  lint_test_js:
+    name: Lint & Test JS
     runs-on: ubuntu-latest
 
     steps:
@@ -48,3 +48,6 @@ jobs:
 
       - name: Lint
         run: pnpm lint
+
+      - name: Test
+        run: pnpm vitest --run
