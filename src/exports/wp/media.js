@@ -1,4 +1,4 @@
-import { fetch_and_parse, fetch_data, pick_schema } from '../utils/index.js';
+import { fetch_and_parse, fetch_data, generate_endpoint_url, pick_schema } from '../utils/index.js';
 import { post_edit_base, post_embed, post_view } from './posts.js';
 import { renderable_item } from './schema.js';
 import { z } from 'zod';
@@ -70,19 +70,7 @@ export const media_edit = media_view.merge( post_edit_base );
  * @return {URL} Endpoint URL.
  */
 function generate_url( url, context = undefined, id = undefined ) {
-	let endpoint = `${ url }/wp/v2/media`;
-
-	if ( id ) {
-		endpoint = `${ endpoint }/${ id }`;
-	}
-
-	const endpoint_url = new URL( endpoint );
-
-	if ( context ) {
-		endpoint_url.searchParams.append( 'context', context );
-	}
-
-	return endpoint_url;
+	return generate_endpoint_url( `${ url }/wp/v2/media`, context, id );
 }
 
 /**
