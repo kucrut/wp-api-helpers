@@ -16,6 +16,11 @@ export const jwt_valid_token = z.object( {
 } );
 
 /**
+ * @typedef {z.infer<typeof jwt_auth_data>} JWT_Auth
+ * @typedef {z.infer<typeof jwt_valid_token>} JWT_Valid_Token
+ */
+
+/**
  * Get JWT authentication
  *
  * @since 0.1.0
@@ -26,7 +31,7 @@ export const jwt_valid_token = z.object( {
  *
  * @throws {Error|import('zod').ZodError}
  *
- * @return {Promise<import('zod').infer<typeof jwt_auth_data>>} Auth data.
+ * @return {Promise<JWT_Auth>} Auth data.
  */
 export async function get_jwt_auth( url, username, password ) {
 	return fetch_and_parse( jwt_auth_data, () => {
@@ -49,7 +54,7 @@ export async function get_jwt_auth( url, username, password ) {
  * @param {string} url WordPress API root URL.
  * @param {string} token JWT token.
  *
- * @return {Promise<import('zod').infer<typeof jwt_valid_token>>} Valid token data.
+ * @return {Promise<JWT_Valid_Token>} Valid token data.
  */
 export async function get_jwt_validate_token( url, token ) {
 	return fetch_and_parse( jwt_valid_token, () => {
