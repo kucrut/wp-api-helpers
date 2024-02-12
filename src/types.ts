@@ -5,6 +5,7 @@ import type { ZodTypeAny } from 'zod';
 export type Context_Arg = undefined | 'view' | 'embed' | 'edit';
 export type Operator_Arg = 'AND' | 'OR';
 export type Order_Arg = 'asc' | 'desc';
+export type User_ID_Arg = number | 'me';
 
 export interface Tax_Query {
 	include_children?: boolean;
