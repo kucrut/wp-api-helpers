@@ -29,8 +29,8 @@ export const application_password_deleted = z.object( {
  * Generate URL for application password requests
  *
  * @param {string} url WP API root URL.
- * @param {import('../../types.ts').User_ID_Arg} user_id User ID.
- * @param {import('../../types.ts').Context_Arg} context Request context.
+ * @param {import('$types').User_ID_Arg} user_id User ID.
+ * @param {import('$types').Context_Arg} context Request context.
  * @param {string=} uuid Application password UUID.
  *
  * @return {URL} Endpoint URL.
@@ -59,7 +59,7 @@ function generate_url( url, user_id, context = undefined, uuid = '' ) {
  * @param {string} url WP API root URL.
  * @return {Promise<string>} Application password authorization route.
  *
- * @throws {Error|import('z').ZodError}
+ * @throws {Error|z.ZodError}
  */
 export async function get_app_password_auth_endpoint( url ) {
 	const info = await get_info( url );
@@ -76,16 +76,16 @@ export async function get_app_password_auth_endpoint( url ) {
  *
  * @since 0.1.0
  *
- * @template {import('../../types.ts').Context_Arg} C
+ * @template {import('$types').Context_Arg} C
  *
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
- * @param {import('../../types.ts').User_ID_Arg} user_id User ID or 'me'.
+ * @param {import('$types').User_ID_Arg} user_id User ID or 'me'.
  * @param {C=} context Request context, defaults to 'view'.
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|z.ZodError}
  *
- * @return {Promise<z.infer<import('../../types.ts').Schema_By_Context<C, WP_Application_Password, WP_Application_Password_Embed, WP_Application_Password_Edit>[]>>} Application passwords data.
+ * @return {Promise<z.infer<import('$types').Schema_By_Context<C, WP_Application_Password, WP_Application_Password_Embed, WP_Application_Password_Edit>[]>>} Application passwords data.
  */
 export function get_app_passwords( url, auth, user_id, context = undefined ) {
 	const schema = pick_schema(
@@ -105,7 +105,7 @@ export function get_app_passwords( url, auth, user_id, context = undefined ) {
  *
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
- * @param {import('../../types.ts').User_ID_Arg} user_id User ID or 'me'.
+ * @param {import('$types').User_ID_Arg} user_id User ID or 'me'.
  * @param {string} uuid Application password UUID.
  *
  * @throws {Error|import('zod').ZodError}
