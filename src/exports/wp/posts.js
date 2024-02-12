@@ -7,7 +7,7 @@ import {
 	taxonomy_view,
 	term_view,
 } from './schema.js';
-import { fetch_and_parse, fetch_data } from '../utils/index.js';
+import { fetch_and_parse, fetch_data, pick_schema } from '../utils/index.js';
 import { z } from 'zod';
 
 export const post_edit_base = z.object( {
@@ -97,12 +97,14 @@ function generate_url( url, type, context = undefined, id = undefined ) {
  *
  * @todo Add args parameter.
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|z.ZodError}
  *
- * @return {Promise<import('zod').infer<typeof post_view>>} Post data.
+ * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof post_view, typeof post_embed, typeof post_edit>>>} Single media data.
  */
 export async function get_post( id, url, auth = '', type = 'posts', context = undefined ) {
-	return fetch_and_parse( post_view, () => fetch_data( generate_url( url, type, context, id ), auth ) );
+	const schema = pick_schema( post_view, post_embed, post_edit, context );
+
+	return fetch_and_parse( schema, () => fetch_data( generate_url( url, type, context, id ), auth ) );
 }
 
 /**
