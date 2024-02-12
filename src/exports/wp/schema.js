@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const comment_ping_status = z.enum( [ 'open', 'closed' ] );
+export const comment_ping_status = z.enum( [ 'open', 'closed' ] );
 
 export const date_item = z.coerce.date();
 
@@ -14,12 +14,7 @@ export const link_item = z.array(
 );
 
 // NOTE: When meta is an array it shouldn't have any value, hence the never type.
-const meta = z.record( z.any() ).or( z.array( z.never() ) ).optional();
-
-export const post_edit_base = z.object( {
-	generated_slug: z.string(),
-	permalink_template: z.string(),
-} );
+export const meta = z.record( z.any() ).or( z.array( z.never() ) ).optional();
 
 export const renderable_item = z.object( {
 	block_version: z.number().optional(),
@@ -27,41 +22,6 @@ export const renderable_item = z.object( {
 	raw: z.string().optional(),
 	rendered: z.string(),
 } );
-
-export const post_embed = z.object( {
-	author: z.number().min( 1 ),
-	date: date_item,
-	excerpt: renderable_item,
-	featured_media: z.number(),
-	id: z.number(),
-	link: z.string().url(),
-	slug: z.string(),
-	title: renderable_item,
-	type: z.string(),
-	_links: z.record( link_item ).optional(),
-} );
-
-export const post_view = post_embed.extend( {
-	meta,
-	comment_status: comment_ping_status,
-	content: renderable_item,
-	date_gmt: date_item,
-	format: z.string().optional(),
-	menu_order: z.number().optional(),
-	modified: date_item,
-	modified_gmt: date_item,
-	parent: z.number().optional(),
-	ping_status: comment_ping_status,
-	status: z.string(),
-	sticky: z.boolean().optional(),
-	template: z.string(),
-	guid: z.object( {
-		raw: z.string().url().optional(),
-		rendered: z.string().url(),
-	} ),
-} );
-
-export const post_edit = post_view.merge( post_edit_base );
 
 export const rest_error = z.object( {
 	code: z.string(),

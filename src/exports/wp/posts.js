@@ -1,5 +1,54 @@
+import {
+	comment_ping_status,
+	date_item,
+	link_item,
+	meta,
+	renderable_item,
+	taxonomy_view,
+	term_view,
+} from './schema.js';
 import { fetch_and_parse, fetch_data } from '../utils/index.js';
-import { post_view, taxonomy_view, term_view } from './schema.js';
+import { z } from 'zod';
+
+export const post_edit_base = z.object( {
+	generated_slug: z.string(),
+	permalink_template: z.string(),
+} );
+
+export const post_embed = z.object( {
+	author: z.number().min( 1 ),
+	date: date_item,
+	excerpt: renderable_item,
+	featured_media: z.number(),
+	id: z.number(),
+	link: z.string().url(),
+	slug: z.string(),
+	title: renderable_item,
+	type: z.string(),
+	_links: z.record( link_item ).optional(),
+} );
+
+export const post_view = post_embed.extend( {
+	meta,
+	comment_status: comment_ping_status,
+	content: renderable_item,
+	date_gmt: date_item,
+	format: z.string().optional(),
+	menu_order: z.number().optional(),
+	modified: date_item,
+	modified_gmt: date_item,
+	parent: z.number().optional(),
+	ping_status: comment_ping_status,
+	status: z.string(),
+	sticky: z.boolean().optional(),
+	template: z.string(),
+	guid: z.object( {
+		raw: z.string().url().optional(),
+		rendered: z.string().url(),
+	} ),
+} );
+
+export const post_edit = post_view.merge( post_edit_base );
 
 /**
  * @typedef {{taxonomy: import('zod').infer<typeof taxonomy_view>, terms: import('zod').infer<typeof term_view>[]}} Post_Terms
