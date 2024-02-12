@@ -50,9 +50,11 @@ export const post_view = post_embed.extend( {
 
 export const post_edit = post_view.merge( post_edit_base );
 
-/**
- * @typedef {{taxonomy: import('zod').infer<typeof taxonomy_view>, terms: import('zod').infer<typeof term_view>[]}} Post_Terms
- */
+/** @typedef {z.infer<typeof post_view>} WP_Post */
+/** @typedef {z.infer<typeof post_edit>} WP_Post_Edit */
+/** @typedef {z.infer<typeof post_embed>} WP_Post_Embed */
+/* TODO */
+/** @typedef {{taxonomy: z.infer<typeof taxonomy_view>, terms: z.infer<typeof term_view>[]}} WP_Post_Terms */
 
 /**
  * Get single post
@@ -100,7 +102,7 @@ export async function get_posts( url, auth = '', type = 'posts', args = undefine
  * @param {import('zod').infer<typeof post_view>} post Post object.
  * @param {string=} auth Authorization header (optional).
  *
- * @return {Promise<Post_Terms[]|null>} Array of post terms.
+ * @return {Promise<WP_Post_Terms[]|null>} Array of post terms.
  */
 export async function get_post_terms( post, auth = '' ) {
 	if ( ! post._links ) {
@@ -115,7 +117,7 @@ export async function get_post_terms( post, auth = '' ) {
 		return null;
 	}
 
-	/** @type {Post_Terms[]} */
+	/** @type {WP_Post_Terms[]} */
 	const result = [];
 
 	for ( const tax of taxonomies ) {
