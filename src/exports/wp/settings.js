@@ -1,5 +1,5 @@
-import { z } from 'zod';
 import { fetch_and_parse, fetch_data } from '../utils/index.js';
+import { z } from 'zod';
 
 export const settings = z.object( {
 	date_format: z.string(),
@@ -23,6 +23,8 @@ export const settings = z.object( {
 	url: z.string(),
 	use_smilies: z.boolean(),
 } );
+
+/** @typedef {z.infer<typeof settings>} WP_Settings */
 
 /**
  * Get settings
