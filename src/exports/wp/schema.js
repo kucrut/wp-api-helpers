@@ -42,10 +42,10 @@ export const application_password_embed = z.object( {
 	uuid: z.string(),
 } );
 
-export const application_password_view = z.object( {
+export const application_password_view = application_password_embed.extend( {
 	created: date_item,
-	last_ip: date_item,
-	last_used: z.string().ip(),
+	last_ip: z.string().ip(),
+	last_used: date_item,
 } );
 
 export const application_password_edit = application_password_view.extend( {
