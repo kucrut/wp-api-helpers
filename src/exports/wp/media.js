@@ -63,7 +63,7 @@ export const media_edit = media_view.merge( post_edit_base );
  * Generate URL for media requests
  *
  * @param {string} url WP API root URL.
- * @param {import('../../types.ts').Context_Arg} context Request context.
+ * @param {import('$types').Context_Arg} context Request context.
  * @param {number=} id Media ID.
  *
  * @return {URL} Endpoint URL.
@@ -113,7 +113,7 @@ export function create_media( url, auth, data ) {
  *
  * @since 0.2.0
  *
- * @template {import('../../types.ts').Context_Arg} C
+ * @template {import('$types').Context_Arg} C
  *
  * @param {string} url WordPress API root URL.
  * @param {string=} auth Authorization header.
@@ -122,7 +122,7 @@ export function create_media( url, auth, data ) {
  *
  * @throws {Error|import('zod').ZodError}
  *
- * @return {Promise<z.infer<import('../../types.ts').Schema_By_Context<C, WP_Media, WP_Media_Embed, WP_Media_Edit>[]>>} Media collection data.
+ * @return {Promise<z.infer<import('$types').Schema_By_Context<C, WP_Media, WP_Media_Embed, WP_Media_Edit>[]>>} Media collection data.
  */
 export async function get_media( url, auth = '', context = undefined, args = undefined ) {
 	const schema = pick_schema( media_view, media_embed, media_edit, context ).array();
@@ -135,7 +135,7 @@ export async function get_media( url, auth = '', context = undefined, args = und
  *
  * @since 0.2.0
  *
- * @template {import('../../types.ts').Context_Arg} C
+ * @template {import('$types').Context_Arg} C
  *
  * @param {number} id Media ID.
  * @param {string} url WordPress API root URL.
@@ -144,7 +144,7 @@ export async function get_media( url, auth = '', context = undefined, args = und
  *
  * @throws {Error|import('zod').ZodError}
  *
- * @return {Promise<z.infer<import('../../types.ts').Schema_By_Context<C, typeof media_view, typeof media_embed, typeof media_edit>>>} Single media data.
+ * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof media_view, typeof media_embed, typeof media_edit>>>} Single media data.
  */
 export async function get_single_media( id, url, auth = '', context = undefined ) {
 	const schema = pick_schema( media_view, media_embed, media_edit, context );
