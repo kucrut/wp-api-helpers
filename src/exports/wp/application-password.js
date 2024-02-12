@@ -85,7 +85,7 @@ export async function get_app_password_auth_endpoint( url ) {
  *
  * @throws {Error|import('zod').ZodError}
  *
- * @return {Promise<import('zod').infer<import('../../types.ts').Schema_By_Context<C, typeof application_password_view, typeof application_password_embed, typeof application_password_view>>[]>} Application passwords data.
+ * @return {Promise<z.infer<import('../../types.ts').Schema_By_Context<C, WP_Application_Password, WP_Application_Password_Embed, WP_Application_Password_Edit>[]>>} Application passwords data.
  */
 export function get_app_passwords( url, auth, user_id, context = undefined ) {
 	const schema = pick_schema(
