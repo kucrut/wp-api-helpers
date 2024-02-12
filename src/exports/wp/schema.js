@@ -51,32 +51,3 @@ export const term_view = term_embed.extend( {
 	description: z.string(),
 	parent: z.number(),
 } );
-
-export const user_embed = z.object( {
-	avatar_urls: z.record( z.string().url() ),
-	description: z.string(),
-	id: z.number().min( 1 ),
-	name: z.string().min( 1 ),
-	url: z.string().url(),
-	slug: z.string(),
-	_links: z.object( {
-		self: link_item,
-		collection: link_item,
-	} ),
-} );
-
-export const user_view = user_embed.extend( { meta } );
-
-export const user_edit = user_view.extend( {
-	capabilities: z.record( z.boolean() ),
-	email: z.string().email(),
-	extra_capabilities: z.record( z.boolean() ),
-	first_name: z.string(),
-	last_name: z.string(),
-	link: z.string().url(),
-	locale: z.string(),
-	nickname: z.string(),
-	registered_date: z.string().datetime( { offset: true } ),
-	roles: z.string().array(),
-	username: z.string(),
-} );
