@@ -1,6 +1,31 @@
+import { date_item } from './schema';
 import { fetch_and_parse, fetch_data, pick_schema } from '../utils';
 import { get_info } from './general';
-import { application_password_deleted, application_password_embed, application_password_view } from './schema';
+import { z } from 'zod';
+
+export const application_password_embed = z.object( {
+	app_id: z.string(),
+	name: z.string(),
+	uuid: z.string(),
+} );
+
+export const application_password_view = application_password_embed.extend( {
+	created: date_item,
+	last_ip: z.string().ip(),
+	last_used: date_item,
+} );
+
+export const application_password_deleted = z.object( {
+	deleted: z.boolean(),
+	previous: application_password_view,
+} );
+
+/**
+ * @typedef {z.infer<typeof application_password_deleted>} WP_Application_Password_Deleted
+ * @typedef {z.infer<typeof application_password_view>} WP_Application_Password_Edit
+ * @typedef {z.infer<typeof application_password_embed>} WP_Application_Password_Embed
+ * @typedef {z.infer<typeof application_password_view>} WP_Application_Password_View
+ */
 
 /**
  * Generate URL for application password requests
@@ -62,7 +87,7 @@ export async function get_app_password_auth_endpoint( url ) {
  *
  * @throws {Error|import('zod').ZodError}
  *
- * @return {Promise<import('zod').infer<import('../../types.ts').Schema_By_Context<C, typeof application_password_view, typeof application_password_embed, typeof application_password_view>>[]>} Users data.
+ * @return {Promise<import('zod').infer<import('../../types.ts').Schema_By_Context<C, typeof application_password_view, typeof application_password_embed, typeof application_password_view>>[]>} Application passwords data.
  */
 export function get_app_passwords( url, auth, user_id, context = undefined ) {
 	const schema = pick_schema(
@@ -87,7 +112,7 @@ export function get_app_passwords( url, auth, user_id, context = undefined ) {
  *
  * @throws {Error|import('zod').ZodError}
  *
- * @return {Promise<import('./schema').WP_Application_Password_Deleted>} Response data.
+ * @return {Promise<WP_Application_Password_Deleted>} Response data.
  */
 export function delete_app_password( url, auth, user_id, uuid ) {
 	return fetch_and_parse( application_password_deleted, () => {

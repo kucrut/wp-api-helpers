@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const comment_ping_status = z.enum( [ 'open', 'closed' ] );
 
-const date_item = z.coerce.date();
+export const date_item = z.coerce.date();
 
 const image_size = z.object( {
 	file: z.string(),
@@ -34,23 +34,6 @@ const renderable_item = z.object( {
 	protected: z.boolean().optional(),
 	raw: z.string().optional(),
 	rendered: z.string(),
-} );
-
-export const application_password_embed = z.object( {
-	app_id: z.string(),
-	name: z.string(),
-	uuid: z.string(),
-} );
-
-export const application_password_view = application_password_embed.extend( {
-	created: date_item,
-	last_ip: z.string().ip(),
-	last_used: date_item,
-} );
-
-export const application_password_deleted = z.object( {
-	deleted: z.boolean(),
-	previous: application_password_view,
 } );
 
 export const info = z.object( {
@@ -314,10 +297,3 @@ export const user_edit = user_view.extend( {
 	roles: z.string().array(),
 	username: z.string(),
 } );
-
-/**
- * @typedef {z.infer<typeof application_password_deleted>} WP_Application_Password_Deleted
- * @typedef {z.infer<typeof application_password_view>} WP_Application_Password_Edit
- * @typedef {z.infer<typeof application_password_embed>} WP_Application_Password_Embed
- * @typedef {z.infer<typeof application_password_view>} WP_Application_Password_View
- */
