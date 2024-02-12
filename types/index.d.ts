@@ -20,16 +20,16 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param user_id User ID or 'me'.
 	 * @param context Request context, defaults to 'view'.
 	 *
-	 * @return {Promise<import('zod').infer<import('../../types.ts').Schema_By_Context<C, typeof application_password_view, typeof application_password_embed, typeof application_password_view>>[]>} Users data.
+	 * @return {Promise<import('zod').infer<import('../../types.ts').Schema_By_Context<C, typeof application_password_view, typeof application_password_embed, typeof application_password_view>>[]>} Application passwords data.
 	 */
-	export function get_app_passwords<C extends Context_Arg>(url: string, auth: string, user_id: User_ID_Arg, context?: C | undefined): Promise<import("zod").TypeOf<Schema_By_Context<C, import("zod").ZodObject<{
-		name: import("zod").ZodString;
-		uuid: import("zod").ZodString;
-		app_id: import("zod").ZodString;
-		created: import("zod").ZodDate;
-		last_ip: import("zod").ZodString;
-		last_used: import("zod").ZodDate;
-	}, "strip", import("zod").ZodTypeAny, {
+	export function get_app_passwords<C extends Context_Arg>(url: string, auth: string, user_id: User_ID_Arg, context?: C | undefined): Promise<z.TypeOf<Schema_By_Context<C, z.ZodObject<{
+		name: z.ZodString;
+		uuid: z.ZodString;
+		app_id: z.ZodString;
+		created: z.ZodDate;
+		last_ip: z.ZodString;
+		last_used: z.ZodDate;
+	}, "strip", z.ZodTypeAny, {
 		name: string;
 		uuid: string;
 		app_id: string;
@@ -43,11 +43,11 @@ declare module '@kucrut/wp-api-helpers' {
 		created: Date;
 		last_ip: string;
 		last_used: Date;
-	}>, import("zod").ZodObject<{
-		app_id: import("zod").ZodString;
-		name: import("zod").ZodString;
-		uuid: import("zod").ZodString;
-	}, "strip", import("zod").ZodTypeAny, {
+	}>, z.ZodObject<{
+		app_id: z.ZodString;
+		name: z.ZodString;
+		uuid: z.ZodString;
+	}, "strip", z.ZodTypeAny, {
 		name: string;
 		uuid: string;
 		app_id: string;
@@ -55,14 +55,14 @@ declare module '@kucrut/wp-api-helpers' {
 		name: string;
 		uuid: string;
 		app_id: string;
-	}>, import("zod").ZodObject<{
-		name: import("zod").ZodString;
-		uuid: import("zod").ZodString;
-		app_id: import("zod").ZodString;
-		created: import("zod").ZodDate;
-		last_ip: import("zod").ZodString;
-		last_used: import("zod").ZodDate;
-	}, "strip", import("zod").ZodTypeAny, {
+	}>, z.ZodObject<{
+		name: z.ZodString;
+		uuid: z.ZodString;
+		app_id: z.ZodString;
+		created: z.ZodDate;
+		last_ip: z.ZodString;
+		last_used: z.ZodDate;
+	}, "strip", z.ZodTypeAny, {
 		name: string;
 		uuid: string;
 		app_id: string;
@@ -77,6 +77,103 @@ declare module '@kucrut/wp-api-helpers' {
 		last_ip: string;
 		last_used: Date;
 	}>>>[]>;
+	/**
+	 * Get application passwords
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param url WordPress API root URL.
+	 * @param auth Authorization header.
+	 * @param user_id User ID or 'me'.
+	 * @param uuid Application password UUID.
+	 *
+	 * @return {Promise<WP_Application_Password_Deleted>} Response data.
+	 */
+	export function delete_app_password(url: string, auth: string, user_id: User_ID_Arg, uuid: string): Promise<WP_Application_Password_Deleted>;
+	export const application_password_embed: z.ZodObject<{
+		app_id: z.ZodString;
+		name: z.ZodString;
+		uuid: z.ZodString;
+	}, "strip", z.ZodTypeAny, {
+		name: string;
+		uuid: string;
+		app_id: string;
+	}, {
+		name: string;
+		uuid: string;
+		app_id: string;
+	}>;
+	export const application_password_view: z.ZodObject<{
+		name: z.ZodString;
+		uuid: z.ZodString;
+		app_id: z.ZodString;
+		created: z.ZodDate;
+		last_ip: z.ZodString;
+		last_used: z.ZodDate;
+	}, "strip", z.ZodTypeAny, {
+		name: string;
+		uuid: string;
+		app_id: string;
+		created: Date;
+		last_ip: string;
+		last_used: Date;
+	}, {
+		name: string;
+		uuid: string;
+		app_id: string;
+		created: Date;
+		last_ip: string;
+		last_used: Date;
+	}>;
+	export const application_password_deleted: z.ZodObject<{
+		deleted: z.ZodBoolean;
+		previous: z.ZodObject<{
+			name: z.ZodString;
+			uuid: z.ZodString;
+			app_id: z.ZodString;
+			created: z.ZodDate;
+			last_ip: z.ZodString;
+			last_used: z.ZodDate;
+		}, "strip", z.ZodTypeAny, {
+			name: string;
+			uuid: string;
+			app_id: string;
+			created: Date;
+			last_ip: string;
+			last_used: Date;
+		}, {
+			name: string;
+			uuid: string;
+			app_id: string;
+			created: Date;
+			last_ip: string;
+			last_used: Date;
+		}>;
+	}, "strip", z.ZodTypeAny, {
+		deleted: boolean;
+		previous: {
+			name: string;
+			uuid: string;
+			app_id: string;
+			created: Date;
+			last_ip: string;
+			last_used: Date;
+		};
+	}, {
+		deleted: boolean;
+		previous: {
+			name: string;
+			uuid: string;
+			app_id: string;
+			created: Date;
+			last_ip: string;
+			last_used: Date;
+		};
+	}>;
+	export type WP_Application_Password_Deleted = z.infer<typeof application_password_deleted>;
+	export type WP_Application_Password_Edit = z.infer<typeof application_password_view>;
+	export type WP_Application_Password_Embed = z.infer<typeof application_password_embed>;
+	export type WP_Application_Password_View = z.infer<typeof application_password_view>;
 	/**
 	 * Get JWT authentication
 	 *
@@ -200,41 +297,7 @@ declare module '@kucrut/wp-api-helpers' {
 		taxonomy: import('zod').infer<typeof taxonomy_view>;
 		terms: import('zod').infer<typeof term_view>[];
 	};
-	export const application_password_embed: z.ZodObject<{
-		app_id: z.ZodString;
-		name: z.ZodString;
-		uuid: z.ZodString;
-	}, "strip", z.ZodTypeAny, {
-		name: string;
-		uuid: string;
-		app_id: string;
-	}, {
-		name: string;
-		uuid: string;
-		app_id: string;
-	}>;
-	export const application_password_view: z.ZodObject<{
-		name: z.ZodString;
-		uuid: z.ZodString;
-		app_id: z.ZodString;
-		created: z.ZodDate;
-		last_ip: z.ZodString;
-		last_used: z.ZodDate;
-	}, "strip", z.ZodTypeAny, {
-		name: string;
-		uuid: string;
-		app_id: string;
-		created: Date;
-		last_ip: string;
-		last_used: Date;
-	}, {
-		name: string;
-		uuid: string;
-		app_id: string;
-		created: Date;
-		last_ip: string;
-		last_used: Date;
-	}>;
+	export const date_item: z.ZodDate;
 	export const info: z.ZodObject<{
 		description: z.ZodString;
 		gmt_offset: z.ZodNumber;
@@ -3636,9 +3699,6 @@ declare module '@kucrut/wp-api-helpers' {
 		roles: string[];
 		meta?: never[] | Record<string, any> | undefined;
 	}>;
-	export type WP_Application_Password_Edit = z.infer<typeof application_password_view>;
-	export type WP_Application_Password_Embed = z.infer<typeof application_password_embed>;
-	export type WP_Application_Password_View = z.infer<typeof application_password_view>;
 	/**
 	 * Get settings
 	 *
