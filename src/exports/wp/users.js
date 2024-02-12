@@ -40,16 +40,16 @@ export const user_edit = user_view.extend( {
  *
  * @since 0.1.0
  *
- * @template {import('../../types.ts').Context_Arg} C
+ * @template {import('$types').Context_Arg} C
  *
  * @param {string} url WordPress API root URL.
  * @param {number|'me'} id User ID or 'me'.
  * @param {string=} auth Authorization header (required when `id` is `me`).
  * @param {C=} context Request context, defaults to 'view'.
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|z.ZodError}
  *
- * @return {Promise<import('zod').infer<import('../../types.ts').Schema_By_Context<C, typeof user_view, typeof user_embed, typeof user_edit>>>} User data.
+ * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof user_view, typeof user_embed, typeof user_edit>>>} User data.
  */
 export function get_user( url, id, auth = undefined, context = undefined ) {
 	if ( typeof id === 'number' && id < 1 ) {
@@ -86,16 +86,16 @@ export function get_user( url, id, auth = undefined, context = undefined ) {
  *
  * @since 0.1.0
  *
- * @template {import('../../types.ts').Context_Arg} C
+ * @template {import('$types').Context_Arg} C
  *
  * @param {string} url WordPress API root URL.
  * @param {string=} auth Authorization header (required when `id` is `me`).
  * @param {C=} context Request context, defaults to 'view'.
- * @param {import('../../types.ts').Fetch_Users_Args} args Request arguments.
+ * @param {import('$types').Fetch_Users_Args} args Request arguments.
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|z.ZodError}
  *
- * @return {Promise<import('zod').infer<import('../../types.ts').Schema_By_Context<C, typeof user_view, typeof user_embed, typeof user_edit>>[]>} Users data.
+ * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof user_view, typeof user_embed, typeof user_edit>>[]>} Users data.
  */
 export function get_users( url, auth = '', context = undefined, args = {} ) {
 	const fetch_args = args || {};
