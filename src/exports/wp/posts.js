@@ -57,14 +57,43 @@ export const post_edit = post_view.merge( post_edit_base );
 /** @typedef {{taxonomy: z.infer<typeof taxonomy_view>, terms: z.infer<typeof term_view>[]}} WP_Post_Terms */
 
 /**
+ * Generate URL for posts requests
+ *
+ * @param {string} url WP API root URL.
+ * @param {string=} type Post type, defaults to 'posts'.
+ * @param {import('$types').Context_Arg} context Request context.
+ * @param {number=} id Media ID.
+ *
+ * @return {URL} Endpoint URL.
+ */
+function generate_url( url, type, context = undefined, id = undefined ) {
+	let endpoint = `${ url }/wp/v2/${ type }`;
+
+	if ( id ) {
+		endpoint = `${ endpoint }/${ id }`;
+	}
+
+	const endpoint_url = new URL( endpoint );
+
+	if ( context ) {
+		endpoint_url.searchParams.append( 'context', context );
+	}
+
+	return endpoint_url;
+}
+
+/**
  * Get single post
  *
  * @since 0.2.0
+ *
+ * @template {import('$types').Context_Arg} C
  *
  * @param {number} id Post ID (optional).
  * @param {string} url WordPress API root URL.
  * @param {string=} auth Authorization header.
  * @param {string=} type Post type, defaults to 'posts'.
+ * @param {C=} context Request context, defaults to 'view'.
  *
  * @todo Add args parameter.
  *
@@ -72,8 +101,8 @@ export const post_edit = post_view.merge( post_edit_base );
  *
  * @return {Promise<import('zod').infer<typeof post_view>>} Post data.
  */
-export async function get_post( id, url, auth = '', type = 'posts' ) {
-	return fetch_and_parse( post_view, () => fetch_data( `${ url }/wp/v2/${ type }/${ id }`, auth ) );
+export async function get_post( id, url, auth = '', type = 'posts', context = undefined ) {
+	return fetch_and_parse( post_view, () => fetch_data( generate_url( url, type, context, id ), auth ) );
 }
 
 /**
