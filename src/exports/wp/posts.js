@@ -1,13 +1,6 @@
-import {
-	comment_ping_status,
-	date_item,
-	link_item,
-	meta,
-	renderable_item,
-	taxonomy_view,
-	term_view,
-} from './schema.js';
+import { comment_ping_status, date_item, link_item, meta, renderable_item, term_view } from './schema.js';
 import { fetch_and_parse, fetch_data, generate_endpoint_url, pick_schema } from '../utils/index.js';
+import { taxonomy_view } from './taxonomies.js';
 import { z } from 'zod';
 
 export const post_edit_base = z.object( {
