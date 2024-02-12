@@ -31,6 +31,10 @@ export const user_edit = user_view.extend( {
 	username: z.string(),
 } );
 
+/** @typedef {z.infer<typeof user_view>} WP_User */
+/** @typedef {z.infer<typeof user_edit>} WP_User_Edit */
+/** @typedef {z.infer<typeof user_embed>} WP_User_Embed */
+
 /**
  * Get user data
  *
