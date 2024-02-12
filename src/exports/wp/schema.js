@@ -54,7 +54,7 @@ export const application_password_edit = application_password_view.extend( {
 
 export const info = z.object( {
 	description: z.string(),
-	gmt_offset: z.number(),
+	gmt_offset: z.coerce.number(), // TODO.
 	home: z.string().url(),
 	name: z.string(),
 	namespaces: z.string().array(),
