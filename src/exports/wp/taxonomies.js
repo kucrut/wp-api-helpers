@@ -115,14 +115,19 @@ export async function get_taxonomies( url, auth = '', context = undefined, args 
  *
  * @since 0.2.0
  *
+ * @template {import('$types').Context_Arg} C
+ *
  * @param {string}  name Taxonomy name.
  * @param {string}  url  WordPress API root URL.
  * @param {string=} auth Authorization header.
+ * @param {C=} context Request context, defaults to 'view'.
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|z.ZodError}
  *
- * @return {Promise<import('zod').infer<typeof taxonomy_view>>} Taxonomies (view) data.
+ * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof taxonomy_view, typeof taxonomy_embed, typeof taxonomy_edit>>>} Single taxonomy data.
  */
-export async function get_taxonomy( name, url, auth ) {
-	return fetch_and_parse( taxonomy_view, () => fetch_data( `${ url }/wp/v2/taxonomies/${ name }`, auth ) );
+export async function get_single_taxonomy( name, url, auth = '', context = undefined ) {
+	const schema = pick_schema( taxonomy_view, taxonomy_embed, taxonomy_edit, context );
+
+	return fetch_and_parse( schema, () => fetch_data( generate_url( url, context, name ), auth ) );
 }
