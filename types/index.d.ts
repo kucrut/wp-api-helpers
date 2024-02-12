@@ -1,6 +1,16 @@
 declare module '@kucrut/wp-api-helpers' {
 	import type { z, ZodTypeAny } from 'zod';
 	/**
+	 * Get application password authorization endpoint
+	 *
+	 * @since 0.3.0
+	 *
+	 * @param url WP API root URL.
+	 * @return {Promise<string>} Application password authorization route.
+	 *
+	 * */
+	export function get_app_password_auth_endpoint(url: string): Promise<string>;
+	/**
 	 * Get JWT authentication
 	 *
 	 * @since 0.1.0
