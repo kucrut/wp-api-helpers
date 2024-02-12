@@ -1,5 +1,58 @@
 import { fetch_and_parse, fetch_data } from '../utils/index.js';
-import { media_edit, media_view } from './schema.js';
+import { post_edit_base, post_embed, post_view, renderable_item } from './schema.js';
+import { z } from 'zod';
+
+export const image_size = z.object( {
+	file: z.string(),
+	height: z.number(),
+	mime_type: z.string(),
+	source_url: z.string(),
+	width: z.number(),
+} );
+
+export const media_embed = post_embed
+	.omit( {
+		excerpt: true,
+		featured_media: true,
+	} )
+	.extend( {
+		alt_text: z.string(),
+		caption: renderable_item,
+		media_type: z.string(),
+		media_details: z.object( {
+			bitrate: z.number().optional(), // Video.
+			dataformat: z.string().optional(), // Video.
+			file: z.string().optional(), // Image.
+			fileformat: z.string().optional(), // Video.
+			filesize: z.number(), // Image.
+			height: z.number().optional(), // Image.
+			image_meta: z.record( z.any() ).optional(), // Image.
+			length: z.number().optional(), // Video.
+			length_formatted: z.string().optional(), // Video.
+			width: z.number().optional(), // Image.
+			sizes: z.record( image_size ).optional(), // Image.
+		} ),
+		mime_type: z.string(),
+		source_url: z.string().url(),
+	} );
+
+export const media_view = z
+	.object( {
+		description: renderable_item,
+		post: z.number().nullable(),
+	} )
+	.merge( post_view )
+	.merge( media_embed )
+	.omit( {
+		content: true,
+		excerpt: true,
+		featured_media: true,
+		menu_order: true,
+		parent: true,
+		sticky: true,
+	} );
+
+export const media_edit = media_view.merge( post_edit_base );
 
 /**
  * Create media

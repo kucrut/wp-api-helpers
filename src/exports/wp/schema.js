@@ -4,14 +4,6 @@ const comment_ping_status = z.enum( [ 'open', 'closed' ] );
 
 export const date_item = z.coerce.date();
 
-const image_size = z.object( {
-	file: z.string(),
-	height: z.number(),
-	mime_type: z.string(),
-	source_url: z.string(),
-	width: z.number(),
-} );
-
 export const link_item = z.array(
 	z.object( {
 		embeddable: z.boolean().optional(),
@@ -24,12 +16,12 @@ export const link_item = z.array(
 // NOTE: When meta is an array it shouldn't have any value, hence the never type.
 const meta = z.record( z.any() ).or( z.array( z.never() ) ).optional();
 
-const post_edit_base = z.object( {
+export const post_edit_base = z.object( {
 	generated_slug: z.string(),
 	permalink_template: z.string(),
 } );
 
-const renderable_item = z.object( {
+export const renderable_item = z.object( {
 	block_version: z.number().optional(),
 	protected: z.boolean().optional(),
 	raw: z.string().optional(),
@@ -70,50 +62,6 @@ export const post_view = post_embed.extend( {
 } );
 
 export const post_edit = post_view.merge( post_edit_base );
-
-export const media_embed = post_embed
-	.omit( {
-		excerpt: true,
-		featured_media: true,
-	} )
-	.extend( {
-		alt_text: z.string(),
-		caption: renderable_item,
-		media_type: z.string(),
-		media_details: z.object( {
-			bitrate: z.number().optional(), // Video.
-			dataformat: z.string().optional(), // Video.
-			file: z.string().optional(), // Image.
-			fileformat: z.string().optional(), // Video.
-			filesize: z.number(), // Image.
-			height: z.number().optional(), // Image.
-			image_meta: z.record( z.any() ).optional(), // Image.
-			length: z.number().optional(), // Video.
-			length_formatted: z.string().optional(), // Video.
-			width: z.number().optional(), // Image.
-			sizes: z.record( image_size ).optional(), // Image.
-		} ),
-		mime_type: z.string(),
-		source_url: z.string().url(),
-	} );
-
-export const media_view = z
-	.object( {
-		description: renderable_item,
-		post: z.number().nullable(),
-	} )
-	.merge( post_view )
-	.merge( media_embed )
-	.omit( {
-		content: true,
-		excerpt: true,
-		featured_media: true,
-		menu_order: true,
-		parent: true,
-		sticky: true,
-	} );
-
-export const media_edit = media_view.merge( post_edit_base );
 
 export const rest_error = z.object( {
 	code: z.string(),
