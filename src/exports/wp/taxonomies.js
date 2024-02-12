@@ -1,4 +1,4 @@
-import { fetch_and_parse, fetch_data, generate_endpoint_url } from '../utils/index.js';
+import { fetch_and_parse, fetch_data, generate_endpoint_url, pick_schema } from '../utils/index.js';
 import { link_item } from './schema.js';
 import { z } from 'zod';
 
@@ -89,16 +89,25 @@ function generate_url( url, context = undefined, name = '' ) {
  *
  * @since 0.1.0
  *
+ * @template {import('$types').Context_Arg} C
+ *
  * @param {string} url WordPress API root URL.
  * @param {string=} auth Authorization header.
+ * @param {C=} context Request context, defaults to 'view'.
  * @param {import("$types").Fetch_Taxonomies_Args=} args Request arguments.
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|z.ZodError}
  *
- * @return {Promise<import('zod').infer<typeof taxonomies_view>>} Taxonomies (view) data.
+ * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof taxonomy_view, typeof taxonomy_embed, typeof taxonomy_edit>[]>>} Single post data.
  */
-export async function get_taxonomies( url, auth, args ) {
-	return fetch_and_parse( z.record( taxonomy_view ), () => fetch_data( `${ url }/wp/v2/taxonomies`, auth, args ) );
+export async function get_taxonomies( url, auth = '', context = undefined, args = undefined ) {
+	const schema = pick_schema( taxonomy_view, taxonomy_embed, taxonomy_edit, context );
+
+	const data = await fetch_and_parse( z.record( schema ), () => {
+		return fetch_data( generate_url( url, context ), auth, args );
+	} );
+
+	return Object.values( data );
 }
 
 /**
