@@ -101,7 +101,7 @@ function generate_url( url, type, context = undefined, id = undefined ) {
  *
  * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof post_view, typeof post_embed, typeof post_edit>>>} Single media data.
  */
-export async function get_post( id, url, auth = '', type = 'posts', context = undefined ) {
+export async function get_single_post( id, url, auth = '', type = 'posts', context = undefined ) {
 	const schema = pick_schema( post_view, post_embed, post_edit, context );
 
 	return fetch_and_parse( schema, () => fetch_data( generate_url( url, type, context, id ), auth ) );
