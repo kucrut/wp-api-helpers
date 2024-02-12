@@ -16,7 +16,7 @@
 		"check-js": "eslint --ext .cjs,.js,.ts .",
 		"generate-types": "node scripts/generate-types.js",
 		"lint": "pnpm check-format && pnpm check-js && tsc",
-		"test": "vitest"
+		"test": "vitest --run"
 	},
 	"exports": {
 		"./package.json": "./package.json",
