@@ -1,6 +1,6 @@
 export * from './application-password.js';
-export * from './auth.js';
 export * from './general.js';
+export * from './jwt.js';
 export * from './media.js';
 export * from './posts.js';
 export * from './schema.js';
