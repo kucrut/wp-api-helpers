@@ -1,6 +1,7 @@
-import { comment_ping_status, date_item, link_item, meta, renderable_item, term_view } from './schema.js';
+import { comment_ping_status, date_item, link_item, meta, renderable_item } from './schema.js';
 import { fetch_and_parse, fetch_data, generate_endpoint_url, pick_schema } from '../utils/index.js';
 import { taxonomy_view } from './taxonomies.js';
+import { term_view } from './terms.js';
 import { z } from 'zod';
 
 export const post_edit_base = z.object( {
@@ -46,7 +47,6 @@ export const post_edit = post_view.merge( post_edit_base );
 /** @typedef {z.infer<typeof post_view>} WP_Post */
 /** @typedef {z.infer<typeof post_edit>} WP_Post_Edit */
 /** @typedef {z.infer<typeof post_embed>} WP_Post_Embed */
-/* TODO */
 /** @typedef {{taxonomy: z.infer<typeof taxonomy_view>, terms: z.infer<typeof term_view>[]}} WP_Post_Terms */
 
 /**
