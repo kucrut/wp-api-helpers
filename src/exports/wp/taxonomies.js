@@ -70,6 +70,31 @@ export const taxonomy_edit = taxonomy_view.extend( {
 /** @typedef {z.infer<taxonomy_embed>} WP_Taxonomy_Embed */
 
 /**
+ * Generate URL for taxonomy requests
+ *
+ * @param {string} url WP API root URL.
+ * @param {import('$types').Context_Arg} context Request context.
+ * @param {string=} name Taxonomy name.
+ *
+ * @return {URL} Endpoint URL.
+ */
+function generate_url( url, context = undefined, name = '' ) {
+	let endpoint = `${ url }/wp/v2/taxonomies`;
+
+	if ( name ) {
+		endpoint = `${ endpoint }/${ name }`;
+	}
+
+	const endpoint_url = new URL( endpoint );
+
+	if ( context ) {
+		endpoint_url.searchParams.append( 'context', context );
+	}
+
+	return endpoint_url;
+}
+
+/**
  * Get taxonomies
  *
  * @since 0.1.0
