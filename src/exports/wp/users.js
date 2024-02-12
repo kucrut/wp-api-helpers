@@ -79,7 +79,7 @@ export function get_single_user( id, url, auth = '', context = undefined ) {
 
 	const schema = pick_schema( user_view, user_embed, user_edit, context );
 
-	return fetch_and_parse( schema, () => fetch_data( generate_url( url, context, id ) ) );
+	return fetch_and_parse( schema, () => fetch_data( generate_url( url, context, id ), auth ) );
 }
 
 /**
