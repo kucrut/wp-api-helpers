@@ -1,6 +1,6 @@
-import { date_item } from './schema';
-import { fetch_and_parse, fetch_data, generate_endpoint_url, pick_schema } from '../utils';
-import { get_info } from './general';
+import { date_item } from './schema.js';
+import { fetch_and_parse, fetch_data, generate_endpoint_url, pick_schema } from '../utils/index.js';
+import { get_info } from './general.js';
 import { z } from 'zod';
 
 export const application_password_embed = z.object( {
