@@ -48,6 +48,11 @@ export const application_password_view = application_password_embed.extend( {
 	last_used: date_item,
 } );
 
+export const application_password_deleted = z.object( {
+	deleted: z.boolean(),
+	previous: application_password_view,
+} );
+
 export const info = z.object( {
 	description: z.string(),
 	gmt_offset: z.coerce.number(), // TODO.
@@ -311,6 +316,7 @@ export const user_edit = user_view.extend( {
 } );
 
 /**
+ * @typedef {z.infer<typeof application_password_deleted>} WP_Application_Password_Deleted
  * @typedef {z.infer<typeof application_password_view>} WP_Application_Password_Edit
  * @typedef {z.infer<typeof application_password_embed>} WP_Application_Password_Embed
  * @typedef {z.infer<typeof application_password_view>} WP_Application_Password_View
