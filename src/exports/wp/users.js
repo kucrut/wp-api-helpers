@@ -1,4 +1,4 @@
-import { fetch_and_parse, fetch_data, pick_schema } from '../utils/index.js';
+import { fetch_and_parse, fetch_data, generate_endpoint_url, pick_schema } from '../utils/index.js';
 import { link_item, meta } from './schema.js';
 import { z } from 'zod';
 
@@ -34,6 +34,19 @@ export const user_edit = user_view.extend( {
 /** @typedef {z.infer<typeof user_view>} WP_User */
 /** @typedef {z.infer<typeof user_edit>} WP_User_Edit */
 /** @typedef {z.infer<typeof user_embed>} WP_User_Embed */
+
+/**
+ * Generate URL for user requests
+ *
+ * @param {string} url WP API root URL.
+ * @param {import('$types').Context_Arg=} context Request context.
+ * @param {import('$types').User_ID_Arg=} id User ID or 'me'.
+ *
+ * @return {URL} Endpoint URL.
+ */
+function generate_url( url, context = undefined, id = undefined ) {
+	return generate_endpoint_url( `${ url }/wp/v2/users`, context, id );
+}
 
 /**
  * Get user data
