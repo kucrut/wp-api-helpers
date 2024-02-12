@@ -99,7 +99,7 @@ function generate_url( url, type, context = undefined, id = undefined ) {
  *
  * @throws {Error|z.ZodError}
  *
- * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof post_view, typeof post_embed, typeof post_edit>>>} Single media data.
+ * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof post_view, typeof post_embed, typeof post_edit>>>} Single post data.
  */
 export async function get_single_post( id, url, auth = '', type = 'posts', context = undefined ) {
 	const schema = pick_schema( post_view, post_embed, post_edit, context );
@@ -112,17 +112,22 @@ export async function get_single_post( id, url, auth = '', type = 'posts', conte
  *
  * @since 0.2.0
  *
+ * @template {import('$types').Context_Arg} C
+ *
  * @param {string} url WordPress API root URL.
  * @param {string=} auth Authorization header.
  * @param {string=} type Post type, defaults to 'posts'.
+ * @param {C=} context Request context, defaults to 'view'.
  * @param {import('$types').Fetch_Posts_Args=} args Request arguments
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|z.ZodError}
  *
- * @return {Promise<import('zod').infer<typeof post_view>[]>} Post data.
+ * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof post_view, typeof post_embed, typeof post_edit>[]>>} Post collection data.
  */
-export async function get_posts( url, auth = '', type = 'posts', args = undefined ) {
-	return fetch_and_parse( post_view.array(), () => fetch_data( `${ url }/wp/v2/${ type }`, auth, args ) );
+export async function get_posts( url, auth = '', type = 'posts', context = undefined, args = undefined ) {
+	const schema = pick_schema( post_view, post_embed, post_edit, context ).array();
+
+	return fetch_and_parse( schema, () => fetch_data( generate_url( url, type, context ), auth, args ) );
 }
 
 /**
