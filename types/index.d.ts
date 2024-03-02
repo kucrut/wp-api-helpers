@@ -78,7 +78,18 @@ declare module '@kucrut/wp-api-helpers' {
 		last_used: Date;
 	}>>>[]>;
 	/**
-	 * Get application passwords
+	 * Get current application password data
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param url WordPress API root URL.
+	 * @param auth Authorization header.
+	 *
+	 * @return {Promise<WP_Application_Password>} Response data.
+	 */
+	export function get_current_app_password(url: string, auth: string): Promise<WP_Application_Password>;
+	/**
+	 * Delete application password
 	 *
 	 * @since 0.1.0
 	 *
