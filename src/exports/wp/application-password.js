@@ -87,7 +87,7 @@ export function get_app_passwords( url, auth, user_id, context = undefined ) {
 }
 
 /**
- * Get application passwords
+ * Delete application password
  *
  * @since 0.1.0
  *
