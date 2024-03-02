@@ -1,5 +1,11 @@
 # @kucrut/wp-api-helpers
 
+## 0.4.0
+
+### Minor Changes
+
+- 03acbf9: Add get_current_app_password()
+
 ## 0.3.1
 
 ### Patch Changes
