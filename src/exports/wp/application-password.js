@@ -87,6 +87,29 @@ export function get_app_passwords( url, auth, user_id, context = undefined ) {
 }
 
 /**
+ * Get current application password data
+ *
+ * @since 0.1.0
+ *
+ * @param {string} url WordPress API root URL.
+ * @param {string} auth Authorization header.
+ *
+ * @throws {Error|import('zod').ZodError}
+ *
+ * @return {Promise<WP_Application_Password>} Response data.
+ */
+export function get_current_app_password( url, auth ) {
+	return fetch_and_parse( application_password_view, () => {
+		return fetch( generate_url( url, 'me' ) + '/introspect', {
+			headers: {
+				Authorization: auth,
+				Accept: 'application/json',
+			},
+		} );
+	} );
+}
+
+/**
  * Delete application password
  *
  * @since 0.1.0
