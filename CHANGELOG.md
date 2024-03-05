@@ -1,5 +1,11 @@
 # @kucrut/wp-api-helpers
 
+## 0.5.0
+
+### Minor Changes
+
+- ba5d4f4: Support custom fetch function
+
 ## 0.4.0
 
 ### Minor Changes
