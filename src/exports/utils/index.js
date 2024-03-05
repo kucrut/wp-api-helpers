@@ -1,5 +1,8 @@
+import { get_fetch } from './fetch.js';
 import { rest_error } from '../wp/schema.js';
 import { ZodError } from 'zod';
+
+export * from './fetch.js';
 
 /**
  * Create basic auth string
@@ -64,7 +67,7 @@ export function fetch_data( endpoint, auth = '', args = undefined ) {
 		} );
 	}
 
-	return fetch( url, { headers } );
+	return get_fetch()( url, { headers } );
 }
 
 /**
