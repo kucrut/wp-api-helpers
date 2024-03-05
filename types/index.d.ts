@@ -9651,6 +9651,18 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	export function pick_schema<C extends Context_Arg, S extends import("zod").ZodTypeAny>(view_schema: S, embed_schema: S, edit_schema: S, context?: C | undefined): S;
 	type Context_Arg = undefined | 'view' | 'embed' | 'edit';
 	type Handle_Response<T> = (data: unknown) => Promise<T>;
+	/**
+	 * Get fetch function
+	 *
+	 * @return {typeof fetch} Fetch function.
+	 */
+	export function get_fetch(): typeof fetch;
+	/**
+	 * Set fetcher
+	 *
+	 * @param fn Fetch function.
+	 */
+	export function set_fetch(fn: typeof fetch): void;
 }
 
 //# sourceMappingURL=index.d.ts.map
