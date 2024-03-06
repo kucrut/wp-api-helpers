@@ -140,7 +140,7 @@ export function get_error_message( error, fallback, dump = true ) {
  * @param {Response} response Fetch response object.
  * @param {import('$types').Handle_Response<T>} callback Callback to run when json is valid.
  *
- * @throws {Error} JSON.parse error.
+ * @throws {Error|typeof rest_error} JSON.parse error or WP API error.
  *
  * @return {Promise<T>} Whatever the callback returns.
  */
@@ -161,20 +161,17 @@ export async function handle_response( response, callback ) {
 		return await callback( result );
 	}
 
-	const json = await response.json();
-	const error = rest_error.safeParse( json );
-	/** @type {string} */
-	let message;
+	const data = await response.json();
+	const wp_error_check = rest_error.safeParse( data );
 
-	if ( error.success ) {
-		message = error.data.message;
-	} else {
-		message = 'Unexpected response from server. Please consult the logs.';
-		// eslint-disable-next-line no-console
-		console.error( error );
+	if ( wp_error_check.success ) {
+		throw data;
 	}
 
-	throw new Error( message );
+	// eslint-disable-next-line no-console
+	console.error( data );
+
+	throw new Error( 'Unexpected response from server. Please consult the logs.' );
 }
 
 /**
