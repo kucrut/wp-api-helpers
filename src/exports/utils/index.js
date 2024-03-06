@@ -10,11 +10,12 @@ export * from './fetch.js';
  * @since 0.3.0
  *
  * @param {string} username Username.
- * @param {*} password Password
+ * @param {string} password Password.
  * @return {string} Base64-encoded basic auth;
  */
 export function create_basic_auth_string( username, password ) {
-	return `Basic ${ Buffer.from( `${ username }:${ password }` ).toString( 'base64' ) }`;
+	console.log( password );
+	return `Basic ${ Buffer.from( `${ username }:${ password.replaceAll( ' ', '' ) }` ).toString( 'base64' ) }`;
 }
 
 /**
