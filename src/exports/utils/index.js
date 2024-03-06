@@ -167,7 +167,11 @@ export async function handle_response( response, callback ) {
 	// eslint-disable-next-line no-console
 	console.error( data );
 
-	throw wp_error_check.success ? wp_error_check.data : wp_error_check.error;
+	if ( wp_error_check.success ) {
+		throw new WP_REST_Error( wp_error_check.data.message, wp_error_check.data.code, wp_error_check.data.data );
+	}
+
+	throw wp_error_check.error;
 }
 
 /**
