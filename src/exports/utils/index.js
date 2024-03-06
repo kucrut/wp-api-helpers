@@ -245,3 +245,18 @@ export function pick_schema( view_schema, embed_schema, edit_schema, context = u
 
 	return view_schema;
 }
+
+export class WP_REST_Error extends Error {
+	/**
+	 * @param {string} message Error message.
+	 * @param {string} code REST error code.
+	 * @param {{status: number}} data Misc. data.
+	 */
+	constructor( message, code, data ) {
+		super( message );
+
+		this.code = code;
+		this.data = data;
+		this.name = 'WP_REST_Error';
+	}
+}
