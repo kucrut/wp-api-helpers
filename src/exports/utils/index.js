@@ -164,9 +164,6 @@ export async function handle_response( response, callback ) {
 	const data = await response.json();
 	const wp_error_check = rest_error.safeParse( data );
 
-	// eslint-disable-next-line no-console
-	console.error( data );
-
 	if ( wp_error_check.success ) {
 		throw new WP_REST_Error( wp_error_check.data.message, wp_error_check.data.code, wp_error_check.data.data );
 	}
