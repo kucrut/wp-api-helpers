@@ -9554,10 +9554,10 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @since 0.3.0
 	 *
 	 * @param username Username.
-	 * @param password Password
+	 * @param password Password.
 	 * @return {string} Base64-encoded basic auth;
 	 */
-	export function create_basic_auth_string(username: string, password: any): string;
+	export function create_basic_auth_string(username: string, password: string): string;
 	/**
 	 * Fetch and parse response
 	 *
@@ -9615,7 +9615,7 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @param response Fetch response object.
 	 * @param callback Callback to run when json is valid.
 	 *
-	 * @throws {Error} JSON.parse error.
+	 * @throws {Error|ZodError|typeof rest_error} JSON.parse error, Zod error or WP API error.
 	 *
 	 * @return {Promise<T>} Whatever the callback returns.
 	 */
@@ -9649,6 +9649,20 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @return {S} Schema.
 	 */
 	export function pick_schema<C extends Context_Arg, S extends import("zod").ZodTypeAny>(view_schema: S, embed_schema: S, edit_schema: S, context?: C | undefined): S;
+	export class WP_REST_Error extends Error {
+		/**
+		 * @param message Error message.
+		 * @param code REST error code.
+		 * @param data Misc. data.
+		 */
+		constructor(message: string, code: string, data: {
+			status: number;
+		});
+		code: string;
+		data: {
+			status: number;
+		};
+	}
 	type Context_Arg = undefined | 'view' | 'embed' | 'edit';
 	type Handle_Response<T> = (data: unknown) => Promise<T>;
 	/**
