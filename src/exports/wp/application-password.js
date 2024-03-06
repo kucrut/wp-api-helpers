@@ -1,5 +1,5 @@
 import { date_item } from './schema.js';
-import { fetch_and_parse, fetch_data, generate_endpoint_url, pick_schema } from '../utils/index.js';
+import { fetch_and_parse, fetch_data, generate_endpoint_url, get_fetch, pick_schema } from '../utils/index.js';
 import { get_info } from './general.js';
 import { z } from 'zod';
 
@@ -100,7 +100,7 @@ export function get_app_passwords( url, auth, user_id, context = undefined ) {
  */
 export function get_current_app_password( url, auth ) {
 	return fetch_and_parse( application_password_view, () => {
-		return fetch( generate_url( url, 'me' ) + '/introspect', {
+		return get_fetch()( generate_url( url, 'me' ) + '/introspect', {
 			headers: {
 				Authorization: auth,
 				Accept: 'application/json',
@@ -125,7 +125,7 @@ export function get_current_app_password( url, auth ) {
  */
 export function delete_app_password( url, auth, user_id, uuid ) {
 	return fetch_and_parse( application_password_deleted, () => {
-		return fetch( generate_url( url, user_id, undefined, uuid ), {
+		return get_fetch()( generate_url( url, user_id, undefined, uuid ), {
 			method: 'DELETE',
 			headers: {
 				Authorization: auth,

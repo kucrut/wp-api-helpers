@@ -1,7 +1,5 @@
-import { expect, describe, test, vi } from 'vitest';
+import { expect, describe, test } from 'vitest';
 import { handle_response } from '../../src/exports/utils/index.js';
-
-const console_mock = vi.spyOn( console, 'error' ).mockImplementation( () => undefined );
 
 describe( 'Handle response from WP API', () => {
 	test( 'Data is properly returned.', async () => {
@@ -70,7 +68,6 @@ describe( 'Handle response from WP API', () => {
 				() => {},
 			);
 
-		await expect( bad_response ).rejects.toThrowError( 'Unexpected response from server' );
-		expect( console_mock ).toHaveBeenCalled();
+		await expect( bad_response ).rejects.toThrowError( 'invalid_type' );
 	} );
 } );

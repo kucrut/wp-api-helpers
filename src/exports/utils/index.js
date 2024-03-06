@@ -10,11 +10,11 @@ export * from './fetch.js';
  * @since 0.3.0
  *
  * @param {string} username Username.
- * @param {*} password Password
+ * @param {string} password Password.
  * @return {string} Base64-encoded basic auth;
  */
 export function create_basic_auth_string( username, password ) {
-	return `Basic ${ Buffer.from( `${ username }:${ password }` ).toString( 'base64' ) }`;
+	return `Basic ${ Buffer.from( `${ username }:${ password.replaceAll( ' ', '' ) }` ).toString( 'base64' ) }`;
 }
 
 /**
@@ -140,7 +140,7 @@ export function get_error_message( error, fallback, dump = true ) {
  * @param {Response} response Fetch response object.
  * @param {import('$types').Handle_Response<T>} callback Callback to run when json is valid.
  *
- * @throws {Error} JSON.parse error.
+ * @throws {Error|ZodError|typeof rest_error} JSON.parse error, Zod error or WP API error.
  *
  * @return {Promise<T>} Whatever the callback returns.
  */
@@ -161,20 +161,14 @@ export async function handle_response( response, callback ) {
 		return await callback( result );
 	}
 
-	const json = await response.json();
-	const error = rest_error.safeParse( json );
-	/** @type {string} */
-	let message;
+	const data = await response.json();
+	const wp_error_check = rest_error.safeParse( data );
 
-	if ( error.success ) {
-		message = error.data.message;
-	} else {
-		message = 'Unexpected response from server. Please consult the logs.';
-		// eslint-disable-next-line no-console
-		console.error( error );
+	if ( wp_error_check.success ) {
+		throw new WP_REST_Error( wp_error_check.data.message, wp_error_check.data.code, wp_error_check.data.data );
 	}
 
-	throw new Error( message );
+	throw wp_error_check.error;
 }
 
 /**
@@ -251,4 +245,19 @@ export function pick_schema( view_schema, embed_schema, edit_schema, context = u
 	}
 
 	return view_schema;
+}
+
+export class WP_REST_Error extends Error {
+	/**
+	 * @param {string} message Error message.
+	 * @param {string} code REST error code.
+	 * @param {{status: number}} data Misc. data.
+	 */
+	constructor( message, code, data ) {
+		super( message );
+
+		this.code = code;
+		this.data = data;
+		this.name = 'WP_REST_Error';
+	}
 }

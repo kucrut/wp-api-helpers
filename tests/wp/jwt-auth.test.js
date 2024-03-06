@@ -45,8 +45,6 @@ describe( 'JWT Login', () => {
 	} );
 
 	test( 'Throw error when given invalid credentials', async () => {
-		const console_mock = vi.spyOn( console, 'error' ).mockImplementation( () => undefined );
-
 		const fake_response = data => {
 			fetch.mockReturnValueOnce(
 				new Response( JSON.stringify( data ), {
@@ -66,7 +64,6 @@ describe( 'JWT Login', () => {
 		await expect( make_request ).rejects.toThrowError( 'Invalid credentials' );
 
 		fake_response( { error: true } );
-		await expect( make_request ).rejects.toThrowError( 'Unexpected response' );
-		expect( console_mock ).toHaveBeenCalledOnce();
+		await expect( make_request ).rejects.toThrowError( 'invalid_type' );
 	} );
 } );

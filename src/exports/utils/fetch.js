@@ -1,5 +1,5 @@
 /** @type {typeof fetch} */
-let fetcher;
+let fetcher_fn;
 
 /**
  * Get fetch function
@@ -7,7 +7,7 @@ let fetcher;
  * @return {typeof fetch} Fetch function.
  */
 export function get_fetch() {
-	return fetcher || fetch;
+	return fetcher_fn || fetch;
 }
 
 /**
@@ -16,5 +16,5 @@ export function get_fetch() {
  * @param {typeof fetch} fn Fetch function.
  */
 export function set_fetch( fn ) {
-	fetcher = fn;
+	fetcher_fn = fn;
 }
