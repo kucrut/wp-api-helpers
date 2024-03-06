@@ -1,4 +1,4 @@
-import { fetch_and_parse, fetch_data, generate_endpoint_url, pick_schema } from '../utils/index.js';
+import { fetch_and_parse, fetch_data, generate_endpoint_url, get_fetch, pick_schema } from '../utils/index.js';
 import { post_edit_base, post_embed, post_view } from './posts.js';
 import { renderable_item } from './schema.js';
 import { z } from 'zod';
@@ -86,7 +86,7 @@ function generate_url( url, context = undefined, id = undefined ) {
  */
 export function create_media( url, auth, data ) {
 	return fetch_and_parse( media_edit, () => {
-		return fetch( `${ url }/wp/v2/media`, {
+		return get_fetch()( `${ url }/wp/v2/media`, {
 			body: data,
 			method: 'POST',
 			headers: {

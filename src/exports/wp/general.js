@@ -1,4 +1,4 @@
-import { fetch_and_parse, fetch_data } from '../utils/index.js';
+import { fetch_and_parse, fetch_data, get_fetch } from '../utils/index.js';
 import { link_item } from './schema.js';
 import { z } from 'zod';
 
@@ -37,7 +37,7 @@ export const info = z.object( {
  * @return {Promise<string>} WordPress API root URL.
  */
 export async function discover( url ) {
-	const response = await fetch( url, {
+	const response = await get_fetch()( url, {
 		method: 'HEAD',
 	} );
 

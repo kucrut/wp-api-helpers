@@ -1,4 +1,4 @@
-import { fetch_and_parse } from '../utils/index.js';
+import { fetch_and_parse, get_fetch } from '../utils/index.js';
 import { z } from 'zod';
 
 export const jwt_auth_data = z.object( {
@@ -35,7 +35,7 @@ export const jwt_valid_token = z.object( {
  */
 export async function get_jwt_auth( url, username, password ) {
 	return fetch_and_parse( jwt_auth_data, () => {
-		return fetch( `${ url }/jwt-auth/v1/token`, {
+		return get_fetch()( `${ url }/jwt-auth/v1/token`, {
 			body: JSON.stringify( { username, password } ),
 			method: 'POST',
 			headers: {
@@ -58,7 +58,7 @@ export async function get_jwt_auth( url, username, password ) {
  */
 export async function get_jwt_validate_token( url, token ) {
 	return fetch_and_parse( jwt_valid_token, () => {
-		return fetch( `${ url }/jwt-auth/v1/token/validate`, {
+		return get_fetch()( `${ url }/jwt-auth/v1/token/validate`, {
 			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${ token }`,
