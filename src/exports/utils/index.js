@@ -14,7 +14,6 @@ export * from './fetch.js';
  * @return {string} Base64-encoded basic auth;
  */
 export function create_basic_auth_string( username, password ) {
-	console.log( password );
 	return `Basic ${ Buffer.from( `${ username }:${ password.replaceAll( ' ', '' ) }` ).toString( 'base64' ) }`;
 }
 
