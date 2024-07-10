@@ -120,7 +120,6 @@ export function get_error_message( error, fallback, dump = true ) {
 		message = fallback;
 
 		if ( dump ) {
-			// eslint-disable-next-line no-console
 			console.error( error );
 		}
 	}
