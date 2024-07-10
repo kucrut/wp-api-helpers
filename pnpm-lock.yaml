@@ -18,8 +18,8 @@ importers:
         specifier: ^20.11.17
         version: 20.14.10
       dts-buddy:
-        specifier: ^0.4.4
-        version: 0.4.7(typescript@5.5.3)
+        specifier: ^0.5.1
+        version: 0.5.1(typescript@5.5.3)
       eslint:
         specifier: ^9.6.0
         version: 9.6.0
@@ -583,11 +583,11 @@ packages:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
     engines: {node: '>=8'}
 
-  dts-buddy@0.4.7:
-    resolution: {integrity: sha512-trSY5EWkWWKov9uf9nTPjmEoiIcrYPpNEVCu75drPX9Fus3OwQzN/WNXyO+w7cMteBrUqSoExAAud1KCzYv0SQ==}
+  dts-buddy@0.5.1:
+    resolution: {integrity: sha512-naiM3F8hSlBIrMl+WyU9KQsC+Vd0i9jVBeksQ5IsH9Rfzpqx27TmSCftlsY9UxFxAWxoGcf5EB3p1xi0JxWzPw==}
     hasBin: true
     peerDependencies:
-      typescript: '>=5.0.4 <5.5'
+      typescript: '>=5.0.4 <5.6'
 
   enquirer@2.4.1:
     resolution: {integrity: sha512-rRqJg/6gd538VHvR3PSrdRBb/1Vy2YfzHqzvbhGIQpDRKIa4FgV/54b5Q1xYSxOOwKvjXweS26E0Q+nAMwp2pQ==}
@@ -1902,7 +1902,7 @@ snapshots:
     dependencies:
       path-type: 4.0.0
 
-  dts-buddy@0.4.7(typescript@5.5.3):
+  dts-buddy@0.5.1(typescript@5.5.3):
     dependencies:
       '@jridgewell/source-map': 0.3.6
       '@jridgewell/sourcemap-codec': 1.5.0
