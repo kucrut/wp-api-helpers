@@ -1,5 +1,0 @@
-.pnpm-store
-**/node_modules/**
-
-# Generated files
-/types/**

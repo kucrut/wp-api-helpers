@@ -123,7 +123,6 @@ export async function get_posts( url, auth = '', type = 'posts', context = undef
  */
 export async function get_post_terms( post, auth = '' ) {
 	if ( ! post._links ) {
-		// eslint-disable-next-line no-console
 		console.warn( 'get_post_terms(): Post object is missing `_links`.', post );
 		return null;
 	}
@@ -151,7 +150,6 @@ export async function get_post_terms( post, auth = '' ) {
 
 			result.push( { taxonomy, terms } );
 		} catch ( error ) {
-			// eslint-disable-next-line no-console
 			console.error( 'get_post_terms():', error );
 		}
 	}
