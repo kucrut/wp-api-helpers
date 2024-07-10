@@ -1,5 +1,11 @@
 # @kucrut/wp-api-helpers
 
+## 0.6.1
+
+### Patch Changes
+
+- 1da0fba: Dependency updates
+
 ## 0.6.0
 
 ### Minor Changes
