@@ -27,7 +27,7 @@ export const jwt_valid_token = z.object( {
  *
  * @param {string} url WordPress API root URL.
  * @param {string} username Username or email.
- * @param {string} password Password.
+ * @param {string} password User password.
  *
  * @throws {Error|z.ZodError}
  *

@@ -4,7 +4,8 @@ import { z } from 'zod';
 
 export const info = z.object( {
 	description: z.string(),
-	gmt_offset: z.coerce.number(), // TODO.
+	// TODO
+	gmt_offset: z.coerce.number(),
 	home: z.string().url(),
 	name: z.string(),
 	namespaces: z.string().array(),
@@ -66,7 +67,7 @@ export async function discover( url ) {
  * @since 0.2.0
  *
  * @param {string} url WordPress API root URL.
- * @param {string=} auth Authorization header.
+ * @param {string} auth Authorization header.
  *
  * @throws {Error|import('zod').ZodError}
  *

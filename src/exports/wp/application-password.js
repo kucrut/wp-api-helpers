@@ -1,5 +1,11 @@
+import {
+	fetch_and_parse,
+	fetch_data,
+	generate_endpoint_url,
+	get_fetch,
+	pick_schema,
+} from '../utils/index.js';
 import { date_item } from './schema.js';
-import { fetch_and_parse, fetch_data, generate_endpoint_url, get_fetch, pick_schema } from '../utils/index.js';
 import { get_info } from './general.js';
 import { z } from 'zod';
 
@@ -30,13 +36,17 @@ export const application_password_deleted = z.object( {
  *
  * @param {string} url WP API root URL.
  * @param {import('$types').User_ID_Arg} user_id User ID.
- * @param {import('$types').Context_Arg=} context Request context, defaults to 'view'
- * @param {string=} uuid Application password UUID.
+ * @param {import('$types').Context_Arg|undefined} context Request context, defaults to 'view'
+ * @param {string|undefined} uuid Application password UUID.
  *
  * @return {URL} Endpoint URL.
  */
 function generate_url( url, user_id, context = undefined, uuid = '' ) {
-	return generate_endpoint_url( `${ url }/wp/v2/users/${ user_id }/application-passwords`, context, uuid );
+	return generate_endpoint_url(
+		`${ url }/wp/v2/users/${ user_id }/application-passwords`,
+		context,
+		uuid,
+	);
 }
 
 /**
@@ -69,7 +79,7 @@ export async function get_app_password_auth_endpoint( url ) {
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
  * @param {import('$types').User_ID_Arg} user_id User ID or 'me'.
- * @param {C=} context Request context, defaults to 'view'.
+ * @param {C|undefined} context Request context, defaults to 'view'.
  *
  * @throws {Error|z.ZodError}
  *
@@ -83,7 +93,10 @@ export function get_app_passwords( url, auth, user_id, context = undefined ) {
 		context,
 	).array();
 
-	return fetch_and_parse( schema, () => fetch_data( generate_url( url, user_id, context ), auth ) );
+	return fetch_and_parse(
+		schema,
+		() => fetch_data( generate_url( url, user_id, context ), auth ),
+	);
 }
 
 /**

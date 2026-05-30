@@ -53,9 +53,9 @@ export const post_edit = post_view.merge( post_edit_base );
  * Generate URL for posts requests
  *
  * @param {string} url WP API root URL.
- * @param {string=} type Post type, defaults to 'posts'.
- * @param {import('$types').Context_Arg=} context Request context, defaults to 'view'
- * @param {number=} id Media ID.
+ * @param {string} type Post type, defaults to 'posts'.
+ * @param {import('$types').Context_Arg|undefined} context Request context, defaults to 'view'
+ * @param {number|undefined} id Media ID.
  *
  * @return {URL} Endpoint URL.
  */
@@ -72,9 +72,9 @@ function generate_url( url, type, context = undefined, id = undefined ) {
  *
  * @param {number} id Post ID (optional).
  * @param {string} url WordPress API root URL.
- * @param {string=} auth Authorization header.
- * @param {string=} type Post type, defaults to 'posts'.
- * @param {C=} context Request context, defaults to 'view'.
+ * @param {string} auth Authorization header.
+ * @param {string} type Post type, defaults to 'posts'.
+ * @param {C|undefined} context Request context, defaults to 'view'.
  *
  * @todo Add args parameter.
  *
@@ -85,7 +85,10 @@ function generate_url( url, type, context = undefined, id = undefined ) {
 export async function get_single_post( id, url, auth = '', type = 'posts', context = undefined ) {
 	const schema = pick_schema( post_view, post_embed, post_edit, context );
 
-	return fetch_and_parse( schema, () => fetch_data( generate_url( url, type, context, id ), auth ) );
+	return fetch_and_parse(
+		schema,
+		() => fetch_data( generate_url( url, type, context, id ), auth ),
+	);
 }
 
 /**
@@ -96,19 +99,28 @@ export async function get_single_post( id, url, auth = '', type = 'posts', conte
  * @template {import('$types').Context_Arg} C
  *
  * @param {string} url WordPress API root URL.
- * @param {string=} auth Authorization header.
- * @param {string=} type Post type, defaults to 'posts'.
- * @param {C=} context Request context, defaults to 'view'.
- * @param {import('$types').Fetch_Posts_Args=} args Request arguments
+ * @param {string} auth Authorization header.
+ * @param {string} type Post type, defaults to 'posts'.
+ * @param {C|undefined} context Request context, defaults to 'view'.
+ * @param {import('$types').Fetch_Posts_Args|undefined} args Request arguments
  *
  * @throws {Error|z.ZodError}
  *
  * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof post_view, typeof post_embed, typeof post_view>>[]>} Post collection.
  */
-export async function get_posts( url, auth = '', type = 'posts', context = undefined, args = undefined ) {
+export async function get_posts(
+	url,
+	auth = '',
+	type = 'posts',
+	context = undefined,
+	args = undefined,
+) {
 	const schema = pick_schema( post_view, post_embed, post_edit, context ).array();
 
-	return fetch_and_parse( schema, () => fetch_data( generate_url( url, type, context ), auth, args ) );
+	return fetch_and_parse(
+		schema,
+		() => fetch_data( generate_url( url, type, context ), auth, args ),
+	);
 }
 
 /**
@@ -117,12 +129,13 @@ export async function get_posts( url, auth = '', type = 'posts', context = undef
  * @since 0.2.0
  *
  * @param {WP_Post} post Post object.
- * @param {string=} auth Authorization header (optional).
+ * @param {string} auth Authorization header (optional).
  *
  * @return {Promise<WP_Post_Terms[]|null>} Array of post terms.
  */
 export async function get_post_terms( post, auth = '' ) {
 	if ( ! post._links ) {
+		// eslint-disable-next-line no-console
 		console.warn( 'get_post_terms(): Post object is missing `_links`.', post );
 		return null;
 	}
@@ -138,7 +151,10 @@ export async function get_post_terms( post, auth = '' ) {
 
 	for ( const tax of taxonomies ) {
 		try {
-			const terms = await fetch_and_parse( term_view.array(), () => fetch_data( tax.href, auth ) );
+			const terms = await fetch_and_parse(
+				term_view.array(),
+				() => fetch_data( tax.href, auth ),
+			);
 
 			if ( ! terms.length ) {
 				continue;
@@ -150,6 +166,7 @@ export async function get_post_terms( post, auth = '' ) {
 
 			result.push( { taxonomy, terms } );
 		} catch ( error ) {
+			// eslint-disable-next-line no-console
 			console.error( 'get_post_terms():', error );
 		}
 	}

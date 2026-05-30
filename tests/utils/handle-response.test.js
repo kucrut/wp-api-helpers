@@ -31,7 +31,9 @@ describe( 'Handle response from WP API', () => {
 	} );
 
 	test( 'Failed request with bad response body returns proper error.', async () => {
-		const bad_response = () => handle_response( new Response( null, { status: 500 } ), () => {} );
+		const bad_response = () => {
+			return handle_response( new Response( null, { status: 500 } ), () => {} );
+		};
 
 		await expect( bad_response ).rejects.toThrowError( /Unexpected.*JSON/ );
 	} );
