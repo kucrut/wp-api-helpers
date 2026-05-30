@@ -102,9 +102,9 @@ export function generate_endpoint_url( base, context = undefined, suffix = undef
  *
  * @since 0.1.0
  *
- * @param {unknown}  error    Error object, whatever.
- * @param {string}   fallback Fallback message if the error is unrecognized.
- * @param {boolean=} dump     Whether to dump error if the error is unrecognized. (Defaults to true).
+ * @param {unknown} error Error object, whatever.
+ * @param {string} fallback Fallback message if the error is unrecognized.
+ * @param {boolean=} dump Whether to dump error if the error is unrecognized. (Defaults to true).
  *
  * @return {string} Error message.
  */

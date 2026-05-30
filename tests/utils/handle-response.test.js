@@ -37,36 +37,34 @@ describe( 'Handle response from WP API', () => {
 	} );
 
 	test( 'Failed request with WP API Error response body returns proper error.', async () => {
-		const bad_response = () =>
-			handle_response(
-				new Response(
-					JSON.stringify( {
-						code: 'rest_error',
-						message: 'Error message from WP API',
-						data: {
-							status: 403,
-						},
-					} ),
-					{ status: 500 },
-				),
-				() => {},
-			);
+		const bad_response = () => handle_response(
+			new Response(
+				JSON.stringify( {
+					code: 'rest_error',
+					message: 'Error message from WP API',
+					data: {
+						status: 403,
+					},
+				} ),
+				{ status: 500 },
+			),
+			() => {},
+		);
 
 		await expect( bad_response ).rejects.toThrowError( 'Error message from WP API' );
 	} );
 
 	test( 'Failed request with unknown JSON response body returns proper error.', async () => {
-		const bad_response = () =>
-			handle_response(
-				new Response(
-					JSON.stringify( {
-						error: true,
-						message: 'Error message',
-					} ),
-					{ status: 500 },
-				),
-				() => {},
-			);
+		const bad_response = () => handle_response(
+			new Response(
+				JSON.stringify( {
+					error: true,
+					message: 'Error message',
+				} ),
+				{ status: 500 },
+			),
+			() => {},
+		);
 
 		await expect( bad_response ).rejects.toThrowError( 'invalid_type' );
 	} );

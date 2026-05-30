@@ -16,7 +16,6 @@ const make_fail_test = async init => {
 	try {
 		await discover( 'boo' );
 		has_error = false;
-		// eslint-disable-next-line no-unused-vars
 	} catch ( error ) {
 		has_error = true;
 	}

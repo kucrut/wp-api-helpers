@@ -78,8 +78,8 @@ function generate_url( url, context = undefined, id = undefined ) {
  *
  * @since 0.1.0
  *
- * @param {string}   url  WordPress API root URL.
- * @param {string}   auth Autorization header.
+ * @param {string} url WordPress API root URL.
+ * @param {string} auth Autorization header.
  * @param {FormData} data Form data.
  *
  * @return {Promise<WP_Media_Edit>} Media (edit) data.

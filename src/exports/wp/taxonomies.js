@@ -116,8 +116,8 @@ export async function get_taxonomies( url, auth = '', context = undefined, args 
  *
  * @template {import('$types').Context_Arg} C
  *
- * @param {string}  name Taxonomy name.
- * @param {string}  url  WordPress API root URL.
+ * @param {string} name Taxonomy name.
+ * @param {string} url WordPress API root URL.
  * @param {string=} auth Authorization header.
  * @param {C=} context Request context, defaults to 'view'.
  *
