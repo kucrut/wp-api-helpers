@@ -64,6 +64,6 @@ describe( 'JWT Login', () => {
 		await expect( make_request ).rejects.toThrowError( 'Invalid credentials' );
 
 		fake_response( { error: true } );
-		await expect( make_request ).rejects.toThrowError( 'invalid_type' );
+		await expect( make_request ).rejects.toThrowError( 'Invalid data.' );
 	} );
 } );

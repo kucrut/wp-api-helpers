@@ -68,6 +68,6 @@ describe( 'Handle response from WP API', () => {
 			() => {},
 		);
 
-		await expect( bad_response ).rejects.toThrowError( 'invalid_type' );
+		await expect( bad_response ).rejects.toThrowError( 'Invalid data.' );
 	} );
 } );
