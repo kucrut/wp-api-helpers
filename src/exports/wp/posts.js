@@ -90,7 +90,7 @@ function generate_url( url, type, context = undefined, id = undefined ) {
  *
  * @todo Add args parameter.
  *
- * @throws {Error|v.ValiError}
+ * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<v.InferOutput<typeof PostQuerySchemas[C]>>} Single post data.
  */
@@ -114,7 +114,7 @@ export async function get_single_post( id, url, context, auth = '', type = 'post
  * @param {string} type Post type, defaults to 'posts'.
  * @param {import('$types').Fetch_Posts_Args|undefined} args Request arguments
  *
- * @throws {Error|v.ValiError}
+ * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<v.InferOutput<v.ArraySchema<typeof PostQuerySchemas[C], undefined>>>} Post collection.
  */
@@ -138,6 +138,8 @@ export async function get_posts(
  *
  * @param {WP_Post} post Post object.
  * @param {string} auth Authorization header (optional).
+ *
+ * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<WP_Post_Terms[]|null>} Array of post terms.
  */

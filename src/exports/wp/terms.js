@@ -63,7 +63,7 @@ function generate_url( url, taxonomy, context = undefined, id = undefined ) {
  * @param {string|undefined} auth Authorization header.
  * @param {import("$types").Fetch_Terms_Args|undefined} args Request arguments.
  *
- * @throws {Error|v.ValiError}
+ * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<v.InferOutput<v.ArraySchema<typeof TermQuerySchemas[C], undefined>>>} Term collection.
  */

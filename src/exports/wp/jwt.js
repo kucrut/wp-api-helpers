@@ -27,7 +27,7 @@ export const JwtValidTokenSchema = v.object( {
  * @param {string} username Username or email.
  * @param {string} password User password.
  *
- * @throws {Error|v.ValiError}
+ * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<JWT_Auth>} Auth data.
  */
@@ -51,6 +51,8 @@ export async function get_jwt_auth( url, username, password ) {
  *
  * @param {string} url WordPress API root URL.
  * @param {string} token JWT token.
+ *
+ * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<JWT_Valid_Token>} Valid token data.
  */
