@@ -43,9 +43,11 @@ export async function fetch_and_parse( schema, fetcher ) {
  *
  * @since 0.1.0
  *
+ * @template {Record<string,unknown>} A
+ *
  * @param {string|URL} endpoint Data endpoint.
  * @param {string|undefined} auth Authentication header.
- * @param {Record<string,unknown>|undefined} args Arguments.
+ * @param {A|undefined} args Arguments.
  *
  * @return {ReturnType<typeof fetch>} Response.
  */

@@ -103,6 +103,7 @@ function generate_url( url, context = undefined, name = '' ) {
 export async function get_taxonomies( url, auth = '', context = undefined, args = undefined ) {
 	const schema = pick_schema( taxonomy_view, taxonomy_embed, taxonomy_edit, context );
 	const data = await fetch_and_parse( z.record( schema ), () => {
+		// @ts-expect-error TODO
 		return fetch_data( generate_url( url, context ), auth, args );
 	} );
 

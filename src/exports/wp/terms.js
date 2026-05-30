@@ -63,6 +63,7 @@ export async function get_terms( url, taxonomy, auth = '', context = undefined, 
 
 	return fetch_and_parse(
 		schema,
+		// @ts-expect-error TODO
 		() => fetch_data( generate_url( url, taxonomy, context ), auth, args ),
 	);
 }

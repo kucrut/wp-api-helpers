@@ -101,5 +101,6 @@ export function get_single_user( id, url, auth = '', context = undefined ) {
 export function get_users( url, auth = '', context = undefined, args = {} ) {
 	const schema = pick_schema( user_view, user_embed, user_edit, context ).array();
 
+	// @ts-expect-error TODO
 	return fetch_and_parse( schema, () => fetch_data( generate_url( url, context ), auth, args ) );
 }

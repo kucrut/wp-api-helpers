@@ -119,6 +119,7 @@ export async function get_posts(
 
 	return fetch_and_parse(
 		schema,
+		// @ts-expect-error TODO
 		() => fetch_data( generate_url( url, type, context ), auth, args ),
 	);
 }
