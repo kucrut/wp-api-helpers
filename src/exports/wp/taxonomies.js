@@ -75,8 +75,8 @@ export const taxonomy_edit = taxonomy_view.extend( {
  * @since 0.3.0
  *
  * @param {string} url WP API root URL.
- * @param {import('$types').Context_Arg=} context Request context, defaults to 'view'
- * @param {string=} name Taxonomy name.
+ * @param {import('$types').Context_Arg|undefined} context Request context, defaults to 'view'
+ * @param {string|undefined} name Taxonomy name.
  *
  * @return {URL} Endpoint URL.
  */
@@ -92,9 +92,9 @@ function generate_url( url, context = undefined, name = '' ) {
  * @template {import('$types').Context_Arg} C
  *
  * @param {string} url WordPress API root URL.
- * @param {string=} auth Authorization header.
- * @param {C=} context Request context, defaults to 'view'.
- * @param {import("$types").Fetch_Taxonomies_Args=} args Request arguments.
+ * @param {string|undefined} auth Authorization header.
+ * @param {C|undefined} context Request context, defaults to 'view'.
+ * @param {import("$types").Fetch_Taxonomies_Args|undefined} args Request arguments.
  *
  * @throws {Error|z.ZodError}
  *
@@ -103,6 +103,7 @@ function generate_url( url, context = undefined, name = '' ) {
 export async function get_taxonomies( url, auth = '', context = undefined, args = undefined ) {
 	const schema = pick_schema( taxonomy_view, taxonomy_embed, taxonomy_edit, context );
 	const data = await fetch_and_parse( z.record( schema ), () => {
+		// @ts-expect-error TODO
 		return fetch_data( generate_url( url, context ), auth, args );
 	} );
 
@@ -116,10 +117,10 @@ export async function get_taxonomies( url, auth = '', context = undefined, args 
  *
  * @template {import('$types').Context_Arg} C
  *
- * @param {string}  name Taxonomy name.
- * @param {string}  url  WordPress API root URL.
- * @param {string=} auth Authorization header.
- * @param {C=} context Request context, defaults to 'view'.
+ * @param {string} name Taxonomy name.
+ * @param {string} url WordPress API root URL.
+ * @param {string|undefined} auth Authorization header.
+ * @param {C|undefined} context Request context, defaults to 'view'.
  *
  * @throws {Error|z.ZodError}
  *

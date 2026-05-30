@@ -1,0 +1,17 @@
+{
+	"tab_size": 4,
+	"use_on_type_format": false,
+	"code_actions_on_format": {
+		"source.fixAll.eslint": true,
+	},
+	"file_types": {
+		"JSONC": [
+			".zed/settings.json",
+			".vscode/settings.json"
+		]
+	},
+	"formatter": [],
+	"prettier": {
+		"allowed": false
+	},
+}

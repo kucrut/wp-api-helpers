@@ -3,10 +3,8 @@ import { discover } from '../../src/exports/wp/index.js';
 
 global.fetch = vi.fn();
 
-/** @param {ResponseInit=} init */
 const create_response = init => new Response( null, init );
 
-/** @param {ResponseInit=} init */
 const make_fail_test = async init => {
 	fetch.mockReturnValueOnce( create_response( init ) );
 
@@ -16,8 +14,7 @@ const make_fail_test = async init => {
 	try {
 		await discover( 'boo' );
 		has_error = false;
-		// eslint-disable-next-line no-unused-vars
-	} catch ( error ) {
+	} catch {
 		has_error = true;
 	}
 

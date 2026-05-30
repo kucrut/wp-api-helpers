@@ -16,24 +16,30 @@ describe( 'Get error message', () => {
 		expect( result ).toStrictEqual( message );
 	} );
 
-	test( 'Fallback message is returned when the error is not recognized, and error is dumped.', () => {
-		const console_mock = vi.spyOn( console, 'error' ).mockImplementation( () => undefined );
-		const fallback = 'Fallback message';
-		const result = get_error_message( null, fallback );
+	test(
+		'Fallback message is returned when the error is not recognized, and error is dumped.',
+		() => {
+			const console_mock = vi.spyOn( console, 'error' ).mockImplementation( () => undefined );
+			const fallback = 'Fallback message';
+			const result = get_error_message( null, fallback );
 
-		expect( result ).toStrictEqual( fallback );
-		expect( console_mock ).toHaveBeenCalledOnce();
-		expect( console_mock ).toHaveBeenCalledWith( null );
-	} );
+			expect( result ).toStrictEqual( fallback );
+			expect( console_mock ).toHaveBeenCalledOnce();
+			expect( console_mock ).toHaveBeenCalledWith( null );
+		},
+	);
 
-	test( 'Fallback message is returned when the error is not recognized, and error is not dumped.', () => {
-		const console_mock = vi.spyOn( console, 'error' ).mockImplementation( () => undefined );
-		const fallback = 'Fallback message';
-		const result = get_error_message( null, fallback, false );
+	test(
+		'Fallback message is returned when the error is not recognized, and error is not dumped.',
+		() => {
+			const console_mock = vi.spyOn( console, 'error' ).mockImplementation( () => undefined );
+			const fallback = 'Fallback message';
+			const result = get_error_message( null, fallback, false );
 
-		expect( result ).toStrictEqual( fallback );
-		expect( console_mock ).not.toHaveBeenCalled();
-	} );
+			expect( result ).toStrictEqual( fallback );
+			expect( console_mock ).not.toHaveBeenCalled();
+		},
+	);
 
 	test( 'Zod error message is returned', () => {
 		class ZodError extends Error {

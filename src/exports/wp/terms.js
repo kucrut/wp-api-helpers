@@ -32,8 +32,8 @@ export const term_view = term_embed.extend( {
  *
  * @param {string} url WP API root URL.
  * @param {string} taxonomy Taxonomy's rest_base.
- * @param {import('$types').Context_Arg=} context Request context.
- * @param {number=} id Term ID.
+ * @param {import('$types').Context_Arg|undefined} context Request context.
+ * @param {number|undefined} id Term ID.
  *
  * @return {URL} Endpoint URL.
  */
@@ -50,9 +50,9 @@ function generate_url( url, taxonomy, context = undefined, id = undefined ) {
  *
  * @param {string} url WordPress API root URL.
  * @param {string} taxonomy Taxonomy's rest_base.
- * @param {string=} auth Authorization header.
- * @param {C=} context Request context, defaults to 'view'.
- * @param {import("$types").Fetch_Terms_Args=} args Request arguments.
+ * @param {string|undefined} auth Authorization header.
+ * @param {C|undefined} context Request context, defaults to 'view'.
+ * @param {import("$types").Fetch_Terms_Args|undefined} args Request arguments.
  *
  * @throws {Error|import('zod').ZodError}
  *
@@ -61,5 +61,9 @@ function generate_url( url, taxonomy, context = undefined, id = undefined ) {
 export async function get_terms( url, taxonomy, auth = '', context = undefined, args = undefined ) {
 	const schema = pick_schema( term_view, term_embed, term_view, context ).array();
 
-	return fetch_and_parse( schema, () => fetch_data( generate_url( url, taxonomy, context ), auth, args ) );
+	return fetch_and_parse(
+		schema,
+		// @ts-expect-error TODO
+		() => fetch_data( generate_url( url, taxonomy, context ), auth, args ),
+	);
 }

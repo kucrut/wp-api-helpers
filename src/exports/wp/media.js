@@ -21,17 +21,28 @@ export const media_embed = post_embed
 		caption: renderable_item,
 		media_type: z.string(),
 		media_details: z.object( {
-			bitrate: z.number().optional(), // Video.
-			dataformat: z.string().optional(), // Video.
-			file: z.string().optional(), // Image.
-			fileformat: z.string().optional(), // Video.
-			filesize: z.number(), // Image.
-			height: z.number().optional(), // Image.
-			image_meta: z.record( z.any() ).optional(), // Image.
-			length: z.number().optional(), // Video.
-			length_formatted: z.string().optional(), // Video.
-			width: z.number().optional(), // Image.
-			sizes: z.record( image_size ).optional(), // Image.
+			// Video.
+			bitrate: z.number().optional(),
+			// Video.
+			dataformat: z.string().optional(),
+			// Image.
+			file: z.string().optional(),
+			// Video.
+			fileformat: z.string().optional(),
+			// Image.
+			filesize: z.number(),
+			// Image.
+			height: z.number().optional(),
+			// Image.
+			image_meta: z.record( z.any() ).optional(),
+			// Video.
+			length: z.number().optional(),
+			// Video.
+			length_formatted: z.string().optional(),
+			// Image.
+			width: z.number().optional(),
+			// Image.
+			sizes: z.record( image_size ).optional(),
 		} ),
 		mime_type: z.string(),
 		source_url: z.string().url(),
@@ -64,8 +75,8 @@ export const media_edit = media_view.merge( post_edit_base );
  * Generate URL for media requests
  *
  * @param {string} url WP API root URL.
- * @param {import('$types').Context_Arg=} context Request context, defaults to 'view'
- * @param {number=} id Media ID.
+ * @param {import('$types').Context_Arg|undefined} context Request context, defaults to 'view'
+ * @param {number|undefined} id Media ID.
  *
  * @return {URL} Endpoint URL.
  */
@@ -78,8 +89,8 @@ function generate_url( url, context = undefined, id = undefined ) {
  *
  * @since 0.1.0
  *
- * @param {string}   url  WordPress API root URL.
- * @param {string}   auth Autorization header.
+ * @param {string} url WordPress API root URL.
+ * @param {string} auth Autorization header.
  * @param {FormData} data Form data.
  *
  * @return {Promise<WP_Media_Edit>} Media (edit) data.
@@ -105,9 +116,9 @@ export function create_media( url, auth, data ) {
  * @template {import('$types').Context_Arg} C
  *
  * @param {string} url WordPress API root URL.
- * @param {string=} auth Authorization header.
- * @param {C=} context Request context, defaults to 'view'.
- * @param {import('$types').Fetch_Media_Args=} args Request arguments.
+ * @param {string|undefined} auth Authorization header.
+ * @param {C|undefined} context Request context, defaults to 'view'.
+ * @param {import('$types').Fetch_Media_Args|undefined} args Request arguments.
  *
  * @throws {Error|z.ZodError}
  *
@@ -116,6 +127,7 @@ export function create_media( url, auth, data ) {
 export async function get_media( url, auth = '', context = undefined, args = undefined ) {
 	const schema = pick_schema( media_view, media_embed, media_edit, context ).array();
 
+	// @ts-expect-error TODO
 	return fetch_and_parse( schema, () => fetch_data( generate_url( url, context ), auth, args ) );
 }
 
@@ -128,8 +140,8 @@ export async function get_media( url, auth = '', context = undefined, args = und
  *
  * @param {number} id Media ID.
  * @param {string} url WordPress API root URL.
- * @param {string=} auth Authorization header.
- * @param {C=} context Request context, defaults to 'view'.
+ * @param {string|undefined} auth Authorization header.
+ * @param {C|undefined} context Request context, defaults to 'view'.
  *
  * @throws {Error|z.ZodError}
  *

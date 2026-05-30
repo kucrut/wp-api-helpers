@@ -39,8 +39,8 @@ export const user_edit = user_view.extend( {
  * Generate URL for user requests
  *
  * @param {string} url WP API root URL.
- * @param {import('$types').Context_Arg=} context Request context.
- * @param {import('$types').User_ID_Arg=} id User ID or 'me'.
+ * @param {import('$types').Context_Arg} context Request context.
+ * @param {import('$types').User_ID_Arg|undefined} id User ID or 'me'.
  *
  * @return {URL} Endpoint URL.
  */
@@ -57,8 +57,8 @@ function generate_url( url, context = undefined, id = undefined ) {
  *
  * @param {import('$types').User_ID_Arg} id User ID or 'me'.
  * @param {string} url WordPress API root URL.
- * @param {string=} auth Authorization header (required when `id` is `me`).
- * @param {C=} context Request context, defaults to 'view'.
+ * @param {string} auth Authorization header (required when `id` is `me`).
+ * @param {C|undefined} context Request context, defaults to 'view'.
  *
  * @throws {Error|z.ZodError}
  *
@@ -90,8 +90,8 @@ export function get_single_user( id, url, auth = '', context = undefined ) {
  * @template {import('$types').Context_Arg} C
  *
  * @param {string} url WordPress API root URL.
- * @param {string=} auth Authorization header.
- * @param {C=} context Request context, defaults to 'view'.
+ * @param {string} auth Authorization header.
+ * @param {C|undefined} context Request context, defaults to 'view'.
  * @param {import('$types').Fetch_Users_Args} args Request arguments.
  *
  * @throws {Error|z.ZodError}
@@ -101,5 +101,6 @@ export function get_single_user( id, url, auth = '', context = undefined ) {
 export function get_users( url, auth = '', context = undefined, args = {} ) {
 	const schema = pick_schema( user_view, user_embed, user_edit, context ).array();
 
+	// @ts-expect-error TODO
 	return fetch_and_parse( schema, () => fetch_data( generate_url( url, context ), auth, args ) );
 }

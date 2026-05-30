@@ -9,8 +9,8 @@ export * from './fetch.js';
  *
  * @since 0.3.0
  *
- * @param {string} username Username.
- * @param {string} password Password.
+ * @param {string} username User name.
+ * @param {string} password User password.
  * @return {string} Base64-encoded basic auth;
  */
 export function create_basic_auth_string( username, password ) {
@@ -43,22 +43,21 @@ export async function fetch_and_parse( schema, fetcher ) {
  *
  * @since 0.1.0
  *
+ * @template {Record<string,unknown>} A
+ *
  * @param {string|URL} endpoint Data endpoint.
- * @param {string=} auth Authentication header.
- * @param {Record<string,any>=} args Arguments.
+ * @param {string|undefined} auth Authentication header.
+ * @param {A|undefined} args Arguments.
  *
  * @return {ReturnType<typeof fetch>} Response.
  */
 export function fetch_data( endpoint, auth = '', args = undefined ) {
 	const url = new URL( endpoint );
 
-	/** @type {HeadersInit} */
-	const headers = {
-		Accept: 'application/json',
-	};
+	const headers = new Headers( { Accept: 'application/json' } );
 
 	if ( auth ) {
-		headers.Authorization = auth;
+		headers.append( 'Authorization', auth );
 	}
 
 	if ( args ) {
@@ -76,8 +75,8 @@ export function fetch_data( endpoint, auth = '', args = undefined ) {
  * @since 0.3.0
  *
  * @param {string} base Base endpoint URL.
- * @param {import('$types').Context_Arg=} context Request context, defaults to 'view'.
- * @param {string|number=} suffix Endpoint suffix.
+ * @param {import('$types').Context_Arg|undefined} context Request context, defaults to 'view'.
+ * @param {string|number|undefined} suffix Endpoint suffix.
  *
  * @return {URL} URL object
  */
@@ -102,9 +101,9 @@ export function generate_endpoint_url( base, context = undefined, suffix = undef
  *
  * @since 0.1.0
  *
- * @param {unknown}  error    Error object, whatever.
- * @param {string}   fallback Fallback message if the error is unrecognized.
- * @param {boolean=} dump     Whether to dump error if the error is unrecognized. (Defaults to true).
+ * @param {unknown} error Error object, whatever.
+ * @param {string} fallback Fallback message if the error is unrecognized.
+ * @param {boolean|undefined} dump Whether to dump error if the error is unrecognized. (Defaults to true).
  *
  * @return {string} Error message.
  */
@@ -120,6 +119,7 @@ export function get_error_message( error, fallback, dump = true ) {
 		message = fallback;
 
 		if ( dump ) {
+			// eslint-disable-next-line no-console
 			console.error( error );
 		}
 	}
@@ -154,7 +154,7 @@ export async function handle_response( response, callback ) {
 			const text = await clone.text();
 			const message = get_error_message( error, 'Please consult the logs.' ).replace( '<', '&lt;' );
 
-			throw new Error( `Unexpected response: ${ message }\n${ text }` );
+			throw new Error( `Unexpected response: ${ message }\n${ text }`, { cause: error } );
 		}
 
 		return await callback( result );
@@ -164,7 +164,11 @@ export async function handle_response( response, callback ) {
 	const wp_error_check = rest_error.safeParse( data );
 
 	if ( wp_error_check.success ) {
-		throw new WP_REST_Error( wp_error_check.data.message, wp_error_check.data.code, wp_error_check.data.data );
+		throw new WP_REST_Error(
+			wp_error_check.data.message,
+			wp_error_check.data.code,
+			wp_error_check.data.data,
+		);
 	}
 
 	throw wp_error_check.error;
@@ -178,10 +182,9 @@ export async function handle_response( response, callback ) {
  * @template T
  *
  * @param {import('$types').Handle_Response<T>} handler Handler function.
- * @return {(resp: Response) => Promise<T>} Bleh
+ * @return {(resp: Response) => Promise<T>} Response handler function.
  */
 export function make_response_handler( handler ) {
-	/** @param {Response} response */
 	return response => handle_response( response, handler );
 }
 
@@ -190,11 +193,14 @@ export function make_response_handler( handler ) {
  *
  * @since 0.1.0
  *
- * @param {Record<string,any>} args Fetch arguments.
+ * @param {Record<string,unknown>} args Fetch arguments.
  * @return {[string, string][]} Pairs of key and value strings.
  */
 export function normalize_fetch_args( args ) {
-	/** @param {unknown} input */
+	/**
+	 * @param {unknown} input Raw input.
+	 * @return {string} Normalised input.
+	 */
 	const to_string = input => {
 		if ( input === true ) {
 			return '1';
@@ -230,7 +236,7 @@ export function normalize_fetch_args( args ) {
  * @param {S} view_schema View schema.
  * @param {S} embed_schema Embed schema.
  * @param {S} edit_schema Edit schema.
- * @param {C=} context Context.
+ * @param {C|undefined} context Request context.
  *
  * @return {S} Schema.
  */
