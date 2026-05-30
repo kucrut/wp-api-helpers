@@ -1,32 +1,35 @@
-import { z } from 'zod';
+import * as v from 'valibot';
 
-export const comment_ping_status = z.enum( [ 'open', 'closed' ] );
+export const CommentPingStatusSchema = v.picklist( [ 'open', 'closed' ] );
 
-export const date_item = z.coerce.date();
+export const DateItemSchema = v.date();
 
-export const link_item = z.array(
-	z.object( {
-		embeddable: z.boolean().optional(),
-		href: z.string().url(),
-		templated: z.boolean().optional(),
-		type: z.string().optional(),
+export const LinkItemSchema = v.array(
+	v.object( {
+		embeddable: v.optional( v.boolean() ),
+		href: v.pipe( v.string(), v.url() ),
+		templated: v.optional( v.boolean() ),
+		type: v.optional( v.string() ),
 	} ),
 );
 
-// NOTE: When meta is an array it shouldn't have any value, hence the never type.
-export const meta = z.record( z.any() ).or( z.array( z.never() ) ).optional();
+export const meta = v.optional( v.union( [
+	v.any(),
+	// When meta is an array it shouldn't have any value, hence the never type.
+	v.array( v.never() ),
+] ) );
 
-export const renderable_item = z.object( {
-	block_version: z.number().optional(),
-	protected: z.boolean().optional(),
-	raw: z.string().optional(),
-	rendered: z.string(),
+export const RenderableItemSchema = v.object( {
+	block_version: v.optional( v.number() ),
+	protected: v.optional( v.boolean() ),
+	raw: v.optional( v.string() ),
+	rendered: v.string(),
 } );
 
-export const rest_error = z.object( {
-	code: z.string(),
-	message: z.string(),
-	data: z.object( {
-		status: z.number(),
+export const RestErrorSchema = v.object( {
+	code: v.string(),
+	message: v.string(),
+	data: v.object( {
+		status: v.number(),
 	} ),
 } );
