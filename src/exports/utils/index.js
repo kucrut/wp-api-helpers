@@ -171,7 +171,7 @@ export async function handle_response( response, callback ) {
 		);
 	}
 
-	throw wp_error_check.issues;
+	throw new Error( 'Invalid data.', { cause: wp_error_check.issues } );
 }
 
 /**
