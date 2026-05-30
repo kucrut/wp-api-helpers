@@ -35,7 +35,7 @@
 		"@eslint/markdown": "^8.0.2",
 		"@kucrut/eslint-config": "^0.5.1",
 		"@types/node": "^24.12.4",
-		"dts-buddy": "^0.5.1",
+		"dts-buddy": "^0.8.0",
 		"eslint": "^10.4.0",
 		"eslint-plugin-jsdoc": "^63.0.0",
 		"globals": "^15.8.0",
