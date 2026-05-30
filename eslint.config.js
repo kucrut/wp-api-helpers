@@ -39,6 +39,9 @@ const base_js = {
 		'@stylistic/max-len': [ 'error', {
 			code: 100,
 			ignoreComments: true,
+			ignoreRegExpLiterals: true,
+			ignoreStrings: true,
+			ignoreTemplateLiterals: true,
 		} ],
 	},
 	settings: {
