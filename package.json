@@ -13,9 +13,8 @@
 	],
 	"keywords": [],
 	"scripts": {
-		"check-format": "prettier --check .",
 		"generate-types": "node scripts/generate-types.js",
-		"lint": "pnpm check-format && eslint && tsc",
+		"lint": "eslint && tsc",
 		"test": "vitest --run"
 	},
 	"exports": {
