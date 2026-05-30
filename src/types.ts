@@ -1,7 +1,4 @@
-
-import type { ZodTypeAny } from 'zod';
-
-export type Context_Arg = undefined | 'view' | 'embed' | 'edit';
+export type Context_Arg = 'edit' | 'embed' | 'view';
 export type Operator_Arg = 'AND' | 'OR';
 export type Order_Arg = 'asc' | 'desc';
 export type User_ID_Arg = number | 'me';
@@ -249,15 +246,3 @@ export interface Fetch_Users_Args extends Fetch_Args, Fetch_Collection_Args {
 }
 
 export type Handle_Response<T> = ( data: unknown ) => Promise<T>;
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Handled_Fetch<F extends ( ...args: any ) => any, T> = (
-	...args: Parameters<F>
-) => ReturnType<Handle_Response<T>>;
-
-export type Schema_By_Context<
-	C extends Context_Arg,
-	X extends ZodTypeAny,
-	Y extends ZodTypeAny,
-	Z extends ZodTypeAny,
-> = C extends undefined | 'view' ? X : C extends 'embed' ? Y : C extends 'edit' ? Z : never;

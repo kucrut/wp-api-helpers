@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"version": "0.6.1",
 	"type": "module",
-	"packageManager": "pnpm@11.4.0",
+	"packageManager": "pnpm@11.5.0",
 	"types": "types/index.d.ts",
 	"files": [
 		"src",
@@ -14,7 +14,7 @@
 	"keywords": [],
 	"scripts": {
 		"generate-types": "node scripts/generate-types.js",
-		"lint": "eslint && tsc",
+		"lint": "eslint && tsc --noEmit",
 		"test": "vitest --run"
 	},
 	"exports": {
@@ -35,16 +35,16 @@
 		"@eslint/markdown": "^8.0.2",
 		"@kucrut/eslint-config": "^0.5.1",
 		"@types/node": "^24.12.4",
-		"dts-buddy": "^0.5.1",
+		"dts-buddy": "^0.8.0",
 		"eslint": "^10.4.0",
 		"eslint-plugin-jsdoc": "^63.0.0",
-		"globals": "^15.8.0",
-		"typescript": "^5.3.3",
+		"globals": "^17.6.0",
+		"typescript": "^6.0.3",
 		"typescript-eslint": "^8.60.0",
-		"vitest": "^2.0.1",
-		"zod": "^3.22.4"
+		"valibot": "^1.4.1",
+		"vitest": "^2.0.1"
 	},
 	"peerDependencies": {
-		"zod": "^3.22.4"
+		"valibot": "^1.4.1"
 	}
 }

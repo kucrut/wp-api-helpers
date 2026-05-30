@@ -1,31 +1,40 @@
-import { fetch_and_parse, fetch_data, generate_endpoint_url, pick_schema } from '../utils/index.js';
-import { link_item, meta } from './schema.js';
-import { z } from 'zod';
+import * as v from 'valibot';
+import { fetch_and_parse, fetch_data, generate_endpoint_url } from '../utils/index.js';
+import { IdSchema, LinkItemSchema, MetaSchema } from './schema.js';
 
-export const term_embed = z.object( {
-	id: z.number().min( 1 ),
-	link: z.string(),
-	name: z.string(),
-	slug: z.string(),
-	taxonomy: z.string(),
-	_links: z.object( {
-		'about': link_item,
-		'collection': link_item,
-		'self': link_item,
-		'wp:post_type': link_item,
+/** @typedef {v.InferOutput<typeof TermEmbedSchema>} WP_Term_Embed */
+export const TermEmbedSchema = v.object( {
+	id: IdSchema,
+	link: v.string(),
+	name: v.string(),
+	slug: v.string(),
+	taxonomy: v.string(),
+	_links: v.object( {
+		'about': LinkItemSchema,
+		'collection': LinkItemSchema,
+		'self': LinkItemSchema,
+		'wp:post_type': LinkItemSchema,
 	} ),
 } );
 
-export const term_view = term_embed.extend( {
-	meta,
-	count: z.number(),
-	description: z.string(),
-	parent: z.number(),
-} );
+/** @typedef {v.InferOutput<typeof TermViewSchema>} WP_Term */
+export const TermViewSchema = v.object( v.entriesFromObjects( [
+	TermEmbedSchema,
+	v.object( {
+		meta: MetaSchema,
+		count: v.number(),
+		description: v.string(),
+		parent: v.number(),
+	} ),
+] ) );
 
-/** @typedef {z.infer<term_view>} WP_Term */
-/** @typedef {z.infer<term_embed>} WP_Term_Embed */
-/** @typedef {z.infer<term_view>} WP_Term_Edit */
+/** @typedef {v.InferOutput<TermViewSchema>} WP_Term_Edit */
+
+const TermQuerySchemas = {
+	edit: TermViewSchema,
+	embed: TermEmbedSchema,
+	view: TermViewSchema,
+};
 
 /**
  * Generate URL for user requests
@@ -46,23 +55,21 @@ function generate_url( url, taxonomy, context = undefined, id = undefined ) {
  *
  * @since 0.1.0
  *
- * @template {import('$types').Context_Arg} C
+ * @template {keyof typeof TermQuerySchemas} C
  *
  * @param {string} url WordPress API root URL.
  * @param {string} taxonomy Taxonomy's rest_base.
+ * @param {C} context Request context, defaults to 'view'.
  * @param {string|undefined} auth Authorization header.
- * @param {C|undefined} context Request context, defaults to 'view'.
  * @param {import("$types").Fetch_Terms_Args|undefined} args Request arguments.
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|v.ValiError}
  *
- * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof term_view, typeof term_embed, typeof term_view>>[]>} Term collection.
+ * @return {Promise<v.InferOutput<v.ArraySchema<typeof TermQuerySchemas[C], undefined>>>} Term collection.
  */
-export async function get_terms( url, taxonomy, auth = '', context = undefined, args = undefined ) {
-	const schema = pick_schema( term_view, term_embed, term_view, context ).array();
-
+export async function get_terms( url, taxonomy, context, auth = '', args = undefined ) {
 	return fetch_and_parse(
-		schema,
+		v.array( TermQuerySchemas[ context ] ),
 		// @ts-expect-error TODO
 		() => fetch_data( generate_url( url, taxonomy, context ), auth, args ),
 	);

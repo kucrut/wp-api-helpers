@@ -1,53 +1,65 @@
-import { comment_ping_status, date_item, link_item, meta, renderable_item } from './schema.js';
-import { fetch_and_parse, fetch_data, generate_endpoint_url, pick_schema } from '../utils/index.js';
-import { taxonomy_view } from './taxonomies.js';
-import { term_view } from './terms.js';
-import { z } from 'zod';
+import * as v from 'valibot';
+import { CommentStatusSchema, DateItemSchema, IdSchema, LinkItemSchema, MetaSchema, RenderableItemSchema, UrlSchema } from './schema.js';
+import { fetch_and_parse, fetch_data, generate_endpoint_url } from '../utils/index.js';
+import { TaxonomyViewSchema } from './taxonomies.js';
+import { TermViewSchema } from './terms.js';
 
-export const post_edit_base = z.object( {
-	generated_slug: z.string(),
-	permalink_template: z.string(),
+export const PostEditBaseSchema = v.object( {
+	generated_slug: v.string(),
+	permalink_template: v.string(),
 } );
 
-export const post_embed = z.object( {
-	author: z.number().min( 1 ),
-	date: date_item,
-	excerpt: renderable_item,
-	featured_media: z.number(),
-	id: z.number(),
-	link: z.string().url(),
-	slug: z.string(),
-	title: renderable_item,
-	type: z.string(),
-	_links: z.record( link_item ).optional(),
+/** @typedef {v.InferOutput<typeof PostEmbedSchema>} WP_Post_Embed */
+export const PostEmbedSchema = v.object( {
+	author: IdSchema,
+	date: DateItemSchema,
+	excerpt: RenderableItemSchema,
+	featured_media: v.number(),
+	id: v.number(),
+	link: UrlSchema,
+	slug: v.string(),
+	title: RenderableItemSchema,
+	type: v.string(),
+	_links: v.optional( v.record( v.string(), LinkItemSchema ) ),
 } );
 
-export const post_view = post_embed.extend( {
-	meta,
-	comment_status: comment_ping_status,
-	content: renderable_item,
-	date_gmt: date_item,
-	format: z.string().optional(),
-	menu_order: z.number().optional(),
-	modified: date_item,
-	modified_gmt: date_item,
-	parent: z.number().optional(),
-	ping_status: comment_ping_status,
-	status: z.string(),
-	sticky: z.boolean().optional(),
-	template: z.string(),
-	guid: z.object( {
-		raw: z.string().url().optional(),
-		rendered: z.string().url(),
+/** @typedef {v.InferOutput<typeof PostViewSchema>} WP_Post */
+export const PostViewSchema = v.object( v.entriesFromObjects( [
+	PostEmbedSchema,
+	v.object( {
+		comment_status: CommentStatusSchema,
+		content: RenderableItemSchema,
+		date_gmt: DateItemSchema,
+		format: v.optional( v.string() ),
+		menu_order: v.optional( v.number() ),
+		meta: MetaSchema,
+		modified: DateItemSchema,
+		modified_gmt: DateItemSchema,
+		parent: v.optional( v.number() ),
+		ping_status: CommentStatusSchema,
+		status: v.string(),
+		sticky: v.optional( v.boolean() ),
+		template: v.string(),
+		guid: v.object( {
+			raw: v.optional( UrlSchema ),
+			rendered: UrlSchema,
+		} ),
 	} ),
-} );
+] ) );
 
-export const post_edit = post_view.merge( post_edit_base );
+/** @typedef {v.InferOutput<typeof PostEditSchema>} WP_Post_Edit */
+export const PostEditSchema = v.object( v.entriesFromObjects( [
+	PostViewSchema,
+	PostEditBaseSchema,
+] ) );
 
-/** @typedef {z.infer<typeof post_view>} WP_Post */
-/** @typedef {z.infer<typeof post_edit>} WP_Post_Edit */
-/** @typedef {z.infer<typeof post_embed>} WP_Post_Embed */
-/** @typedef {{taxonomy: z.infer<typeof taxonomy_view>, terms: z.infer<typeof term_view>[]}} WP_Post_Terms */
+const PostQuerySchemas = {
+	edit: PostEditSchema,
+	embed: PostEmbedSchema,
+	view: PostViewSchema,
+};
+
+/** @typedef {{taxonomy: import('./taxonomies.js').WP_Taxonomy, terms: import('./terms.js').WP_Term[] }} WP_Post_Terms */
 
 /**
  * Generate URL for posts requests
@@ -68,25 +80,23 @@ function generate_url( url, type, context = undefined, id = undefined ) {
  *
  * @since 0.2.0
  *
- * @template {import('$types').Context_Arg} C
+ * @template {keyof typeof PostQuerySchemas} C
  *
  * @param {number} id Post ID (optional).
  * @param {string} url WordPress API root URL.
+ * @param {C} context Request context, defaults to 'view'.
  * @param {string} auth Authorization header.
  * @param {string} type Post type, defaults to 'posts'.
- * @param {C|undefined} context Request context, defaults to 'view'.
  *
  * @todo Add args parameter.
  *
- * @throws {Error|z.ZodError}
+ * @throws {Error|v.ValiError}
  *
- * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof post_view, typeof post_embed, typeof post_edit>>>} Single post data.
+ * @return {Promise<v.InferOutput<typeof PostQuerySchemas[C]>>} Single post data.
  */
-export async function get_single_post( id, url, auth = '', type = 'posts', context = undefined ) {
-	const schema = pick_schema( post_view, post_embed, post_edit, context );
-
+export async function get_single_post( id, url, context, auth = '', type = 'posts' ) {
 	return fetch_and_parse(
-		schema,
+		PostQuerySchemas[ context ],
 		() => fetch_data( generate_url( url, type, context, id ), auth ),
 	);
 }
@@ -96,29 +106,27 @@ export async function get_single_post( id, url, auth = '', type = 'posts', conte
  *
  * @since 0.2.0
  *
- * @template {import('$types').Context_Arg} C
+ * @template {keyof typeof PostQuerySchemas} C
  *
  * @param {string} url WordPress API root URL.
+ * @param {C} context Request context, defaults to 'view'.
  * @param {string} auth Authorization header.
  * @param {string} type Post type, defaults to 'posts'.
- * @param {C|undefined} context Request context, defaults to 'view'.
  * @param {import('$types').Fetch_Posts_Args|undefined} args Request arguments
  *
- * @throws {Error|z.ZodError}
+ * @throws {Error|v.ValiError}
  *
- * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof post_view, typeof post_embed, typeof post_view>>[]>} Post collection.
+ * @return {Promise<v.InferOutput<v.ArraySchema<typeof PostQuerySchemas[C], undefined>>>} Post collection.
  */
 export async function get_posts(
 	url,
+	context,
 	auth = '',
 	type = 'posts',
-	context = undefined,
 	args = undefined,
 ) {
-	const schema = pick_schema( post_view, post_embed, post_edit, context ).array();
-
 	return fetch_and_parse(
-		schema,
+		v.array( PostQuerySchemas[ context ] ),
 		// @ts-expect-error TODO
 		() => fetch_data( generate_url( url, type, context ), auth, args ),
 	);
@@ -153,7 +161,7 @@ export async function get_post_terms( post, auth = '' ) {
 	for ( const tax of taxonomies ) {
 		try {
 			const terms = await fetch_and_parse(
-				term_view.array(),
+				v.array( TermViewSchema ),
 				() => fetch_data( tax.href, auth ),
 			);
 
@@ -161,7 +169,7 @@ export async function get_post_terms( post, auth = '' ) {
 				continue;
 			}
 
-			const taxonomy = await fetch_and_parse( taxonomy_view, () => {
+			const taxonomy = await fetch_and_parse( TaxonomyViewSchema, () => {
 				return fetch_data( terms[ 0 ]._links.about[ 0 ].href, auth );
 			} );
 

@@ -1,30 +1,30 @@
 import { fetch_and_parse, fetch_data, get_fetch } from '../utils/index.js';
-import { link_item } from './schema.js';
-import { z } from 'zod';
+import { LinkItemSchema, UrlSchema } from './schema.js';
+import * as v from 'valibot';
 
-export const info = z.object( {
-	description: z.string(),
+/** @typedef {v.InferOutput<typeof InfoSchema>} WP_Info */
+export const InfoSchema = v.object( {
+	description: v.string(),
 	// TODO
-	gmt_offset: z.coerce.number(),
-	home: z.string().url(),
-	name: z.string(),
-	namespaces: z.string().array(),
-	site_icon_url: z.string(),
-	site_icon: z.number(),
-	site_logo: z.number(),
-	timezone_string: z.string(),
-	url: z.string().url(),
-	authentication: z.record(
-		z.object( {
-			endpoints: z.object( {
-				authorization: z.string().url(),
+	gmt_offset: v.pipe( v.string(), v.toNumber() ),
+	home: UrlSchema,
+	name: v.string(),
+	namespaces: v.array( v.string() ),
+	site_icon_url: UrlSchema,
+	site_icon: v.number(),
+	site_logo: v.number(),
+	timezone_string: v.string(),
+	url: UrlSchema,
+	authentication: v.record(
+		v.string(),
+		v.object( {
+			endpoints: v.object( {
+				authorization: UrlSchema,
 			} ),
 		} ),
 	),
-	_links: z.record( link_item ),
+	_links: v.record( v.string(), LinkItemSchema ),
 } );
-
-/** @typedef {z.infer<typeof info>} WP_Info */
 
 /**
  * Discover WordPress API root URL
@@ -69,10 +69,10 @@ export async function discover( url ) {
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|v.ValiError}
  *
  * @return {Promise<WP_Info>} Site info data.
  */
 export async function get_info( url, auth = '' ) {
-	return fetch_and_parse( info, () => fetch_data( `${ url }/`, auth ) );
+	return fetch_and_parse( InfoSchema, () => fetch_data( `${ url }/`, auth ) );
 }

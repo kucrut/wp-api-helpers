@@ -1,45 +1,58 @@
-import { fetch_and_parse, fetch_data, generate_endpoint_url, pick_schema } from '../utils/index.js';
-import { link_item, meta } from './schema.js';
-import { z } from 'zod';
+import * as v from 'valibot';
+import { fetch_and_parse, fetch_data, generate_endpoint_url } from '../utils/index.js';
+import { EmailSchema, IdSchema, LinkItemSchema, MetaSchema, UrlSchema } from './schema.js';
 
-export const user_embed = z.object( {
-	avatar_urls: z.record( z.string().url() ),
-	description: z.string(),
-	id: z.number().min( 1 ),
-	name: z.string().min( 1 ),
-	url: z.string().url(),
-	slug: z.string(),
-	_links: z.object( {
-		self: link_item,
-		collection: link_item,
+const CapabilitiesSchema = v.record( v.string(), v.boolean() );
+
+/** @typedef {v.InferOutput<typeof UserEmbedSchema>} WP_User_Embed */
+export const UserEmbedSchema = v.object( {
+	avatar_urls: v.record( v.string(), UrlSchema ),
+	description: v.string(),
+	id: IdSchema,
+	name: v.pipe( v.string(), v.minLength( 1 ) ),
+	url: UrlSchema,
+	slug: v.string(),
+	_links: v.object( {
+		self: LinkItemSchema,
+		collection: LinkItemSchema,
 	} ),
 } );
 
-export const user_view = user_embed.extend( { meta } );
+/** @typedef {v.InferOutput<typeof UserViewSchema>} WP_User */
+export const UserViewSchema = v.object( v.entriesFromObjects( [
+	UserEmbedSchema,
+	v.object( { meta: MetaSchema } ),
+] ) );
 
-export const user_edit = user_view.extend( {
-	capabilities: z.record( z.boolean() ),
-	email: z.string().email(),
-	extra_capabilities: z.record( z.boolean() ),
-	first_name: z.string(),
-	last_name: z.string(),
-	link: z.string().url(),
-	locale: z.string(),
-	nickname: z.string(),
-	registered_date: z.string().datetime( { offset: true } ),
-	roles: z.string().array(),
-	username: z.string(),
-} );
+/** @typedef {v.InferOutput<typeof UserEditSchema>} WP_User_Edit */
+export const UserEditSchema = v.object( v.entriesFromObjects( [
+	UserViewSchema,
+	v.object( {
+		capabilities: v.record( v.string(), v.boolean() ),
+		email: EmailSchema,
+		extra_capabilities: CapabilitiesSchema,
+		first_name: v.string(),
+		last_name: v.string(),
+		link: UrlSchema,
+		locale: v.string(),
+		nickname: v.string(),
+		registered_date: CapabilitiesSchema,
+		roles: v.array( v.string() ),
+		username: v.string(),
+	} ),
+] ) );
 
-/** @typedef {z.infer<typeof user_view>} WP_User */
-/** @typedef {z.infer<typeof user_edit>} WP_User_Edit */
-/** @typedef {z.infer<typeof user_embed>} WP_User_Embed */
+const UserQuerySchemas = {
+	edit: UserEditSchema,
+	embed: UserEmbedSchema,
+	view: UserViewSchema,
+};
 
 /**
  * Generate URL for user requests
  *
  * @param {string} url WP API root URL.
- * @param {import('$types').Context_Arg} context Request context.
+ * @param {import('$types').Context_Arg|undefined} context Request context.
  * @param {import('$types').User_ID_Arg|undefined} id User ID or 'me'.
  *
  * @return {URL} Endpoint URL.
@@ -53,18 +66,18 @@ function generate_url( url, context = undefined, id = undefined ) {
  *
  * @since 0.1.0
  *
- * @template {import('$types').Context_Arg} C
+ * @template {keyof typeof UserQuerySchemas} C
  *
  * @param {import('$types').User_ID_Arg} id User ID or 'me'.
  * @param {string} url WordPress API root URL.
+ * @param {C} context Request context, defaults to 'view'.
  * @param {string} auth Authorization header (required when `id` is `me`).
- * @param {C|undefined} context Request context, defaults to 'view'.
  *
- * @throws {Error|z.ZodError}
+ * @throws {Error|v.ValiError}
  *
- * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof user_view, typeof user_embed, typeof user_edit>>>} User data.
+ * @return {Promise<v.InferOutput<typeof UserQuerySchemas[C]>>} User data.
  */
-export function get_single_user( id, url, auth = '', context = undefined ) {
+export function get_single_user( id, url, context, auth = '' ) {
 	if ( typeof id === 'number' && id < 1 ) {
 		throw new Error( '[get_user] User ID must be greater than 0.' );
 	}
@@ -74,12 +87,13 @@ export function get_single_user( id, url, auth = '', context = undefined ) {
 	}
 
 	if ( context === 'edit' && ! auth ) {
-		throw new Error( '[get_user] auth is required when context is set to `edit`.' );
+		throw new Error( '[get_single_user] auth is required when context is set to `edit`.' );
 	}
 
-	const schema = pick_schema( user_view, user_embed, user_edit, context );
-
-	return fetch_and_parse( schema, () => fetch_data( generate_url( url, context, id ), auth ) );
+	return fetch_and_parse(
+		UserQuerySchemas[ context ],
+		() => fetch_data( generate_url( url, context, id ), auth ),
+	);
 }
 
 /**
@@ -87,20 +101,21 @@ export function get_single_user( id, url, auth = '', context = undefined ) {
  *
  * @since 0.1.0
  *
- * @template {import('$types').Context_Arg} C
+ * @template {keyof typeof UserQuerySchemas} C
  *
  * @param {string} url WordPress API root URL.
+ * @param {C} context Request context.
  * @param {string} auth Authorization header.
- * @param {C|undefined} context Request context, defaults to 'view'.
  * @param {import('$types').Fetch_Users_Args} args Request arguments.
  *
- * @throws {Error|z.ZodError}
+ * @throws {Error|v.ValiError}
  *
- * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof user_view, typeof user_embed, typeof user_edit>>[]>} User collection.
+ * @return {Promise<v.InferOutput<v.ArraySchema<typeof UserQuerySchemas[C], undefined>>>} User collection.
  */
-export function get_users( url, auth = '', context = undefined, args = {} ) {
-	const schema = pick_schema( user_view, user_embed, user_edit, context ).array();
-
-	// @ts-expect-error TODO
-	return fetch_and_parse( schema, () => fetch_data( generate_url( url, context ), auth, args ) );
+export function get_users( url, context, auth = '', args = {} ) {
+	return fetch_and_parse(
+		v.array( UserQuerySchemas[ context ] ),
+		// @ts-expect-error TODO
+		() => fetch_data( generate_url( url, context ), auth, args ),
+	);
 }
