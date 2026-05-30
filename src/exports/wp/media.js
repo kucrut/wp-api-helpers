@@ -133,7 +133,6 @@ export function create_media( url, auth, data ) {
 export async function get_media( url, context, auth = '', args = undefined ) {
 	return fetch_and_parse(
 		v.array( MediaQuerySchemas[ context ] ),
-		// @ts-expect-error TODO
 		() => fetch_data( generate_url( url, context ), auth, args ),
 	);
 }

@@ -70,7 +70,6 @@ function generate_url( url, taxonomy, context = undefined, id = undefined ) {
 export async function get_terms( url, taxonomy, context, auth = '', args = undefined ) {
 	return fetch_and_parse(
 		v.array( TermQuerySchemas[ context ] ),
-		// @ts-expect-error TODO
 		() => fetch_data( generate_url( url, taxonomy, context ), auth, args ),
 	);
 }

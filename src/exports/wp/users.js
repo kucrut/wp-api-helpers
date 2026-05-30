@@ -115,7 +115,6 @@ export function get_single_user( id, url, context, auth = '' ) {
 export function get_users( url, context, auth = '', args = {} ) {
 	return fetch_and_parse(
 		v.array( UserQuerySchemas[ context ] ),
-		// @ts-expect-error TODO
 		() => fetch_data( generate_url( url, context ), auth, args ),
 	);
 }

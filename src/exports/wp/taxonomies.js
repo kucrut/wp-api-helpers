@@ -115,7 +115,6 @@ export async function get_taxonomies( url, context, auth = '', args = undefined 
 	const data = await fetch_and_parse(
 		v.record( v.string(), TaxQuerySchemas[ context ] ),
 		() => {
-			// @ts-expect-error TODO
 			return fetch_data( generate_url( url, context ), auth, args );
 		},
 	);
