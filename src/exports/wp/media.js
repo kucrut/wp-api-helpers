@@ -1,75 +1,81 @@
-import { fetch_and_parse, fetch_data, generate_endpoint_url, get_fetch, pick_schema } from '../utils/index.js';
-import { post_edit_base, post_embed, post_view } from './posts.js';
-import { renderable_item } from './schema.js';
-import { z } from 'zod';
+import * as v from 'valibot';
+import { fetch_and_parse, fetch_data, generate_endpoint_url, get_fetch } from '../utils/index.js';
+import { PostEditBaseSchema, PostEmbedSchema, PostViewSchema } from './posts.js';
+import { RenderableItemSchema, UrlSchema } from './schema.js';
 
-export const image_size = z.object( {
-	file: z.string(),
-	height: z.number(),
-	mime_type: z.string(),
-	source_url: z.string(),
-	width: z.number(),
+/** @typedef {v.InferOutput<typeof ImageSizeSchema>} WP_Image_Size */
+export const ImageSizeSchema = v.object( {
+	file: v.string(),
+	height: v.number(),
+	mime_type: v.string(),
+	source_url: UrlSchema,
+	width: v.number(),
 } );
 
-export const media_embed = post_embed
-	.omit( {
-		excerpt: true,
-		featured_media: true,
-	} )
-	.extend( {
-		alt_text: z.string(),
-		caption: renderable_item,
-		media_type: z.string(),
-		media_details: z.object( {
+/** @typedef {v.InferOutput<typeof MediaEmbedSchema>} WP_Media_Embed */
+export const MediaEmbedSchema = v.object( v.entriesFromObjects( [
+	v.omit( PostEmbedSchema, [ 'excerpt', 'featured_media' ] ),
+	v.object( {
+		alt_text: v.string(),
+		caption: RenderableItemSchema,
+		media_type: v.string(),
+		media_details: v.object( {
 			// Video.
-			bitrate: z.number().optional(),
+			bitrate: v.optional( v.number() ),
 			// Video.
-			dataformat: z.string().optional(),
+			dataformat: v.optional( v.string() ),
 			// Image.
-			file: z.string().optional(),
+			file: v.optional( v.string() ),
 			// Video.
-			fileformat: z.string().optional(),
+			fileformat: v.optional( v.string() ),
 			// Image.
-			filesize: z.number(),
+			filesize: v.number(),
 			// Image.
-			height: z.number().optional(),
+			height: v.optional( v.number() ),
 			// Image.
-			image_meta: z.record( z.any() ).optional(),
+			image_meta: v.optional( v.record( v.string(), v.any() ) ),
 			// Video.
-			length: z.number().optional(),
+			length: v.optional( v.number() ),
 			// Video.
-			length_formatted: z.string().optional(),
+			length_formatted: v.optional( v.string() ),
 			// Image.
-			width: z.number().optional(),
+			width: v.optional( v.number() ),
 			// Image.
-			sizes: z.record( image_size ).optional(),
+			sizes: v.optional( v.record( v.string(), ImageSizeSchema ) ),
 		} ),
-		mime_type: z.string(),
-		source_url: z.string().url(),
-	} );
+		mime_type: v.string(),
+		source_url: UrlSchema,
+	} ),
+] ) );
 
-export const media_view = z
-	.object( {
-		description: renderable_item,
-		post: z.number().nullable(),
-	} )
-	.merge( post_view )
-	.merge( media_embed )
-	.omit( {
-		content: true,
-		excerpt: true,
-		featured_media: true,
-		menu_order: true,
-		parent: true,
-		sticky: true,
-	} );
+/** @typedef {v.InferOutput<typeof MediaViewSchema>} WP_Media */
+export const MediaViewSchema = v.object( v.entriesFromObjects( [
+	MediaEmbedSchema,
+	v.object( {
+		description: RenderableItemSchema,
+		post: v.nullable( v.number() ),
+	} ),
+	v.omit( PostViewSchema, [
+		'content',
+		'excerpt',
+		'featured_media',
+		'menu_order',
+		'parent',
+		'sticky',
+	] ),
+] ) );
 
-export const media_edit = media_view.merge( post_edit_base );
+/** @typedef {v.InferOutput<typeof MediaEditSchema>} WP_Media_Edit */
+export const MediaEditSchema = v.object( v.entriesFromObjects( [
+	MediaViewSchema,
+	PostEditBaseSchema,
+] ) );
 
-/** @typedef {z.infer<typeof image_size>} WP_Image_Size */
-/** @typedef {z.infer<typeof media_view>} WP_Media */
-/** @typedef {z.infer<typeof media_edit>} WP_Media_Edit */
-/** @typedef {z.infer<typeof media_embed>} WP_Media_Embed */
+const MediaQuerySchemas = {
+	edit: MediaEditSchema,
+	embed: MediaEmbedSchema,
+	view: MediaViewSchema,
+};
 
 /**
  * Generate URL for media requests
@@ -96,7 +102,7 @@ function generate_url( url, context = undefined, id = undefined ) {
  * @return {Promise<WP_Media_Edit>} Media (edit) data.
  */
 export function create_media( url, auth, data ) {
-	return fetch_and_parse( media_edit, () => {
+	return fetch_and_parse( MediaEditSchema, () => {
 		return get_fetch()( `${ url }/wp/v2/media`, {
 			body: data,
 			method: 'POST',
@@ -113,22 +119,23 @@ export function create_media( url, auth, data ) {
  *
  * @since 0.2.0
  *
- * @template {import('$types').Context_Arg} C
+ * @template {keyof typeof MediaQuerySchemas} C
  *
  * @param {string} url WordPress API root URL.
+ * @param {C} context Request context, defaults to 'view'.
  * @param {string|undefined} auth Authorization header.
- * @param {C|undefined} context Request context, defaults to 'view'.
  * @param {import('$types').Fetch_Media_Args|undefined} args Request arguments.
  *
- * @throws {Error|z.ZodError}
+ * @throws {Error|v.ValiError}
  *
- * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof media_view, typeof media_embed, typeof media_view>>[]>} Media collection.
+ * @return {Promise<v.InferOutput<v.ArraySchema<typeof MediaQuerySchemas[C], undefined>>>} Media collection.
  */
-export async function get_media( url, auth = '', context = undefined, args = undefined ) {
-	const schema = pick_schema( media_view, media_embed, media_edit, context ).array();
-
-	// @ts-expect-error TODO
-	return fetch_and_parse( schema, () => fetch_data( generate_url( url, context ), auth, args ) );
+export async function get_media( url, context, auth = '', args = undefined ) {
+	return fetch_and_parse(
+		v.array( MediaQuerySchemas[ context ] ),
+		// @ts-expect-error TODO
+		() => fetch_data( generate_url( url, context ), auth, args ),
+	);
 }
 
 /**
@@ -136,19 +143,20 @@ export async function get_media( url, auth = '', context = undefined, args = und
  *
  * @since 0.2.0
  *
- * @template {import('$types').Context_Arg} C
+ * @template {keyof typeof MediaQuerySchemas} C
  *
  * @param {number} id Media ID.
  * @param {string} url WordPress API root URL.
+ * @param {C} context Request context, defaults to 'view'.
  * @param {string|undefined} auth Authorization header.
- * @param {C|undefined} context Request context, defaults to 'view'.
  *
- * @throws {Error|z.ZodError}
+ * @throws {Error|v.ValiError}
  *
- * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof media_view, typeof media_embed, typeof media_edit>>>} Single media data.
+ * @return {Promise<v.InferOutput<typeof MediaQuerySchemas[C]>>} Single media data.
  */
-export async function get_single_media( id, url, auth = '', context = undefined ) {
-	const schema = pick_schema( media_view, media_embed, media_edit, context );
-
-	return fetch_and_parse( schema, () => fetch_data( generate_url( url, context, id ), auth ) );
+export async function get_single_media( id, url, context, auth = '' ) {
+	return fetch_and_parse(
+		MediaQuerySchemas[ context ],
+		() => fetch_data( generate_url( url, context, id ), auth ),
+	);
 }

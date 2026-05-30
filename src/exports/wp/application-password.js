@@ -1,35 +1,36 @@
-import {
-	fetch_and_parse,
-	fetch_data,
-	generate_endpoint_url,
-	get_fetch,
-	pick_schema,
-} from '../utils/index.js';
-import { date_item } from './schema.js';
+import * as v from 'valibot';
+import { DateItemSchema } from './schema.js';
+import { fetch_and_parse, fetch_data, generate_endpoint_url, get_fetch } from '../utils/index.js';
 import { get_info } from './general.js';
-import { z } from 'zod';
 
-export const application_password_embed = z.object( {
-	app_id: z.string(),
-	name: z.string(),
-	uuid: z.string(),
+/** @typedef {v.InferOutput<typeof ApplicationPasswordEmbedSchema>} WP_Application_Password_Embed */
+export const ApplicationPasswordEmbedSchema = v.object( {
+	app_id: v.string(),
+	name: v.string(),
+	uuid: v.pipe( v.string(), v.uuid() ),
 } );
 
-export const application_password_view = application_password_embed.extend( {
-	created: date_item,
-	last_ip: z.string().ip(),
-	last_used: date_item,
+/** @typedef {v.InferOutput<typeof ApplicationPasswordViewSchema>} WP_Application_Password */
+export const ApplicationPasswordViewSchema = v.object( v.entriesFromObjects( [
+	ApplicationPasswordEmbedSchema,
+	v.object( {
+		created: DateItemSchema,
+		last_ip: v.pipe( v.string(), v.ip() ),
+		last_used: DateItemSchema,
+	} ),
+] ) );
+
+/** @typedef {v.InferOutput<typeof ApplicationPasswordDeletedSchema>} WP_Application_Password_Deleted */
+export const ApplicationPasswordDeletedSchema = v.object( {
+	deleted: v.boolean(),
+	previous: ApplicationPasswordViewSchema,
 } );
 
-export const application_password_deleted = z.object( {
-	deleted: z.boolean(),
-	previous: application_password_view,
-} );
-
-/** @typedef {z.infer<typeof application_password_view>} WP_Application_Password */
-/** @typedef {z.infer<typeof application_password_deleted>} WP_Application_Password_Deleted */
-/** @typedef {z.infer<typeof application_password_view>} WP_Application_Password_Edit */
-/** @typedef {z.infer<typeof application_password_embed>} WP_Application_Password_Embed */
+const AppPassQuerySchemas = {
+	edit: ApplicationPasswordViewSchema,
+	embed: ApplicationPasswordEmbedSchema,
+	view: ApplicationPasswordViewSchema,
+};
 
 /**
  * Generate URL for application password requests
@@ -57,7 +58,7 @@ function generate_url( url, user_id, context = undefined, uuid = '' ) {
  * @param {string} url WP API root URL.
  * @return {Promise<string>} Application password authorization route.
  *
- * @throws {Error|z.ZodError}
+ * @throws {Error|v.ValiError}
  */
 export async function get_app_password_auth_endpoint( url ) {
 	const info = await get_info( url );
@@ -74,27 +75,20 @@ export async function get_app_password_auth_endpoint( url ) {
  *
  * @since 0.1.0
  *
- * @template {import('$types').Context_Arg} C
+ * @template {keyof typeof AppPassQuerySchemas} C
  *
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
  * @param {import('$types').User_ID_Arg} user_id User ID or 'me'.
- * @param {C|undefined} context Request context, defaults to 'view'.
+ * @param {C} context Request context, defaults to 'view'.
  *
- * @throws {Error|z.ZodError}
+ * @throws {Error|v.ValiError}
  *
- * @return {Promise<z.infer<import('$types').Schema_By_Context<C, typeof application_password_view, typeof application_password_embed, typeof application_password_view>>[]>} Application password collection.
+ * @return {Promise<v.InferOutput<v.ArraySchema<typeof AppPassQuerySchemas[C], undefined>>>} Application password collection.
  */
-export function get_app_passwords( url, auth, user_id, context = undefined ) {
-	const schema = pick_schema(
-		application_password_view,
-		application_password_embed,
-		application_password_view,
-		context,
-	).array();
-
+export function get_app_passwords( url, auth, user_id, context ) {
 	return fetch_and_parse(
-		schema,
+		v.array( AppPassQuerySchemas[ context ] ),
 		() => fetch_data( generate_url( url, user_id, context ), auth ),
 	);
 }
@@ -107,12 +101,12 @@ export function get_app_passwords( url, auth, user_id, context = undefined ) {
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|v.ValiError}
  *
  * @return {Promise<WP_Application_Password>} Response data.
  */
 export function get_current_app_password( url, auth ) {
-	return fetch_and_parse( application_password_view, () => {
+	return fetch_and_parse( ApplicationPasswordViewSchema, () => {
 		return get_fetch()( generate_url( url, 'me' ) + '/introspect', {
 			headers: {
 				Authorization: auth,
@@ -132,12 +126,12 @@ export function get_current_app_password( url, auth ) {
  * @param {import('$types').User_ID_Arg} user_id User ID or 'me'.
  * @param {string} uuid Application password UUID.
  *
- * @throws {Error|import('zod').ZodError}
+ * @throws {Error|v.ValiError}
  *
  * @return {Promise<WP_Application_Password_Deleted>} Response data.
  */
 export function delete_app_password( url, auth, user_id, uuid ) {
-	return fetch_and_parse( application_password_deleted, () => {
+	return fetch_and_parse( ApplicationPasswordDeletedSchema, () => {
 		return get_fetch()( generate_url( url, user_id, undefined, uuid ), {
 			method: 'DELETE',
 			headers: {

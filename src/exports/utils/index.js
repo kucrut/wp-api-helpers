@@ -1,6 +1,6 @@
+import * as v from 'valibot';
 import { get_fetch } from './fetch.js';
-import { rest_error } from '../wp/schema.js';
-import { ZodError } from 'zod';
+import { RestErrorSchema } from '../wp/schema.js';
 
 export * from './fetch.js';
 
@@ -22,17 +22,17 @@ export function create_basic_auth_string( username, password ) {
  *
  * @since 0.1.0
  *
- * @template {import('zod').ZodTypeAny} T
+ * @template {v.GenericSchema} T
  *
- * @param {T} schema Zod schema to parse the response with.
+ * @param {T} schema Valibot schema to parse the response with.
  * @param {() => ReturnType<typeof fetch>} fetcher Fetch function.
  *
- * @throws {Error|ZodError}
+ * @throws {Error|v.ValiError}
  *
- * @return {ReturnType<import('$types').Handle_Response<import('zod').infer<T>>>} Parsed data.
+ * @return {ReturnType<import('$types').Handle_Response<v.InferOutput<T>>>} Parsed data.
  */
 export async function fetch_and_parse( schema, fetcher ) {
-	const handler = make_response_handler( async data => schema.parse( data ) );
+	const handler = make_response_handler( async data => v.parse( schema, data ) );
 	const response = await fetcher();
 
 	return handler( response );
@@ -113,7 +113,7 @@ export function get_error_message( error, fallback, dump = true ) {
 
 	if ( typeof error === 'string' ) {
 		message = error;
-	} else if ( error instanceof Error || error instanceof ZodError ) {
+	} else if ( error instanceof Error || error instanceof v.ValiError ) {
 		message = error.message;
 	} else {
 		message = fallback;
@@ -139,7 +139,7 @@ export function get_error_message( error, fallback, dump = true ) {
  * @param {Response} response Fetch response object.
  * @param {import('$types').Handle_Response<T>} callback Callback to run when json is valid.
  *
- * @throws {Error|ZodError|typeof rest_error} JSON.parse error, Zod error or WP API error.
+ * @throws {Error|v.ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<T>} Whatever the callback returns.
  */
@@ -161,17 +161,17 @@ export async function handle_response( response, callback ) {
 	}
 
 	const data = await response.json();
-	const wp_error_check = rest_error.safeParse( data );
+	const wp_error_check = v.safeParse( RestErrorSchema, data );
 
 	if ( wp_error_check.success ) {
 		throw new WP_REST_Error(
-			wp_error_check.data.message,
-			wp_error_check.data.code,
-			wp_error_check.data.data,
+			wp_error_check.output.message,
+			wp_error_check.output.code,
+			wp_error_check.output.data,
 		);
 	}
 
-	throw wp_error_check.error;
+	throw wp_error_check.issues;
 }
 
 /**
@@ -220,36 +220,11 @@ export function normalize_fetch_args( args ) {
 
 		if ( Array.isArray( value ) ) {
 			// TODO: Maybe reduce.
-			return [ name, value.map( v => to_string( v ).trim() ).join( ',' ) ];
+			return [ name, value.map( val => to_string( val ).trim() ).join( ',' ) ];
 		}
 
 		return [ name, to_string( value ).trim() ];
 	} );
-}
-
-/**
- * Pick schema based on passed context
- *
- * @template {import('$types').Context_Arg} C
- * @template {import('zod').ZodTypeAny} S
- *
- * @param {S} view_schema View schema.
- * @param {S} embed_schema Embed schema.
- * @param {S} edit_schema Edit schema.
- * @param {C|undefined} context Request context.
- *
- * @return {S} Schema.
- */
-export function pick_schema( view_schema, embed_schema, edit_schema, context = undefined ) {
-	if ( context === 'edit' ) {
-		return edit_schema;
-	}
-
-	if ( context === 'embed' ) {
-		return embed_schema;
-	}
-
-	return view_schema;
 }
 
 export class WP_REST_Error extends Error {

@@ -1,24 +1,22 @@
+import * as v from 'valibot';
+import { EmailSchema } from './schema.js';
 import { fetch_and_parse, get_fetch } from '../utils/index.js';
-import { z } from 'zod';
 
-export const jwt_auth_data = z.object( {
-	user_email: z.string().email(),
-	user_display_name: z.string(),
-	user_nicename: z.string(),
-	token: z.string(),
+/** @typedef {v.InferOutput<typeof JwtAuthDataSchema>} JWT_Auth */
+export const JwtAuthDataSchema = v.object( {
+	user_email: EmailSchema,
+	user_display_name: v.string(),
+	user_nicename: v.string(),
+	token: v.string(),
 } );
 
-export const jwt_valid_token = z.object( {
-	code: z.string().refine( val => val === 'jwt_auth_valid_token' ),
-	data: z.object( {
-		status: z.number().refine( val => val === 200 ),
+/** @typedef {v.InferOutput<typeof JwtValidTokenSchema>} JWT_Valid_Token */
+export const JwtValidTokenSchema = v.object( {
+	code: v.pipe( v.string(), v.check( val => val === 'jwt_auth_valid_token' ) ),
+	data: v.object( {
+		status: v.pipe( v.number(), v.check( val => val === 200 ) ),
 	} ),
 } );
-
-/**
- * @typedef {z.infer<typeof jwt_auth_data>} JWT_Auth
- * @typedef {z.infer<typeof jwt_valid_token>} JWT_Valid_Token
- */
 
 /**
  * Get JWT authentication
@@ -29,12 +27,12 @@ export const jwt_valid_token = z.object( {
  * @param {string} username Username or email.
  * @param {string} password User password.
  *
- * @throws {Error|z.ZodError}
+ * @throws {Error|v.ValiError}
  *
  * @return {Promise<JWT_Auth>} Auth data.
  */
 export async function get_jwt_auth( url, username, password ) {
-	return fetch_and_parse( jwt_auth_data, () => {
+	return fetch_and_parse( JwtAuthDataSchema, () => {
 		return get_fetch()( `${ url }/jwt-auth/v1/token`, {
 			body: JSON.stringify( { username, password } ),
 			method: 'POST',
@@ -57,7 +55,7 @@ export async function get_jwt_auth( url, username, password ) {
  * @return {Promise<JWT_Valid_Token>} Valid token data.
  */
 export async function get_jwt_validate_token( url, token ) {
-	return fetch_and_parse( jwt_valid_token, () => {
+	return fetch_and_parse( JwtValidTokenSchema, () => {
 		return get_fetch()( `${ url }/jwt-auth/v1/token/validate`, {
 			method: 'POST',
 			headers: {
