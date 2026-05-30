@@ -34,7 +34,7 @@ export const SettingsSchema = v.object( {
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
  *
- * @throws {Error|v.ValiError}
+ * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<WP_Settings>} Settings data.
  */

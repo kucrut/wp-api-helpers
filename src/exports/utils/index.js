@@ -43,11 +43,9 @@ export async function fetch_and_parse( schema, fetcher ) {
  *
  * @since 0.1.0
  *
- * @template {Record<string,unknown>} A
- *
  * @param {string|URL} endpoint Data endpoint.
  * @param {string|undefined} auth Authentication header.
- * @param {A|undefined} args Arguments.
+ * @param {object|undefined} args Arguments.
  *
  * @return {ReturnType<typeof fetch>} Response.
  */
@@ -193,7 +191,7 @@ export function make_response_handler( handler ) {
  *
  * @since 0.1.0
  *
- * @param {Record<string,unknown>} args Fetch arguments.
+ * @param {object} args Fetch arguments.
  * @return {[string, string][]} Pairs of key and value strings.
  */
 export function normalize_fetch_args( args ) {

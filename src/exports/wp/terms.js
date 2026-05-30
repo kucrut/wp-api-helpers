@@ -63,14 +63,13 @@ function generate_url( url, taxonomy, context = undefined, id = undefined ) {
  * @param {string|undefined} auth Authorization header.
  * @param {import("$types").Fetch_Terms_Args|undefined} args Request arguments.
  *
- * @throws {Error|v.ValiError}
+ * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<v.InferOutput<v.ArraySchema<typeof TermQuerySchemas[C], undefined>>>} Term collection.
  */
 export async function get_terms( url, taxonomy, context, auth = '', args = undefined ) {
 	return fetch_and_parse(
 		v.array( TermQuerySchemas[ context ] ),
-		// @ts-expect-error TODO
 		() => fetch_data( generate_url( url, taxonomy, context ), auth, args ),
 	);
 }

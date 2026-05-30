@@ -73,7 +73,7 @@ function generate_url( url, context = undefined, id = undefined ) {
  * @param {C} context Request context, defaults to 'view'.
  * @param {string} auth Authorization header (required when `id` is `me`).
  *
- * @throws {Error|v.ValiError}
+ * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<v.InferOutput<typeof UserQuerySchemas[C]>>} User data.
  */
@@ -108,14 +108,13 @@ export function get_single_user( id, url, context, auth = '' ) {
  * @param {string} auth Authorization header.
  * @param {import('$types').Fetch_Users_Args} args Request arguments.
  *
- * @throws {Error|v.ValiError}
+ * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<v.InferOutput<v.ArraySchema<typeof UserQuerySchemas[C], undefined>>>} User collection.
  */
 export function get_users( url, context, auth = '', args = {} ) {
 	return fetch_and_parse(
 		v.array( UserQuerySchemas[ context ] ),
-		// @ts-expect-error TODO
 		() => fetch_data( generate_url( url, context ), auth, args ),
 	);
 }

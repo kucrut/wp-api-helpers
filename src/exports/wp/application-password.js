@@ -82,7 +82,7 @@ export async function get_app_password_auth_endpoint( url ) {
  * @param {import('$types').User_ID_Arg} user_id User ID or 'me'.
  * @param {C} context Request context, defaults to 'view'.
  *
- * @throws {Error|v.ValiError}
+ * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<v.InferOutput<v.ArraySchema<typeof AppPassQuerySchemas[C], undefined>>>} Application password collection.
  */
@@ -101,7 +101,7 @@ export function get_app_passwords( url, auth, user_id, context ) {
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
  *
- * @throws {Error|v.ValiError}
+ * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<WP_Application_Password>} Response data.
  */
@@ -126,7 +126,7 @@ export function get_current_app_password( url, auth ) {
  * @param {import('$types').User_ID_Arg} user_id User ID or 'me'.
  * @param {string} uuid Application password UUID.
  *
- * @throws {Error|v.ValiError}
+ * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<WP_Application_Password_Deleted>} Response data.
  */
