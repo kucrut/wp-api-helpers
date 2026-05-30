@@ -30,6 +30,7 @@ const base_js = {
 	languageOptions: {
 		globals: {
 			...globals.browser,
+			...globals.node,
 		},
 	},
 	rules: {
