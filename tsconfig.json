@@ -16,6 +16,7 @@
 		"sourceMap": true,
 		"strict": true,
 		"target": "esnext",
+		"types": [ "node" ],
 		"paths": {
 			"$types": [ "./src/types.ts" ]
 		}
