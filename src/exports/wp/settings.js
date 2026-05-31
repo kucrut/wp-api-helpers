@@ -1,5 +1,4 @@
-/** @import {InferOutput, ValiError} from "valibot" */
-/** @import {WP_REST_Error} from "../utils/index.js" */
+/** @import {InferOutput} from "valibot" */
 
 import { boolean, nullable, number, object, picklist, string } from 'valibot';
 import { CommentStatusSchema, EmailSchema } from './schema.js';
@@ -36,8 +35,6 @@ export const SettingsSchema = object( {
  *
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
- *
- * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<WP_Settings>} Settings data.
  */

@@ -1,5 +1,4 @@
-/** @import {ArraySchema, InferOutput, ValiError} from "valibot" */
-/** @import {WP_REST_Error} from "../utils/index.js" */
+/** @import {ArraySchema, InferOutput} from "valibot" */
 
 import { array, boolean, entriesFromObjects, number, object, optional, record, string } from 'valibot';
 import { CommentStatusSchema, DateItemSchema, IdSchema, LinkItemSchema, MetaSchema, RenderableItemSchema, UrlSchema } from './schema.js';
@@ -93,8 +92,6 @@ function generate_url( url, type, context = undefined, id = undefined ) {
  *
  * @todo Add args parameter.
  *
- * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
- *
  * @return {Promise<InferOutput<typeof PostQuerySchemas[C]>>} Single post data.
  */
 export async function get_single_post( id, url, context, auth = '', type = 'posts' ) {
@@ -116,8 +113,6 @@ export async function get_single_post( id, url, context, auth = '', type = 'post
  * @param {string} auth Authorization header.
  * @param {string} type Post type, defaults to 'posts'.
  * @param {import('$types').Fetch_Posts_Args|undefined} args Request arguments
- *
- * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<InferOutput<ArraySchema<typeof PostQuerySchemas[C], undefined>>>} Post collection.
  */
@@ -141,8 +136,6 @@ export async function get_posts(
  *
  * @param {WP_Post} post Post object.
  * @param {string} auth Authorization header (optional).
- *
- * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<WP_Post_Terms[]|null>} Array of post terms.
  */

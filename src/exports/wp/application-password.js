@@ -1,5 +1,4 @@
-/** @import {ArraySchema, InferOutput, ValiError} from "valibot" */
-/** @import {WP_REST_Error} from "../utils/index.js" */
+/** @import {ArraySchema, InferOutput} from "valibot" */
 
 import { array, boolean, entriesFromObjects, object, ip, pipe, string, uuid } from 'valibot';
 import { DateItemSchema } from './schema.js';
@@ -59,9 +58,8 @@ function generate_url( url, user_id, context = undefined, p_uuid = '' ) {
  * @since 0.3.0
  *
  * @param {string} url WP API root URL.
- * @return {Promise<string>} Application password authorization route.
  *
- * @throws {Error|ValiError}
+ * @return {Promise<string>} Application password authorization route.
  */
 export async function get_app_password_auth_endpoint( url ) {
 	const info = await get_info( url );
@@ -85,8 +83,6 @@ export async function get_app_password_auth_endpoint( url ) {
  * @param {import('$types').User_ID_Arg} user_id User ID or 'me'.
  * @param {C} context Request context, defaults to 'view'.
  *
- * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
- *
  * @return {Promise<InferOutput<ArraySchema<typeof AppPassQuerySchemas[C], undefined>>>} Application password collection.
  */
 export function get_app_passwords( url, auth, user_id, context ) {
@@ -103,8 +99,6 @@ export function get_app_passwords( url, auth, user_id, context ) {
  *
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
- *
- * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<WP_Application_Password>} Response data.
  */
@@ -128,8 +122,6 @@ export function get_current_app_password( url, auth ) {
  * @param {string} auth Authorization header.
  * @param {import('$types').User_ID_Arg} user_id User ID or 'me'.
  * @param {string} puuid Application password UUID.
- *
- * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<WP_Application_Password_Deleted>} Response data.
  */

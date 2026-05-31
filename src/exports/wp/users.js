@@ -1,5 +1,4 @@
-/** @import {ArraySchema, InferOutput, ValiError} from "valibot" */
-/** @import {WP_REST_Error} from "../utils/index.js" */
+/** @import {ArraySchema, InferOutput} from "valibot" */
 
 import { array, boolean, entriesFromObjects, minLength, object, pipe, record, string } from 'valibot';
 import { fetch_and_parse, fetch_data, generate_endpoint_url } from '../utils/index.js';
@@ -76,8 +75,6 @@ function generate_url( url, context = undefined, id = undefined ) {
  * @param {C} context Request context, defaults to 'view'.
  * @param {string} auth Authorization header (required when `id` is `me`).
  *
- * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
- *
  * @return {Promise<InferOutput<typeof UserQuerySchemas[C]>>} User data.
  */
 export function get_single_user( id, url, context, auth = '' ) {
@@ -110,8 +107,6 @@ export function get_single_user( id, url, context, auth = '' ) {
  * @param {C} context Request context.
  * @param {string} auth Authorization header.
  * @param {import('$types').Fetch_Users_Args} args Request arguments.
- *
- * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<InferOutput<ArraySchema<typeof UserQuerySchemas[C], undefined>>>} User collection.
  */

@@ -1,5 +1,4 @@
-/** @import {ArraySchema, InferOutput, ValiError} from "valibot" */
-/** @import {WP_REST_Error} from "../utils/index.js" */
+/** @import {ArraySchema, InferOutput} from "valibot" */
 
 import { array, entriesFromObjects, number, object, string } from 'valibot';
 import { fetch_and_parse, fetch_data, generate_endpoint_url } from '../utils/index.js';
@@ -65,8 +64,6 @@ function generate_url( url, taxonomy, context = undefined, id = undefined ) {
  * @param {C} context Request context, defaults to 'view'.
  * @param {string|undefined} auth Authorization header.
  * @param {import("$types").Fetch_Terms_Args|undefined} args Request arguments.
- *
- * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<InferOutput<ArraySchema<typeof TermQuerySchemas[C], undefined>>>} Term collection.
  */

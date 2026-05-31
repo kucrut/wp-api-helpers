@@ -1,5 +1,4 @@
-/** @import {ArraySchema, InferOutput, ValiError} from "valibot" */
-/** @import {WP_REST_Error} from "../utils/index.js" */
+/** @import {ArraySchema, InferOutput} from "valibot" */
 
 import { any, array, entriesFromObjects, nullable, number, object, omit, optional, record, string } from 'valibot';
 import { fetch_and_parse, fetch_data, generate_endpoint_url, get_fetch } from '../utils/index.js';
@@ -129,8 +128,6 @@ export function create_media( url, auth, data ) {
  * @param {string|undefined} auth Authorization header.
  * @param {import('$types').Fetch_Media_Args|undefined} args Request arguments.
  *
- * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
- *
  * @return {Promise<InferOutput<ArraySchema<typeof MediaQuerySchemas[C], undefined>>>} Media collection.
  */
 export async function get_media( url, context, auth = '', args = undefined ) {
@@ -151,8 +148,6 @@ export async function get_media( url, context, auth = '', args = undefined ) {
  * @param {string} url WordPress API root URL.
  * @param {C} context Request context, defaults to 'view'.
  * @param {string|undefined} auth Authorization header.
- *
- * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<InferOutput<typeof MediaQuerySchemas[C]>>} Single media data.
  */

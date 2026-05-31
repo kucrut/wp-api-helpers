@@ -1,5 +1,4 @@
-/** @import {InferOutput, ValiError} from "valibot" */
-/** @import {WP_REST_Error} from "../utils/index.js" */
+/** @import {InferOutput} from "valibot" */
 
 import { check, number, object, pipe, string } from 'valibot';
 import { EmailSchema } from './schema.js';
@@ -30,8 +29,6 @@ export const JwtValidTokenSchema = object( {
  * @param {string} username Username or email.
  * @param {string} password User password.
  *
- * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
- *
  * @return {Promise<JWT_Auth>} Auth data.
  */
 export async function get_jwt_auth( url, username, password ) {
@@ -54,8 +51,6 @@ export async function get_jwt_auth( url, username, password ) {
  *
  * @param {string} url WordPress API root URL.
  * @param {string} token JWT token.
- *
- * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<JWT_Valid_Token>} Valid token data.
  */

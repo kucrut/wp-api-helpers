@@ -29,8 +29,6 @@ export function create_basic_auth_string( username, password ) {
  * @param {T} schema Valibot schema to parse the response with.
  * @param {() => ReturnType<typeof fetch>} fetcher Fetch function.
  *
- * @throws {Error|ValiError}
- *
  * @return {ReturnType<import('$types').Handle_Response<InferOutput<T>>>} Parsed data.
  */
 export async function fetch_and_parse( schema, fetcher ) {

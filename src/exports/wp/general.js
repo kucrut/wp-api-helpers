@@ -1,4 +1,4 @@
-/** @import {InferOutput, ValiError} from "valibot" */
+/** @import {InferOutput} from "valibot" */
 
 import { array, number, object, pipe, record, string, toNumber } from 'valibot';
 import { fetch_and_parse, fetch_data, get_fetch } from '../utils/index.js';
@@ -70,8 +70,6 @@ export async function discover( url ) {
  *
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
- *
- * @throws {Error|ValiError}
  *
  * @return {Promise<WP_Info>} Site info data.
  */
