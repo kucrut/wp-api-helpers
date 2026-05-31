@@ -6,9 +6,9 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @since 0.3.0
 	 *
 	 * @param url WP API root URL.
-	 * @return {Promise<string>} Application password authorization route.
 	 *
-	 * */
+	 * @return {Promise<string>} Application password authorization route.
+	 */
 	export function get_app_password_auth_endpoint(url: string): Promise<string>;
 	/**
 	 * Get application passwords
@@ -19,8 +19,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param auth Authorization header.
 	 * @param user_id User ID or 'me'.
 	 * @param context Request context, defaults to 'view'.
-	 *
-	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
 	 *
 	 * @return {Promise<InferOutput<ArraySchema<typeof AppPassQuerySchemas[C], undefined>>>} Application password collection.
 	 */
@@ -33,8 +31,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param url WordPress API root URL.
 	 * @param auth Authorization header.
 	 *
-	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
-	 *
 	 * @return {Promise<WP_Application_Password>} Response data.
 	 */
 	export function get_current_app_password(url: string, auth: string): Promise<WP_Application_Password>;
@@ -46,13 +42,11 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param url WordPress API root URL.
 	 * @param auth Authorization header.
 	 * @param user_id User ID or 'me'.
-	 * @param uuid Application password UUID.
-	 *
-	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
+	 * @param puuid Application password UUID.
 	 *
 	 * @return {Promise<WP_Application_Password_Deleted>} Response data.
 	 */
-	export function delete_app_password(url: string, auth: string, user_id: User_ID_Arg, uuid: string): Promise<WP_Application_Password_Deleted>;
+	export function delete_app_password(url: string, auth: string, user_id: User_ID_Arg, puuid: string): Promise<WP_Application_Password_Deleted>;
 
 	export const embed: import("valibot").ObjectSchema<{
 		readonly app_id: import("valibot").StringSchema<undefined>;
@@ -143,8 +137,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param username Username or email.
 	 * @param password User password.
 	 *
-	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
-	 *
 	 * @return {Promise<JWT_Auth>} Auth data.
 	 */
 	export function get_jwt_auth(url: string, username: string, password: string): Promise<JWT_Auth>;
@@ -155,8 +147,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 *
 	 * @param url WordPress API root URL.
 	 * @param token JWT token.
-	 *
-	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
 	 *
 	 * @return {Promise<JWT_Valid_Token>} Valid token data.
 	 */
@@ -199,8 +189,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param auth Authorization header.
 	 * @param args Request arguments.
 	 *
-	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
-	 *
 	 * @return {Promise<InferOutput<ArraySchema<typeof MediaQuerySchemas[C], undefined>>>} Media collection.
 	 */
 	export function get_media<C extends keyof typeof MediaQuerySchemas>(url: string, context: C, auth?: string | undefined, args?: Fetch_Media_Args | undefined): Promise<InferOutput<ArraySchema<(typeof MediaQuerySchemas)[C], undefined>>>;
@@ -213,8 +201,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param url WordPress API root URL.
 	 * @param context Request context, defaults to 'view'.
 	 * @param auth Authorization header.
-	 *
-	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
 	 *
 	 * @return {Promise<InferOutput<typeof MediaQuerySchemas[C]>>} Single media data.
 	 */
@@ -441,8 +427,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 *
 	 * @todo Add args parameter.
 	 *
-	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
-	 *
 	 * @return {Promise<InferOutput<typeof PostQuerySchemas[C]>>} Single post data.
 	 */
 	export function get_single_post<C extends keyof typeof PostQuerySchemas>(id: number, url: string, context: C, auth?: string, type?: string): Promise<InferOutput<(typeof PostQuerySchemas)[C]>>;
@@ -457,8 +441,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param type Post type, defaults to 'posts'.
 	 * @param args Request arguments
 	 *
-	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
-	 *
 	 * @return {Promise<InferOutput<ArraySchema<typeof PostQuerySchemas[C], undefined>>>} Post collection.
 	 */
 	export function get_posts<C extends keyof typeof PostQuerySchemas>(url: string, context: C, auth?: string, type?: string, args?: Fetch_Posts_Args | undefined): Promise<InferOutput<ArraySchema<(typeof PostQuerySchemas)[C], undefined>>>;
@@ -469,8 +451,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 *
 	 * @param post Post object.
 	 * @param auth Authorization header (optional).
-	 *
-	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
 	 *
 	 * @return {Promise<WP_Post_Terms[]|null>} Array of post terms.
 	 */
@@ -658,8 +638,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param url WordPress API root URL.
 	 * @param auth Authorization header.
 	 *
-	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
-	 *
 	 * @return {Promise<WP_Settings>} Settings data.
 	 */
 	export function get_settings(url: string, auth: string): Promise<WP_Settings>;
@@ -697,8 +675,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param auth Authorization header.
 	 * @param args Request arguments.
 	 *
-	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
-	 *
 	 * @return {Promise<InferOutput<ArraySchema<typeof TaxQuerySchemas[C], undefined>>>} Taxonomy collection.
 	 */
 	export function get_taxonomies<C extends keyof typeof TaxQuerySchemas>(url: string, context: C, auth?: string | undefined, args?: Fetch_Taxonomies_Args | undefined): Promise<InferOutput<ArraySchema<(typeof TaxQuerySchemas)[C], undefined>>>;
@@ -711,8 +687,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param url WordPress API root URL.
 	 * @param context Request context, defaults to 'view'.
 	 * @param auth Authorization header.
-	 *
-	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
 	 *
 	 * @return {Promise<InferOutput<TaxQuerySchemas[C]>>} Taxonomy collection.
 	 */
@@ -958,8 +932,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param auth Authorization header.
 	 * @param args Request arguments.
 	 *
-	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
-	 *
 	 * @return {Promise<InferOutput<ArraySchema<typeof TermQuerySchemas[C], undefined>>>} Term collection.
 	 */
 	export function get_terms<C extends keyof typeof TermQuerySchemas>(url: string, taxonomy: string, context: C, auth?: string | undefined, args?: Fetch_Terms_Args | undefined): Promise<InferOutput<ArraySchema<(typeof TermQuerySchemas)[C], undefined>>>;
@@ -1089,8 +1061,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param context Request context, defaults to 'view'.
 	 * @param auth Authorization header (required when `id` is `me`).
 	 *
-	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
-	 *
 	 * @return {Promise<InferOutput<typeof UserQuerySchemas[C]>>} User data.
 	 */
 	export function get_single_user<C extends keyof typeof UserQuerySchemas>(id: User_ID_Arg, url: string, context: C, auth?: string): Promise<InferOutput<(typeof UserQuerySchemas)[C]>>;
@@ -1103,8 +1073,6 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param context Request context.
 	 * @param auth Authorization header.
 	 * @param args Request arguments.
-	 *
-	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
 	 *
 	 * @return {Promise<InferOutput<ArraySchema<typeof UserQuerySchemas[C], undefined>>>} User collection.
 	 */
