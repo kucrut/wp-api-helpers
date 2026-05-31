@@ -1,44 +1,46 @@
-import * as v from 'valibot';
+/** @import {ArraySchema, InferOutput} from "valibot" */
+
+import { array, boolean, entriesFromObjects, minLength, object, pipe, record, string } from 'valibot';
 import { fetch_and_parse, fetch_data, generate_endpoint_url } from '../utils/index.js';
 import { EmailSchema, IdSchema, LinkItemSchema, MetaSchema, UrlSchema } from './schema.js';
 
-const CapabilitiesSchema = v.record( v.string(), v.boolean() );
+const CapabilitiesSchema = record( string(), boolean() );
 
-/** @typedef {v.InferOutput<typeof UserEmbedSchema>} WP_User_Embed */
-export const UserEmbedSchema = v.object( {
-	avatar_urls: v.record( v.string(), UrlSchema ),
-	description: v.string(),
+/** @typedef {InferOutput<typeof UserEmbedSchema>} WP_User_Embed */
+export const UserEmbedSchema = object( {
+	avatar_urls: record( string(), UrlSchema ),
+	description: string(),
 	id: IdSchema,
-	name: v.pipe( v.string(), v.minLength( 1 ) ),
+	name: pipe( string(), minLength( 1 ) ),
 	url: UrlSchema,
-	slug: v.string(),
-	_links: v.object( {
+	slug: string(),
+	_links: object( {
 		self: LinkItemSchema,
 		collection: LinkItemSchema,
 	} ),
 } );
 
-/** @typedef {v.InferOutput<typeof UserViewSchema>} WP_User */
-export const UserViewSchema = v.object( v.entriesFromObjects( [
+/** @typedef {InferOutput<typeof UserViewSchema>} WP_User */
+export const UserViewSchema = object( entriesFromObjects( [
 	UserEmbedSchema,
-	v.object( { meta: MetaSchema } ),
+	object( { meta: MetaSchema } ),
 ] ) );
 
-/** @typedef {v.InferOutput<typeof UserEditSchema>} WP_User_Edit */
-export const UserEditSchema = v.object( v.entriesFromObjects( [
+/** @typedef {InferOutput<typeof UserEditSchema>} WP_User_Edit */
+export const UserEditSchema = object( entriesFromObjects( [
 	UserViewSchema,
-	v.object( {
-		capabilities: v.record( v.string(), v.boolean() ),
+	object( {
+		capabilities: record( string(), boolean() ),
 		email: EmailSchema,
 		extra_capabilities: CapabilitiesSchema,
-		first_name: v.string(),
-		last_name: v.string(),
+		first_name: string(),
+		last_name: string(),
 		link: UrlSchema,
-		locale: v.string(),
-		nickname: v.string(),
+		locale: string(),
+		nickname: string(),
 		registered_date: CapabilitiesSchema,
-		roles: v.array( v.string() ),
-		username: v.string(),
+		roles: array( string() ),
+		username: string(),
 	} ),
 ] ) );
 
@@ -73,9 +75,7 @@ function generate_url( url, context = undefined, id = undefined ) {
  * @param {C} context Request context, defaults to 'view'.
  * @param {string} auth Authorization header (required when `id` is `me`).
  *
- * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
- *
- * @return {Promise<v.InferOutput<typeof UserQuerySchemas[C]>>} User data.
+ * @return {Promise<InferOutput<typeof UserQuerySchemas[C]>>} User data.
  */
 export function get_single_user( id, url, context, auth = '' ) {
 	if ( typeof id === 'number' && id < 1 ) {
@@ -108,13 +108,11 @@ export function get_single_user( id, url, context, auth = '' ) {
  * @param {string} auth Authorization header.
  * @param {import('$types').Fetch_Users_Args} args Request arguments.
  *
- * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
- *
- * @return {Promise<v.InferOutput<v.ArraySchema<typeof UserQuerySchemas[C], undefined>>>} User collection.
+ * @return {Promise<InferOutput<ArraySchema<typeof UserQuerySchemas[C], undefined>>>} User collection.
  */
 export function get_users( url, context, auth = '', args = {} ) {
 	return fetch_and_parse(
-		v.array( UserQuerySchemas[ context ] ),
+		array( UserQuerySchemas[ context ] ),
 		() => fetch_data( generate_url( url, context ), auth, args ),
 	);
 }

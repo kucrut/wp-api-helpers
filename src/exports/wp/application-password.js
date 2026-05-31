@@ -1,28 +1,30 @@
-import * as v from 'valibot';
+/** @import {ArraySchema, InferOutput} from "valibot" */
+
+import { array, boolean, entriesFromObjects, object, ip, pipe, string, uuid } from 'valibot';
 import { DateItemSchema } from './schema.js';
 import { fetch_and_parse, fetch_data, generate_endpoint_url, get_fetch } from '../utils/index.js';
 import { get_info } from './general.js';
 
-/** @typedef {v.InferOutput<typeof ApplicationPasswordEmbedSchema>} WP_Application_Password_Embed */
-export const ApplicationPasswordEmbedSchema = v.object( {
-	app_id: v.string(),
-	name: v.string(),
-	uuid: v.pipe( v.string(), v.uuid() ),
+/** @typedef {InferOutput<typeof ApplicationPasswordEmbedSchema>} WP_Application_Password_Embed */
+export const ApplicationPasswordEmbedSchema = object( {
+	app_id: string(),
+	name: string(),
+	uuid: pipe( string(), uuid() ),
 } );
 
-/** @typedef {v.InferOutput<typeof ApplicationPasswordViewSchema>} WP_Application_Password */
-export const ApplicationPasswordViewSchema = v.object( v.entriesFromObjects( [
+/** @typedef {InferOutput<typeof ApplicationPasswordViewSchema>} WP_Application_Password */
+export const ApplicationPasswordViewSchema = object( entriesFromObjects( [
 	ApplicationPasswordEmbedSchema,
-	v.object( {
+	object( {
 		created: DateItemSchema,
-		last_ip: v.pipe( v.string(), v.ip() ),
+		last_ip: pipe( string(), ip() ),
 		last_used: DateItemSchema,
 	} ),
 ] ) );
 
-/** @typedef {v.InferOutput<typeof ApplicationPasswordDeletedSchema>} WP_Application_Password_Deleted */
-export const ApplicationPasswordDeletedSchema = v.object( {
-	deleted: v.boolean(),
+/** @typedef {InferOutput<typeof ApplicationPasswordDeletedSchema>} WP_Application_Password_Deleted */
+export const ApplicationPasswordDeletedSchema = object( {
+	deleted: boolean(),
 	previous: ApplicationPasswordViewSchema,
 } );
 
@@ -38,15 +40,15 @@ const AppPassQuerySchemas = {
  * @param {string} url WP API root URL.
  * @param {import('$types').User_ID_Arg} user_id User ID.
  * @param {import('$types').Context_Arg|undefined} context Request context, defaults to 'view'
- * @param {string|undefined} uuid Application password UUID.
+ * @param {string|undefined} p_uuid Application password UUID.
  *
  * @return {URL} Endpoint URL.
  */
-function generate_url( url, user_id, context = undefined, uuid = '' ) {
+function generate_url( url, user_id, context = undefined, p_uuid = '' ) {
 	return generate_endpoint_url(
 		`${ url }/wp/v2/users/${ user_id }/application-passwords`,
 		context,
-		uuid,
+		p_uuid,
 	);
 }
 
@@ -56,9 +58,8 @@ function generate_url( url, user_id, context = undefined, uuid = '' ) {
  * @since 0.3.0
  *
  * @param {string} url WP API root URL.
- * @return {Promise<string>} Application password authorization route.
  *
- * @throws {Error|v.ValiError}
+ * @return {Promise<string>} Application password authorization route.
  */
 export async function get_app_password_auth_endpoint( url ) {
 	const info = await get_info( url );
@@ -82,13 +83,11 @@ export async function get_app_password_auth_endpoint( url ) {
  * @param {import('$types').User_ID_Arg} user_id User ID or 'me'.
  * @param {C} context Request context, defaults to 'view'.
  *
- * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
- *
- * @return {Promise<v.InferOutput<v.ArraySchema<typeof AppPassQuerySchemas[C], undefined>>>} Application password collection.
+ * @return {Promise<InferOutput<ArraySchema<typeof AppPassQuerySchemas[C], undefined>>>} Application password collection.
  */
 export function get_app_passwords( url, auth, user_id, context ) {
 	return fetch_and_parse(
-		v.array( AppPassQuerySchemas[ context ] ),
+		array( AppPassQuerySchemas[ context ] ),
 		() => fetch_data( generate_url( url, user_id, context ), auth ),
 	);
 }
@@ -100,8 +99,6 @@ export function get_app_passwords( url, auth, user_id, context ) {
  *
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
- *
- * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<WP_Application_Password>} Response data.
  */
@@ -124,15 +121,13 @@ export function get_current_app_password( url, auth ) {
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
  * @param {import('$types').User_ID_Arg} user_id User ID or 'me'.
- * @param {string} uuid Application password UUID.
- *
- * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
+ * @param {string} puuid Application password UUID.
  *
  * @return {Promise<WP_Application_Password_Deleted>} Response data.
  */
-export function delete_app_password( url, auth, user_id, uuid ) {
+export function delete_app_password( url, auth, user_id, puuid ) {
 	return fetch_and_parse( ApplicationPasswordDeletedSchema, () => {
-		return get_fetch()( generate_url( url, user_id, undefined, uuid ), {
+		return get_fetch()( generate_url( url, user_id, undefined, puuid ), {
 			method: 'DELETE',
 			headers: {
 				Authorization: auth,

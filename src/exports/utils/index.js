@@ -1,5 +1,7 @@
-import * as v from 'valibot';
+/** @import {GenericSchema, InferOutput} from "valibot" */
+
 import { get_fetch } from './fetch.js';
+import { parse, safeParse, ValiError } from 'valibot';
 import { RestErrorSchema } from '../wp/schema.js';
 
 export * from './fetch.js';
@@ -22,17 +24,15 @@ export function create_basic_auth_string( username, password ) {
  *
  * @since 0.1.0
  *
- * @template {v.GenericSchema} T
+ * @template {GenericSchema} T
  *
  * @param {T} schema Valibot schema to parse the response with.
  * @param {() => ReturnType<typeof fetch>} fetcher Fetch function.
  *
- * @throws {Error|v.ValiError}
- *
- * @return {ReturnType<import('$types').Handle_Response<v.InferOutput<T>>>} Parsed data.
+ * @return {ReturnType<import('$types').Handle_Response<InferOutput<T>>>} Parsed data.
  */
 export async function fetch_and_parse( schema, fetcher ) {
-	const handler = make_response_handler( async data => v.parse( schema, data ) );
+	const handler = make_response_handler( async data => parse( schema, data ) );
 	const response = await fetcher();
 
 	return handler( response );
@@ -111,7 +111,7 @@ export function get_error_message( error, fallback, dump = true ) {
 
 	if ( typeof error === 'string' ) {
 		message = error;
-	} else if ( error instanceof Error || error instanceof v.ValiError ) {
+	} else if ( error instanceof Error || error instanceof ValiError ) {
 		message = error.message;
 	} else {
 		message = fallback;
@@ -137,7 +137,7 @@ export function get_error_message( error, fallback, dump = true ) {
  * @param {Response} response Fetch response object.
  * @param {import('$types').Handle_Response<T>} callback Callback to run when json is valid.
  *
- * @throws {Error|v.ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
+ * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<T>} Whatever the callback returns.
  */
@@ -159,7 +159,7 @@ export async function handle_response( response, callback ) {
 	}
 
 	const data = await response.json();
-	const wp_error_check = v.safeParse( RestErrorSchema, data );
+	const wp_error_check = safeParse( RestErrorSchema, data );
 
 	if ( wp_error_check.success ) {
 		throw new WP_REST_Error(

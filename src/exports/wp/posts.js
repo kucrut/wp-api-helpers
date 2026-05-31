@@ -1,54 +1,56 @@
-import * as v from 'valibot';
+/** @import {ArraySchema, InferOutput} from "valibot" */
+
+import { array, boolean, entriesFromObjects, number, object, optional, record, string } from 'valibot';
 import { CommentStatusSchema, DateItemSchema, IdSchema, LinkItemSchema, MetaSchema, RenderableItemSchema, UrlSchema } from './schema.js';
 import { fetch_and_parse, fetch_data, generate_endpoint_url } from '../utils/index.js';
 import { TaxonomyViewSchema } from './taxonomies.js';
 import { TermViewSchema } from './terms.js';
 
-export const PostEditBaseSchema = v.object( {
-	generated_slug: v.string(),
-	permalink_template: v.string(),
+export const PostEditBaseSchema = object( {
+	generated_slug: string(),
+	permalink_template: string(),
 } );
 
-/** @typedef {v.InferOutput<typeof PostEmbedSchema>} WP_Post_Embed */
-export const PostEmbedSchema = v.object( {
+/** @typedef {InferOutput<typeof PostEmbedSchema>} WP_Post_Embed */
+export const PostEmbedSchema = object( {
 	author: IdSchema,
 	date: DateItemSchema,
 	excerpt: RenderableItemSchema,
-	featured_media: v.number(),
-	id: v.number(),
+	featured_media: number(),
+	id: number(),
 	link: UrlSchema,
-	slug: v.string(),
+	slug: string(),
 	title: RenderableItemSchema,
-	type: v.string(),
-	_links: v.optional( v.record( v.string(), LinkItemSchema ) ),
+	type: string(),
+	_links: optional( record( string(), LinkItemSchema ) ),
 } );
 
-/** @typedef {v.InferOutput<typeof PostViewSchema>} WP_Post */
-export const PostViewSchema = v.object( v.entriesFromObjects( [
+/** @typedef {InferOutput<typeof PostViewSchema>} WP_Post */
+export const PostViewSchema = object( entriesFromObjects( [
 	PostEmbedSchema,
-	v.object( {
+	object( {
 		comment_status: CommentStatusSchema,
 		content: RenderableItemSchema,
 		date_gmt: DateItemSchema,
-		format: v.optional( v.string() ),
-		menu_order: v.optional( v.number() ),
+		format: optional( string() ),
+		menu_order: optional( number() ),
 		meta: MetaSchema,
 		modified: DateItemSchema,
 		modified_gmt: DateItemSchema,
-		parent: v.optional( v.number() ),
+		parent: optional( number() ),
 		ping_status: CommentStatusSchema,
-		status: v.string(),
-		sticky: v.optional( v.boolean() ),
-		template: v.string(),
-		guid: v.object( {
-			raw: v.optional( UrlSchema ),
+		status: string(),
+		sticky: optional( boolean() ),
+		template: string(),
+		guid: object( {
+			raw: optional( UrlSchema ),
 			rendered: UrlSchema,
 		} ),
 	} ),
 ] ) );
 
-/** @typedef {v.InferOutput<typeof PostEditSchema>} WP_Post_Edit */
-export const PostEditSchema = v.object( v.entriesFromObjects( [
+/** @typedef {InferOutput<typeof PostEditSchema>} WP_Post_Edit */
+export const PostEditSchema = object( entriesFromObjects( [
 	PostViewSchema,
 	PostEditBaseSchema,
 ] ) );
@@ -90,9 +92,7 @@ function generate_url( url, type, context = undefined, id = undefined ) {
  *
  * @todo Add args parameter.
  *
- * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
- *
- * @return {Promise<v.InferOutput<typeof PostQuerySchemas[C]>>} Single post data.
+ * @return {Promise<InferOutput<typeof PostQuerySchemas[C]>>} Single post data.
  */
 export async function get_single_post( id, url, context, auth = '', type = 'posts' ) {
 	return fetch_and_parse(
@@ -114,9 +114,7 @@ export async function get_single_post( id, url, context, auth = '', type = 'post
  * @param {string} type Post type, defaults to 'posts'.
  * @param {import('$types').Fetch_Posts_Args|undefined} args Request arguments
  *
- * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
- *
- * @return {Promise<v.InferOutput<v.ArraySchema<typeof PostQuerySchemas[C], undefined>>>} Post collection.
+ * @return {Promise<InferOutput<ArraySchema<typeof PostQuerySchemas[C], undefined>>>} Post collection.
  */
 export async function get_posts(
 	url,
@@ -126,7 +124,7 @@ export async function get_posts(
 	args = undefined,
 ) {
 	return fetch_and_parse(
-		v.array( PostQuerySchemas[ context ] ),
+		array( PostQuerySchemas[ context ] ),
 		() => fetch_data( generate_url( url, type, context ), auth, args ),
 	);
 }
@@ -138,8 +136,6 @@ export async function get_posts(
  *
  * @param {WP_Post} post Post object.
  * @param {string} auth Authorization header (optional).
- *
- * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<WP_Post_Terms[]|null>} Array of post terms.
  */
@@ -162,7 +158,7 @@ export async function get_post_terms( post, auth = '' ) {
 	for ( const tax of taxonomies ) {
 		try {
 			const terms = await fetch_and_parse(
-				v.array( TermViewSchema ),
+				array( TermViewSchema ),
 				() => fetch_data( tax.href, auth ),
 			);
 

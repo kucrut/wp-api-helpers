@@ -1,14 +1,14 @@
 declare module '@kucrut/wp-api-helpers' {
-	import * as v from 'valibot';
+	import type { ArraySchema, InferOutput } from 'valibot';
 	/**
 	 * Get application password authorization endpoint
 	 *
 	 * @since 0.3.0
 	 *
 	 * @param url WP API root URL.
-	 * @return {Promise<string>} Application password authorization route.
 	 *
-	 * */
+	 * @return {Promise<string>} Application password authorization route.
+	 */
 	export function get_app_password_auth_endpoint(url: string): Promise<string>;
 	/**
 	 * Get application passwords
@@ -20,7 +20,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param user_id User ID or 'me'.
 	 * @param context Request context, defaults to 'view'.
 	 *
-	 * @return {Promise<v.InferOutput<v.ArraySchema<typeof AppPassQuerySchemas[C], undefined>>>} Application password collection.
+	 * @return {Promise<InferOutput<ArraySchema<typeof AppPassQuerySchemas[C], undefined>>>} Application password collection.
 	 */
 	export function get_app_passwords<C extends keyof typeof AppPassQuerySchemas>(url: string, auth: string, user_id: User_ID_Arg, context: C): Promise<InferOutput<ArraySchema<(typeof AppPassQuerySchemas)[C], undefined>>>;
 	/**
@@ -42,41 +42,41 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param url WordPress API root URL.
 	 * @param auth Authorization header.
 	 * @param user_id User ID or 'me'.
-	 * @param uuid Application password UUID.
+	 * @param puuid Application password UUID.
 	 *
 	 * @return {Promise<WP_Application_Password_Deleted>} Response data.
 	 */
-	export function delete_app_password(url: string, auth: string, user_id: User_ID_Arg, uuid: string): Promise<WP_Application_Password_Deleted>;
+	export function delete_app_password(url: string, auth: string, user_id: User_ID_Arg, puuid: string): Promise<WP_Application_Password_Deleted>;
 
-	export const embed:ObjectSchema<{
-		readonly app_id:StringSchema<undefined>;
-		readonly name:StringSchema<undefined>;
-		readonly uuid:SchemaWithPipe<readonly [StringSchema<undefined>,UuidAction<string, undefined>]>;
+	export const embed: import("valibot").ObjectSchema<{
+		readonly app_id: import("valibot").StringSchema<undefined>;
+		readonly name: import("valibot").StringSchema<undefined>;
+		readonly uuid: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UuidAction<string, undefined>]>;
 	}, undefined>;
 
-	export const view:ObjectSchema<{
-		readonly name:StringSchema<undefined>;
-		readonly uuid:SchemaWithPipe<readonly [StringSchema<undefined>,UuidAction<string, undefined>]>;
-		readonly app_id:StringSchema<undefined>;
-		readonly created:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly last_ip:SchemaWithPipe<readonly [StringSchema<undefined>,IpAction<string, undefined>]>;
-		readonly last_used:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
+	export const view: import("valibot").ObjectSchema<{
+		readonly name: import("valibot").StringSchema<undefined>;
+		readonly uuid: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UuidAction<string, undefined>]>;
+		readonly app_id: import("valibot").StringSchema<undefined>;
+		readonly created: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly last_ip: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").IpAction<string, undefined>]>;
+		readonly last_used: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
 	}, undefined>;
 
-	export const ApplicationPasswordDeletedSchema:ObjectSchema<{
-		readonly deleted:BooleanSchema<undefined>;
-		readonly previous:ObjectSchema<{
-			readonly name:StringSchema<undefined>;
-			readonly uuid:SchemaWithPipe<readonly [StringSchema<undefined>,UuidAction<string, undefined>]>;
-			readonly app_id:StringSchema<undefined>;
-			readonly created:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-			readonly last_ip:SchemaWithPipe<readonly [StringSchema<undefined>,IpAction<string, undefined>]>;
-			readonly last_used:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
+	export const ApplicationPasswordDeletedSchema: import("valibot").ObjectSchema<{
+		readonly deleted: import("valibot").BooleanSchema<undefined>;
+		readonly previous: import("valibot").ObjectSchema<{
+			readonly name: import("valibot").StringSchema<undefined>;
+			readonly uuid: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UuidAction<string, undefined>]>;
+			readonly app_id: import("valibot").StringSchema<undefined>;
+			readonly created: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+			readonly last_ip: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").IpAction<string, undefined>]>;
+			readonly last_used: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
 		}, undefined>;
 	}, undefined>;
-	export type WP_Application_Password_Embed =InferOutput<typeof embed>;
-	export type WP_Application_Password =InferOutput<typeof view>;
-	export type WP_Application_Password_Deleted =InferOutput<typeof ApplicationPasswordDeletedSchema>;
+	export type WP_Application_Password_Embed = InferOutput<typeof embed>;
+	export type WP_Application_Password = InferOutput<typeof view>;
+	export type WP_Application_Password_Deleted = InferOutput<typeof ApplicationPasswordDeletedSchema>;
 	namespace AppPassQuerySchemas {
 		export { view as edit };
 		export { embed as embed };
@@ -104,30 +104,30 @@ declare module '@kucrut/wp-api-helpers' {
 	 */
 	export function get_info(url: string, auth?: string): Promise<WP_Info>;
 
-	export const InfoSchema:ObjectSchema<{
-		readonly description:StringSchema<undefined>;
-		readonly gmt_offset:SchemaWithPipe<readonly [StringSchema<undefined>,ToNumberAction<string, undefined>]>;
-		readonly home:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly name:StringSchema<undefined>;
-		readonly namespaces:ArraySchema<StringSchema<undefined>, undefined>;
-		readonly site_icon_url:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly site_icon:NumberSchema<undefined>;
-		readonly site_logo:NumberSchema<undefined>;
-		readonly timezone_string:StringSchema<undefined>;
-		readonly url:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly authentication:RecordSchema<StringSchema<undefined>,ObjectSchema<{
-			readonly endpoints:ObjectSchema<{
-				readonly authorization:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
+	export const InfoSchema: import("valibot").ObjectSchema<{
+		readonly description: import("valibot").StringSchema<undefined>;
+		readonly gmt_offset: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToNumberAction<string, undefined>]>;
+		readonly home: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly name: import("valibot").StringSchema<undefined>;
+		readonly namespaces: import("valibot").ArraySchema<import("valibot").StringSchema<undefined>, undefined>;
+		readonly site_icon_url: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly site_icon: import("valibot").NumberSchema<undefined>;
+		readonly site_logo: import("valibot").NumberSchema<undefined>;
+		readonly timezone_string: import("valibot").StringSchema<undefined>;
+		readonly url: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly authentication: import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, import("valibot").ObjectSchema<{
+			readonly endpoints: import("valibot").ObjectSchema<{
+				readonly authorization: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
 			}, undefined>;
 		}, undefined>, undefined>;
-		readonly _links:RecordSchema<StringSchema<undefined>,ArraySchema<ObjectSchema<{
-			readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-			readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+		readonly _links: import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, import("valibot").ArraySchema<import("valibot").ObjectSchema<{
+			readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+			readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 		}, undefined>, undefined>, undefined>;
 	}, undefined>;
-	export type WP_Info =InferOutput<typeof InfoSchema>;
+	export type WP_Info = InferOutput<typeof InfoSchema>;
 	/**
 	 * Get JWT authentication
 	 *
@@ -152,21 +152,21 @@ declare module '@kucrut/wp-api-helpers' {
 	 */
 	export function get_jwt_validate_token(url: string, token: string): Promise<JWT_Valid_Token>;
 
-	export const JwtAuthDataSchema:ObjectSchema<{
-		readonly user_email:SchemaWithPipe<readonly [StringSchema<undefined>,EmailAction<string, undefined>]>;
-		readonly user_display_name:StringSchema<undefined>;
-		readonly user_nicename:StringSchema<undefined>;
-		readonly token:StringSchema<undefined>;
+	export const JwtAuthDataSchema: import("valibot").ObjectSchema<{
+		readonly user_email: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").EmailAction<string, undefined>]>;
+		readonly user_display_name: import("valibot").StringSchema<undefined>;
+		readonly user_nicename: import("valibot").StringSchema<undefined>;
+		readonly token: import("valibot").StringSchema<undefined>;
 	}, undefined>;
 
-	export const JwtValidTokenSchema:ObjectSchema<{
-		readonly code:SchemaWithPipe<readonly [StringSchema<undefined>,CheckAction<string, undefined>]>;
-		readonly data:ObjectSchema<{
-			readonly status:SchemaWithPipe<readonly [NumberSchema<undefined>,CheckAction<number, undefined>]>;
+	export const JwtValidTokenSchema: import("valibot").ObjectSchema<{
+		readonly code: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").CheckAction<string, undefined>]>;
+		readonly data: import("valibot").ObjectSchema<{
+			readonly status: import("valibot").SchemaWithPipe<readonly [import("valibot").NumberSchema<undefined>, import("valibot").CheckAction<number, undefined>]>;
 		}, undefined>;
 	}, undefined>;
-	export type JWT_Auth =InferOutput<typeof JwtAuthDataSchema>;
-	export type JWT_Valid_Token =InferOutput<typeof JwtValidTokenSchema>;
+	export type JWT_Auth = InferOutput<typeof JwtAuthDataSchema>;
+	export type JWT_Valid_Token = InferOutput<typeof JwtValidTokenSchema>;
 	/**
 	 * Create media
 	 *
@@ -189,7 +189,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param auth Authorization header.
 	 * @param args Request arguments.
 	 *
-	 * @return {Promise<v.InferOutput<v.ArraySchema<typeof MediaQuerySchemas[C], undefined>>>} Media collection.
+	 * @return {Promise<InferOutput<ArraySchema<typeof MediaQuerySchemas[C], undefined>>>} Media collection.
 	 */
 	export function get_media<C extends keyof typeof MediaQuerySchemas>(url: string, context: C, auth?: string | undefined, args?: Fetch_Media_Args | undefined): Promise<InferOutput<ArraySchema<(typeof MediaQuerySchemas)[C], undefined>>>;
 	/**
@@ -202,213 +202,213 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param context Request context, defaults to 'view'.
 	 * @param auth Authorization header.
 	 *
-	 * @return {Promise<v.InferOutput<typeof MediaQuerySchemas[C]>>} Single media data.
+	 * @return {Promise<InferOutput<typeof MediaQuerySchemas[C]>>} Single media data.
 	 */
 	export function get_single_media<C extends keyof typeof MediaQuerySchemas>(id: number, url: string, context: C, auth?: string | undefined): Promise<InferOutput<(typeof MediaQuerySchemas)[C]>>;
 
-	export const ImageSizeSchema:ObjectSchema<{
-		readonly file:StringSchema<undefined>;
-		readonly height:NumberSchema<undefined>;
-		readonly mime_type:StringSchema<undefined>;
-		readonly source_url:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly width:NumberSchema<undefined>;
+	export const ImageSizeSchema: import("valibot").ObjectSchema<{
+		readonly file: import("valibot").StringSchema<undefined>;
+		readonly height: import("valibot").NumberSchema<undefined>;
+		readonly mime_type: import("valibot").StringSchema<undefined>;
+		readonly source_url: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly width: import("valibot").NumberSchema<undefined>;
 	}, undefined>;
 
-	export const MediaEmbedSchema:ObjectSchema<{
-		readonly link:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly type:StringSchema<undefined>;
-		readonly id:NumberSchema<undefined>;
-		readonly title:ObjectSchema<{
-			readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly rendered:StringSchema<undefined>;
+	export const MediaEmbedSchema: import("valibot").ObjectSchema<{
+		readonly link: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly type: import("valibot").StringSchema<undefined>;
+		readonly id: import("valibot").NumberSchema<undefined>;
+		readonly title: import("valibot").ObjectSchema<{
+			readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly rendered: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly date:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly slug:StringSchema<undefined>;
-		readonly author:SchemaWithPipe<readonly [NumberSchema<undefined>,MinValueAction<number, 1, undefined>]>;
-		readonly _links:OptionalSchema<RecordSchema<StringSchema<undefined>,ArraySchema<ObjectSchema<{
-			readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-			readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+		readonly date: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly slug: import("valibot").StringSchema<undefined>;
+		readonly author: import("valibot").SchemaWithPipe<readonly [import("valibot").NumberSchema<undefined>, import("valibot").MinValueAction<number, 1, undefined>]>;
+		readonly _links: import("valibot").OptionalSchema<import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, ArraySchema<import("valibot").ObjectSchema<{
+			readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+			readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 		}, undefined>, undefined>, undefined>, undefined>;
-		readonly alt_text:StringSchema<undefined>;
-		readonly caption:ObjectSchema<{
-			readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly rendered:StringSchema<undefined>;
+		readonly alt_text: import("valibot").StringSchema<undefined>;
+		readonly caption: import("valibot").ObjectSchema<{
+			readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly rendered: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly media_type:StringSchema<undefined>;
-		readonly media_details:ObjectSchema<{
-			readonly bitrate:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly dataformat:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly file:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly fileformat:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly filesize:NumberSchema<undefined>;
-			readonly height:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly image_meta:OptionalSchema<RecordSchema<StringSchema<undefined>,AnySchema, undefined>, undefined>;
-			readonly length:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly length_formatted:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly width:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly sizes:OptionalSchema<RecordSchema<StringSchema<undefined>,ObjectSchema<{
-				readonly file:StringSchema<undefined>;
-				readonly height:NumberSchema<undefined>;
-				readonly mime_type:StringSchema<undefined>;
-				readonly source_url:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly width:NumberSchema<undefined>;
+		readonly media_type: import("valibot").StringSchema<undefined>;
+		readonly media_details: import("valibot").ObjectSchema<{
+			readonly bitrate: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly dataformat: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly file: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly fileformat: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly filesize: import("valibot").NumberSchema<undefined>;
+			readonly height: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly image_meta: import("valibot").OptionalSchema<import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, import("valibot").AnySchema, undefined>, undefined>;
+			readonly length: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly length_formatted: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly width: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly sizes: import("valibot").OptionalSchema<import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, import("valibot").ObjectSchema<{
+				readonly file: import("valibot").StringSchema<undefined>;
+				readonly height: import("valibot").NumberSchema<undefined>;
+				readonly mime_type: import("valibot").StringSchema<undefined>;
+				readonly source_url: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly width: import("valibot").NumberSchema<undefined>;
 			}, undefined>, undefined>, undefined>;
 		}, undefined>;
-		readonly mime_type:StringSchema<undefined>;
-		readonly source_url:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
+		readonly mime_type: import("valibot").StringSchema<undefined>;
+		readonly source_url: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
 	}, undefined>;
 
-	export const MediaViewSchema:ObjectSchema<{
-		readonly caption:ObjectSchema<{
-			readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly rendered:StringSchema<undefined>;
+	export const MediaViewSchema: import("valibot").ObjectSchema<{
+		readonly caption: import("valibot").ObjectSchema<{
+			readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly rendered: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly mime_type:StringSchema<undefined>;
-		readonly media_type:StringSchema<undefined>;
-		readonly source_url:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly media_details:ObjectSchema<{
-			readonly bitrate:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly dataformat:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly file:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly fileformat:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly filesize:NumberSchema<undefined>;
-			readonly height:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly image_meta:OptionalSchema<RecordSchema<StringSchema<undefined>,AnySchema, undefined>, undefined>;
-			readonly length:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly length_formatted:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly width:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly sizes:OptionalSchema<RecordSchema<StringSchema<undefined>,ObjectSchema<{
-				readonly file:StringSchema<undefined>;
-				readonly height:NumberSchema<undefined>;
-				readonly mime_type:StringSchema<undefined>;
-				readonly source_url:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly width:NumberSchema<undefined>;
+		readonly mime_type: import("valibot").StringSchema<undefined>;
+		readonly media_type: import("valibot").StringSchema<undefined>;
+		readonly source_url: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly media_details: import("valibot").ObjectSchema<{
+			readonly bitrate: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly dataformat: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly file: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly fileformat: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly filesize: import("valibot").NumberSchema<undefined>;
+			readonly height: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly image_meta: import("valibot").OptionalSchema<import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, import("valibot").AnySchema, undefined>, undefined>;
+			readonly length: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly length_formatted: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly width: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly sizes: import("valibot").OptionalSchema<import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, import("valibot").ObjectSchema<{
+				readonly file: import("valibot").StringSchema<undefined>;
+				readonly height: import("valibot").NumberSchema<undefined>;
+				readonly mime_type: import("valibot").StringSchema<undefined>;
+				readonly source_url: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly width: import("valibot").NumberSchema<undefined>;
 			}, undefined>, undefined>, undefined>;
 		}, undefined>;
-		readonly alt_text:StringSchema<undefined>;
-		readonly description:ObjectSchema<{
-			readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly rendered:StringSchema<undefined>;
+		readonly alt_text: import("valibot").StringSchema<undefined>;
+		readonly description: import("valibot").ObjectSchema<{
+			readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly rendered: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly post:NullableSchema<NumberSchema<undefined>, undefined>;
-		readonly link:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly type:StringSchema<undefined>;
-		readonly format:OptionalSchema<StringSchema<undefined>, undefined>;
-		readonly id:NumberSchema<undefined>;
-		readonly meta:OptionalSchema<UnionSchema<[AnySchema,ArraySchema<NeverSchema<undefined>, undefined>], undefined>, undefined>;
-		readonly template:StringSchema<undefined>;
-		readonly title:ObjectSchema<{
-			readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly rendered:StringSchema<undefined>;
+		readonly post: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, undefined>;
+		readonly link: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly type: import("valibot").StringSchema<undefined>;
+		readonly format: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+		readonly id: import("valibot").NumberSchema<undefined>;
+		readonly meta: import("valibot").OptionalSchema<import("valibot").UnionSchema<[import("valibot").AnySchema, ArraySchema<import("valibot").NeverSchema<undefined>, undefined>], undefined>, undefined>;
+		readonly template: import("valibot").StringSchema<undefined>;
+		readonly title: import("valibot").ObjectSchema<{
+			readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly rendered: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly status:StringSchema<undefined>;
-		readonly date:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly slug:StringSchema<undefined>;
-		readonly author:SchemaWithPipe<readonly [NumberSchema<undefined>,MinValueAction<number, 1, undefined>]>;
-		readonly modified:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly _links:OptionalSchema<RecordSchema<StringSchema<undefined>,ArraySchema<ObjectSchema<{
-			readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-			readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+		readonly status: import("valibot").StringSchema<undefined>;
+		readonly date: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly slug: import("valibot").StringSchema<undefined>;
+		readonly author: import("valibot").SchemaWithPipe<readonly [import("valibot").NumberSchema<undefined>, import("valibot").MinValueAction<number, 1, undefined>]>;
+		readonly modified: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly _links: import("valibot").OptionalSchema<import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, ArraySchema<import("valibot").ObjectSchema<{
+			readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+			readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 		}, undefined>, undefined>, undefined>, undefined>;
-		readonly guid:ObjectSchema<{
-			readonly raw:OptionalSchema<SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>, undefined>;
-			readonly rendered:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
+		readonly guid: import("valibot").ObjectSchema<{
+			readonly raw: import("valibot").OptionalSchema<import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>, undefined>;
+			readonly rendered: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
 		}, undefined>;
-		readonly comment_status:PicklistSchema<["open", "closed"], undefined>;
-		readonly date_gmt:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly modified_gmt:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly ping_status:PicklistSchema<["open", "closed"], undefined>;
+		readonly comment_status: import("valibot").PicklistSchema<["open", "closed"], undefined>;
+		readonly date_gmt: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly modified_gmt: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly ping_status: import("valibot").PicklistSchema<["open", "closed"], undefined>;
 	}, undefined>;
 
-	export const MediaEditSchema:ObjectSchema<{
-		readonly link:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly type:StringSchema<undefined>;
-		readonly format:OptionalSchema<StringSchema<undefined>, undefined>;
-		readonly id:NumberSchema<undefined>;
-		readonly caption:ObjectSchema<{
-			readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly rendered:StringSchema<undefined>;
+	export const MediaEditSchema: import("valibot").ObjectSchema<{
+		readonly link: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly type: import("valibot").StringSchema<undefined>;
+		readonly format: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+		readonly id: import("valibot").NumberSchema<undefined>;
+		readonly caption: import("valibot").ObjectSchema<{
+			readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly rendered: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly meta:OptionalSchema<UnionSchema<[AnySchema,ArraySchema<NeverSchema<undefined>, undefined>], undefined>, undefined>;
-		readonly template:StringSchema<undefined>;
-		readonly title:ObjectSchema<{
-			readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly rendered:StringSchema<undefined>;
+		readonly meta: import("valibot").OptionalSchema<import("valibot").UnionSchema<[import("valibot").AnySchema, ArraySchema<import("valibot").NeverSchema<undefined>, undefined>], undefined>, undefined>;
+		readonly template: import("valibot").StringSchema<undefined>;
+		readonly title: import("valibot").ObjectSchema<{
+			readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly rendered: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly description:ObjectSchema<{
-			readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly rendered:StringSchema<undefined>;
+		readonly description: import("valibot").ObjectSchema<{
+			readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly rendered: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly status:StringSchema<undefined>;
-		readonly date:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly mime_type:StringSchema<undefined>;
-		readonly slug:StringSchema<undefined>;
-		readonly author:SchemaWithPipe<readonly [NumberSchema<undefined>,MinValueAction<number, 1, undefined>]>;
-		readonly modified:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly media_type:StringSchema<undefined>;
-		readonly post:NullableSchema<NumberSchema<undefined>, undefined>;
-		readonly _links:OptionalSchema<RecordSchema<StringSchema<undefined>,ArraySchema<ObjectSchema<{
-			readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-			readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+		readonly status: import("valibot").StringSchema<undefined>;
+		readonly date: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly mime_type: import("valibot").StringSchema<undefined>;
+		readonly slug: import("valibot").StringSchema<undefined>;
+		readonly author: import("valibot").SchemaWithPipe<readonly [import("valibot").NumberSchema<undefined>, import("valibot").MinValueAction<number, 1, undefined>]>;
+		readonly modified: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly media_type: import("valibot").StringSchema<undefined>;
+		readonly post: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, undefined>;
+		readonly _links: import("valibot").OptionalSchema<import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, ArraySchema<import("valibot").ObjectSchema<{
+			readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+			readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 		}, undefined>, undefined>, undefined>, undefined>;
-		readonly guid:ObjectSchema<{
-			readonly raw:OptionalSchema<SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>, undefined>;
-			readonly rendered:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
+		readonly guid: import("valibot").ObjectSchema<{
+			readonly raw: import("valibot").OptionalSchema<import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>, undefined>;
+			readonly rendered: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
 		}, undefined>;
-		readonly comment_status:PicklistSchema<["open", "closed"], undefined>;
-		readonly date_gmt:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly modified_gmt:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly ping_status:PicklistSchema<["open", "closed"], undefined>;
-		readonly source_url:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly media_details:ObjectSchema<{
-			readonly bitrate:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly dataformat:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly file:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly fileformat:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly filesize:NumberSchema<undefined>;
-			readonly height:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly image_meta:OptionalSchema<RecordSchema<StringSchema<undefined>,AnySchema, undefined>, undefined>;
-			readonly length:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly length_formatted:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly width:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly sizes:OptionalSchema<RecordSchema<StringSchema<undefined>,ObjectSchema<{
-				readonly file:StringSchema<undefined>;
-				readonly height:NumberSchema<undefined>;
-				readonly mime_type:StringSchema<undefined>;
-				readonly source_url:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly width:NumberSchema<undefined>;
+		readonly comment_status: import("valibot").PicklistSchema<["open", "closed"], undefined>;
+		readonly date_gmt: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly modified_gmt: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly ping_status: import("valibot").PicklistSchema<["open", "closed"], undefined>;
+		readonly source_url: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly media_details: import("valibot").ObjectSchema<{
+			readonly bitrate: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly dataformat: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly file: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly fileformat: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly filesize: import("valibot").NumberSchema<undefined>;
+			readonly height: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly image_meta: import("valibot").OptionalSchema<import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, import("valibot").AnySchema, undefined>, undefined>;
+			readonly length: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly length_formatted: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly width: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly sizes: import("valibot").OptionalSchema<import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, import("valibot").ObjectSchema<{
+				readonly file: import("valibot").StringSchema<undefined>;
+				readonly height: import("valibot").NumberSchema<undefined>;
+				readonly mime_type: import("valibot").StringSchema<undefined>;
+				readonly source_url: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly width: import("valibot").NumberSchema<undefined>;
 			}, undefined>, undefined>, undefined>;
 		}, undefined>;
-		readonly alt_text:StringSchema<undefined>;
-		readonly generated_slug:StringSchema<undefined>;
-		readonly permalink_template:StringSchema<undefined>;
+		readonly alt_text: import("valibot").StringSchema<undefined>;
+		readonly generated_slug: import("valibot").StringSchema<undefined>;
+		readonly permalink_template: import("valibot").StringSchema<undefined>;
 	}, undefined>;
-	export type WP_Image_Size =InferOutput<typeof ImageSizeSchema>;
-	export type WP_Media_Embed =InferOutput<typeof MediaEmbedSchema>;
-	export type WP_Media =InferOutput<typeof MediaViewSchema>;
-	export type WP_Media_Edit =InferOutput<typeof MediaEditSchema>;
+	export type WP_Image_Size = InferOutput<typeof ImageSizeSchema>;
+	export type WP_Media_Embed = InferOutput<typeof MediaEmbedSchema>;
+	export type WP_Media = InferOutput<typeof MediaViewSchema>;
+	export type WP_Media_Edit = InferOutput<typeof MediaEditSchema>;
 	namespace MediaQuerySchemas {
 		export { MediaEditSchema as edit };
 		export { MediaEmbedSchema as embed };
@@ -427,7 +427,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 *
 	 * @todo Add args parameter.
 	 *
-	 * @return {Promise<v.InferOutput<typeof PostQuerySchemas[C]>>} Single post data.
+	 * @return {Promise<InferOutput<typeof PostQuerySchemas[C]>>} Single post data.
 	 */
 	export function get_single_post<C extends keyof typeof PostQuerySchemas>(id: number, url: string, context: C, auth?: string, type?: string): Promise<InferOutput<(typeof PostQuerySchemas)[C]>>;
 	/**
@@ -441,7 +441,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param type Post type, defaults to 'posts'.
 	 * @param args Request arguments
 	 *
-	 * @return {Promise<v.InferOutput<v.ArraySchema<typeof PostQuerySchemas[C], undefined>>>} Post collection.
+	 * @return {Promise<InferOutput<ArraySchema<typeof PostQuerySchemas[C], undefined>>>} Post collection.
 	 */
 	export function get_posts<C extends keyof typeof PostQuerySchemas>(url: string, context: C, auth?: string, type?: string, args?: Fetch_Posts_Args | undefined): Promise<InferOutput<ArraySchema<(typeof PostQuerySchemas)[C], undefined>>>;
 	/**
@@ -455,181 +455,181 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @return {Promise<WP_Post_Terms[]|null>} Array of post terms.
 	 */
 	export function get_post_terms(post: WP_Post, auth?: string): Promise<WP_Post_Terms[] | null>;
-	export const PostEditBaseSchema:ObjectSchema<{
-		readonly generated_slug:StringSchema<undefined>;
-		readonly permalink_template:StringSchema<undefined>;
+	export const PostEditBaseSchema: import("valibot").ObjectSchema<{
+		readonly generated_slug: import("valibot").StringSchema<undefined>;
+		readonly permalink_template: import("valibot").StringSchema<undefined>;
 	}, undefined>;
 
-	export const PostEmbedSchema:ObjectSchema<{
-		readonly author:SchemaWithPipe<readonly [NumberSchema<undefined>,MinValueAction<number, 1, undefined>]>;
-		readonly date:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly excerpt:ObjectSchema<{
-			readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly rendered:StringSchema<undefined>;
+	export const PostEmbedSchema: import("valibot").ObjectSchema<{
+		readonly author: import("valibot").SchemaWithPipe<readonly [import("valibot").NumberSchema<undefined>, import("valibot").MinValueAction<number, 1, undefined>]>;
+		readonly date: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly excerpt: import("valibot").ObjectSchema<{
+			readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly rendered: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly featured_media:NumberSchema<undefined>;
-		readonly id:NumberSchema<undefined>;
-		readonly link:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly slug:StringSchema<undefined>;
-		readonly title:ObjectSchema<{
-			readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly rendered:StringSchema<undefined>;
+		readonly featured_media: import("valibot").NumberSchema<undefined>;
+		readonly id: import("valibot").NumberSchema<undefined>;
+		readonly link: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly slug: import("valibot").StringSchema<undefined>;
+		readonly title: import("valibot").ObjectSchema<{
+			readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly rendered: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly type:StringSchema<undefined>;
-		readonly _links:OptionalSchema<RecordSchema<StringSchema<undefined>,ArraySchema<ObjectSchema<{
-			readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-			readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+		readonly type: import("valibot").StringSchema<undefined>;
+		readonly _links: import("valibot").OptionalSchema<import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, ArraySchema<import("valibot").ObjectSchema<{
+			readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+			readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 		}, undefined>, undefined>, undefined>, undefined>;
 	}, undefined>;
 
-	export const PostViewSchema:ObjectSchema<{
-		readonly link:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly type:StringSchema<undefined>;
-		readonly id:NumberSchema<undefined>;
-		readonly title:ObjectSchema<{
-			readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly rendered:StringSchema<undefined>;
+	export const PostViewSchema: import("valibot").ObjectSchema<{
+		readonly link: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly type: import("valibot").StringSchema<undefined>;
+		readonly id: import("valibot").NumberSchema<undefined>;
+		readonly title: import("valibot").ObjectSchema<{
+			readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly rendered: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly date:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly slug:StringSchema<undefined>;
-		readonly author:SchemaWithPipe<readonly [NumberSchema<undefined>,MinValueAction<number, 1, undefined>]>;
-		readonly _links:OptionalSchema<RecordSchema<StringSchema<undefined>,ArraySchema<ObjectSchema<{
-			readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-			readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+		readonly date: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly slug: import("valibot").StringSchema<undefined>;
+		readonly author: import("valibot").SchemaWithPipe<readonly [import("valibot").NumberSchema<undefined>, import("valibot").MinValueAction<number, 1, undefined>]>;
+		readonly _links: import("valibot").OptionalSchema<import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, ArraySchema<import("valibot").ObjectSchema<{
+			readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+			readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 		}, undefined>, undefined>, undefined>, undefined>;
-		readonly excerpt:ObjectSchema<{
-			readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly rendered:StringSchema<undefined>;
+		readonly excerpt: import("valibot").ObjectSchema<{
+			readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly rendered: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly featured_media:NumberSchema<undefined>;
-		readonly comment_status:PicklistSchema<["open", "closed"], undefined>;
-		readonly content:ObjectSchema<{
-			readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly rendered:StringSchema<undefined>;
+		readonly featured_media: import("valibot").NumberSchema<undefined>;
+		readonly comment_status: import("valibot").PicklistSchema<["open", "closed"], undefined>;
+		readonly content: import("valibot").ObjectSchema<{
+			readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly rendered: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly date_gmt:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly format:OptionalSchema<StringSchema<undefined>, undefined>;
-		readonly menu_order:OptionalSchema<NumberSchema<undefined>, undefined>;
-		readonly meta:OptionalSchema<UnionSchema<[AnySchema,ArraySchema<NeverSchema<undefined>, undefined>], undefined>, undefined>;
-		readonly modified:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly modified_gmt:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly parent:OptionalSchema<NumberSchema<undefined>, undefined>;
-		readonly ping_status:PicklistSchema<["open", "closed"], undefined>;
-		readonly status:StringSchema<undefined>;
-		readonly sticky:OptionalSchema<BooleanSchema<undefined>, undefined>;
-		readonly template:StringSchema<undefined>;
-		readonly guid:ObjectSchema<{
-			readonly raw:OptionalSchema<SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>, undefined>;
-			readonly rendered:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
+		readonly date_gmt: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly format: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+		readonly menu_order: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+		readonly meta: import("valibot").OptionalSchema<import("valibot").UnionSchema<[import("valibot").AnySchema, ArraySchema<import("valibot").NeverSchema<undefined>, undefined>], undefined>, undefined>;
+		readonly modified: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly modified_gmt: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly parent: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+		readonly ping_status: import("valibot").PicklistSchema<["open", "closed"], undefined>;
+		readonly status: import("valibot").StringSchema<undefined>;
+		readonly sticky: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+		readonly template: import("valibot").StringSchema<undefined>;
+		readonly guid: import("valibot").ObjectSchema<{
+			readonly raw: import("valibot").OptionalSchema<import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>, undefined>;
+			readonly rendered: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
 		}, undefined>;
 	}, undefined>;
 
-	export const PostEditSchema:ObjectSchema<{
-		readonly link:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly type:StringSchema<undefined>;
-		readonly format:OptionalSchema<StringSchema<undefined>, undefined>;
-		readonly id:NumberSchema<undefined>;
-		readonly content:ObjectSchema<{
-			readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly rendered:StringSchema<undefined>;
+	export const PostEditSchema: import("valibot").ObjectSchema<{
+		readonly link: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly type: import("valibot").StringSchema<undefined>;
+		readonly format: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+		readonly id: import("valibot").NumberSchema<undefined>;
+		readonly content: import("valibot").ObjectSchema<{
+			readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly rendered: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly meta:OptionalSchema<UnionSchema<[AnySchema,ArraySchema<NeverSchema<undefined>, undefined>], undefined>, undefined>;
-		readonly template:StringSchema<undefined>;
-		readonly title:ObjectSchema<{
-			readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly rendered:StringSchema<undefined>;
+		readonly meta: import("valibot").OptionalSchema<import("valibot").UnionSchema<[import("valibot").AnySchema, ArraySchema<import("valibot").NeverSchema<undefined>, undefined>], undefined>, undefined>;
+		readonly template: import("valibot").StringSchema<undefined>;
+		readonly title: import("valibot").ObjectSchema<{
+			readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly rendered: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly parent:OptionalSchema<NumberSchema<undefined>, undefined>;
-		readonly status:StringSchema<undefined>;
-		readonly date:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly slug:StringSchema<undefined>;
-		readonly author:SchemaWithPipe<readonly [NumberSchema<undefined>,MinValueAction<number, 1, undefined>]>;
-		readonly sticky:OptionalSchema<BooleanSchema<undefined>, undefined>;
-		readonly modified:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly _links:OptionalSchema<RecordSchema<StringSchema<undefined>,ArraySchema<ObjectSchema<{
-			readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-			readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+		readonly parent: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+		readonly status: import("valibot").StringSchema<undefined>;
+		readonly date: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly slug: import("valibot").StringSchema<undefined>;
+		readonly author: import("valibot").SchemaWithPipe<readonly [import("valibot").NumberSchema<undefined>, import("valibot").MinValueAction<number, 1, undefined>]>;
+		readonly sticky: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+		readonly modified: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly _links: import("valibot").OptionalSchema<import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, ArraySchema<import("valibot").ObjectSchema<{
+			readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+			readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 		}, undefined>, undefined>, undefined>, undefined>;
-		readonly excerpt:ObjectSchema<{
-			readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-			readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-			readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly rendered:StringSchema<undefined>;
+		readonly excerpt: import("valibot").ObjectSchema<{
+			readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+			readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+			readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly rendered: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly featured_media:NumberSchema<undefined>;
-		readonly menu_order:OptionalSchema<NumberSchema<undefined>, undefined>;
-		readonly guid:ObjectSchema<{
-			readonly raw:OptionalSchema<SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>, undefined>;
-			readonly rendered:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
+		readonly featured_media: import("valibot").NumberSchema<undefined>;
+		readonly menu_order: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+		readonly guid: import("valibot").ObjectSchema<{
+			readonly raw: import("valibot").OptionalSchema<import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>, undefined>;
+			readonly rendered: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
 		}, undefined>;
-		readonly comment_status:PicklistSchema<["open", "closed"], undefined>;
-		readonly date_gmt:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly modified_gmt:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-		readonly ping_status:PicklistSchema<["open", "closed"], undefined>;
-		readonly generated_slug:StringSchema<undefined>;
-		readonly permalink_template:StringSchema<undefined>;
+		readonly comment_status: import("valibot").PicklistSchema<["open", "closed"], undefined>;
+		readonly date_gmt: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly modified_gmt: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+		readonly ping_status: import("valibot").PicklistSchema<["open", "closed"], undefined>;
+		readonly generated_slug: import("valibot").StringSchema<undefined>;
+		readonly permalink_template: import("valibot").StringSchema<undefined>;
 	}, undefined>;
 	export type WP_Post_Terms = {
 		taxonomy: WP_Taxonomy;
 		terms: WP_Term[];
 	};
-	export type WP_Post_Embed =InferOutput<typeof PostEmbedSchema>;
-	export type WP_Post =InferOutput<typeof PostViewSchema>;
-	export type WP_Post_Edit =InferOutput<typeof PostEditSchema>;
+	export type WP_Post_Embed = InferOutput<typeof PostEmbedSchema>;
+	export type WP_Post = InferOutput<typeof PostViewSchema>;
+	export type WP_Post_Edit = InferOutput<typeof PostEditSchema>;
 	namespace PostQuerySchemas {
 		export { PostEditSchema as edit };
 		export { PostEmbedSchema as embed };
 		export { PostViewSchema as view };
 	}
-	export const CommentStatusSchema:PicklistSchema<["open", "closed"], undefined>;
-	export const DateItemSchema:SchemaWithPipe<readonly [StringSchema<undefined>,ToDateAction<string, undefined>]>;
-	export const EmailSchema:SchemaWithPipe<readonly [StringSchema<undefined>,EmailAction<string, undefined>]>;
-	export const IdSchema:SchemaWithPipe<readonly [NumberSchema<undefined>,MinValueAction<number, 1, undefined>]>;
-	export const UrlSchema:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-	export const LinkItemSchema:ArraySchema<ObjectSchema<{
-		readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-		readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-		readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+	export const CommentStatusSchema: import("valibot").PicklistSchema<["open", "closed"], undefined>;
+	export const DateItemSchema: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").ToDateAction<string, undefined>]>;
+	export const EmailSchema: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").EmailAction<string, undefined>]>;
+	export const IdSchema: import("valibot").SchemaWithPipe<readonly [import("valibot").NumberSchema<undefined>, import("valibot").MinValueAction<number, 1, undefined>]>;
+	export const UrlSchema: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+	export const LinkItemSchema: import("valibot").ArraySchema<import("valibot").ObjectSchema<{
+		readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+		readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+		readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 	}, undefined>, undefined>;
 
-	export const MetaSchema:OptionalSchema<UnionSchema<[AnySchema,ArraySchema<NeverSchema<undefined>, undefined>], undefined>, undefined>;
-	export const RenderableItemSchema:ObjectSchema<{
-		readonly block_version:OptionalSchema<NumberSchema<undefined>, undefined>;
-		readonly protected:OptionalSchema<BooleanSchema<undefined>, undefined>;
-		readonly raw:OptionalSchema<StringSchema<undefined>, undefined>;
-		readonly rendered:StringSchema<undefined>;
+	export const MetaSchema: import("valibot").OptionalSchema<import("valibot").UnionSchema<[import("valibot").AnySchema, import("valibot").ArraySchema<import("valibot").NeverSchema<undefined>, undefined>], undefined>, undefined>;
+	export const RenderableItemSchema: import("valibot").ObjectSchema<{
+		readonly block_version: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, undefined>;
+		readonly protected: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+		readonly raw: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+		readonly rendered: import("valibot").StringSchema<undefined>;
 	}, undefined>;
 
-	export const RestErrorSchema:ObjectSchema<{
-		readonly code:StringSchema<undefined>;
-		readonly message:StringSchema<undefined>;
-		readonly data:ObjectSchema<{
-			readonly status:NumberSchema<undefined>;
+	export const RestErrorSchema: import("valibot").ObjectSchema<{
+		readonly code: import("valibot").StringSchema<undefined>;
+		readonly message: import("valibot").StringSchema<undefined>;
+		readonly data: import("valibot").ObjectSchema<{
+			readonly status: import("valibot").NumberSchema<undefined>;
 		}, undefined>;
 	}, undefined>;
-	export type Meta =InferOutput<typeof MetaSchema>;
-	export type RestError =InferOutput<typeof RestErrorSchema>;
+	export type Meta = InferOutput<typeof MetaSchema>;
+	export type RestError = InferOutput<typeof RestErrorSchema>;
 	/**
 	 * Get settings
 	 *
@@ -642,29 +642,29 @@ declare module '@kucrut/wp-api-helpers' {
 	 */
 	export function get_settings(url: string, auth: string): Promise<WP_Settings>;
 
-	export const SettingsSchema:ObjectSchema<{
-		readonly date_format:StringSchema<undefined>;
-		readonly default_category:NumberSchema<undefined>;
-		readonly default_comment_status:PicklistSchema<["open", "closed"], undefined>;
-		readonly default_ping_status:PicklistSchema<["open", "closed"], undefined>;
-		readonly default_post_format:StringSchema<undefined>;
-		readonly description:StringSchema<undefined>;
-		readonly email:SchemaWithPipe<readonly [StringSchema<undefined>,EmailAction<string, undefined>]>;
-		readonly language:StringSchema<undefined>;
-		readonly page_for_posts:NumberSchema<undefined>;
-		readonly page_on_front:NumberSchema<undefined>;
-		readonly posts_per_page:NumberSchema<undefined>;
-		readonly show_on_front:PicklistSchema<["page", "posts"], undefined>;
-		readonly site_icon:NullableSchema<NumberSchema<undefined>, undefined>;
-		readonly site_logo:NullableSchema<NumberSchema<undefined>, undefined>;
-		readonly start_of_week:NumberSchema<undefined>;
-		readonly time_format:StringSchema<undefined>;
-		readonly timezone:StringSchema<undefined>;
-		readonly title:StringSchema<undefined>;
-		readonly url:StringSchema<undefined>;
-		readonly use_smilies:BooleanSchema<undefined>;
+	export const SettingsSchema: import("valibot").ObjectSchema<{
+		readonly date_format: import("valibot").StringSchema<undefined>;
+		readonly default_category: import("valibot").NumberSchema<undefined>;
+		readonly default_comment_status: import("valibot").PicklistSchema<["open", "closed"], undefined>;
+		readonly default_ping_status: import("valibot").PicklistSchema<["open", "closed"], undefined>;
+		readonly default_post_format: import("valibot").StringSchema<undefined>;
+		readonly description: import("valibot").StringSchema<undefined>;
+		readonly email: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").EmailAction<string, undefined>]>;
+		readonly language: import("valibot").StringSchema<undefined>;
+		readonly page_for_posts: import("valibot").NumberSchema<undefined>;
+		readonly page_on_front: import("valibot").NumberSchema<undefined>;
+		readonly posts_per_page: import("valibot").NumberSchema<undefined>;
+		readonly show_on_front: import("valibot").PicklistSchema<["page", "posts"], undefined>;
+		readonly site_icon: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, undefined>;
+		readonly site_logo: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, undefined>;
+		readonly start_of_week: import("valibot").NumberSchema<undefined>;
+		readonly time_format: import("valibot").StringSchema<undefined>;
+		readonly timezone: import("valibot").StringSchema<undefined>;
+		readonly title: import("valibot").StringSchema<undefined>;
+		readonly url: import("valibot").StringSchema<undefined>;
+		readonly use_smilies: import("valibot").BooleanSchema<undefined>;
 	}, undefined>;
-	export type WP_Settings =InferOutput<typeof SettingsSchema>;
+	export type WP_Settings = InferOutput<typeof SettingsSchema>;
 	/**
 	 * Get taxonomies
 	 *
@@ -675,7 +675,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param auth Authorization header.
 	 * @param args Request arguments.
 	 *
-	 * @return {Promise<v.InferOutput<v.ArraySchema<typeof TaxQuerySchemas[C], undefined>>>} Taxonomy collection.
+	 * @return {Promise<InferOutput<ArraySchema<typeof TaxQuerySchemas[C], undefined>>>} Taxonomy collection.
 	 */
 	export function get_taxonomies<C extends keyof typeof TaxQuerySchemas>(url: string, context: C, auth?: string | undefined, args?: Fetch_Taxonomies_Args | undefined): Promise<InferOutput<ArraySchema<(typeof TaxQuerySchemas)[C], undefined>>>;
 	/**
@@ -688,234 +688,234 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param context Request context, defaults to 'view'.
 	 * @param auth Authorization header.
 	 *
-	 * @return {Promise<v.InferOutput<TaxQuerySchemas[C]>>} Taxonomy collection.
+	 * @return {Promise<InferOutput<TaxQuerySchemas[C]>>} Taxonomy collection.
 	 */
 	export function get_single_taxonomy<C extends keyof typeof TaxQuerySchemas>(name: string, url: string, context: C, auth?: string | undefined): Promise<InferOutput<{
-		edit:ObjectSchema<{
-			readonly name:StringSchema<undefined>;
-			readonly description:StringSchema<undefined>;
-			readonly slug:StringSchema<undefined>;
-			readonly _links:ObjectSchema<{
-				readonly collection:ArraySchema<ObjectSchema<{
-					readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-					readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-					readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-					readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+		edit: import("valibot").ObjectSchema<{
+			readonly name: import("valibot").StringSchema<undefined>;
+			readonly description: import("valibot").StringSchema<undefined>;
+			readonly slug: import("valibot").StringSchema<undefined>;
+			readonly _links: import("valibot").ObjectSchema<{
+				readonly collection: ArraySchema<import("valibot").ObjectSchema<{
+					readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+					readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+					readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+					readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 				}, undefined>, undefined>;
-				readonly 'wp:items':ArraySchema<ObjectSchema<{
-					readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-					readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-					readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-					readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+				readonly 'wp:items': ArraySchema<import("valibot").ObjectSchema<{
+					readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+					readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+					readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+					readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 				}, undefined>, undefined>;
 			}, undefined>;
-			readonly rest_base:StringSchema<undefined>;
-			readonly rest_namespace:StringSchema<undefined>;
-			readonly types:ArraySchema<StringSchema<undefined>, undefined>;
-			readonly hierarchical:BooleanSchema<undefined>;
-			readonly capabilities:RecordSchema<StringSchema<undefined>,StringSchema<undefined>, undefined>;
-			readonly labels:ObjectSchema<{
-				readonly add_new_item:StringSchema<undefined>;
-				readonly add_or_remove_items:NullableSchema<StringSchema<undefined>, undefined>;
-				readonly all_items:StringSchema<undefined>;
-				readonly archives:OptionalSchema<StringSchema<undefined>, undefined>;
-				readonly back_to_items:StringSchema<undefined>;
-				readonly choose_from_most_used:NullableSchema<StringSchema<undefined>, undefined>;
-				readonly desc_field_description:StringSchema<undefined>;
-				readonly edit_item:StringSchema<undefined>;
-				readonly filter_by_item:NullableSchema<StringSchema<undefined>, undefined>;
-				readonly item_link_description:StringSchema<undefined>;
-				readonly item_link:StringSchema<undefined>;
-				readonly items_list_navigation:StringSchema<undefined>;
-				readonly items_list:StringSchema<undefined>;
-				readonly menu_name:StringSchema<undefined>;
-				readonly most_used:StringSchema<undefined>;
-				readonly name_admin_bar:StringSchema<undefined>;
-				readonly name_field_description:StringSchema<undefined>;
-				readonly name:StringSchema<undefined>;
-				readonly new_item_name:StringSchema<undefined>;
-				readonly no_terms:StringSchema<undefined>;
-				readonly not_found:StringSchema<undefined>;
-				readonly parent_field_description:NullableSchema<StringSchema<undefined>, undefined>;
-				readonly parent_item_colon:NullableSchema<StringSchema<undefined>, undefined>;
-				readonly parent_item:StringSchema<undefined>;
-				readonly popular_items:NullableSchema<StringSchema<undefined>, undefined>;
-				readonly search_items:StringSchema<undefined>;
-				readonly separate_items_with_commas:NullableSchema<StringSchema<undefined>, undefined>;
-				readonly singular_name:StringSchema<undefined>;
-				readonly slug_field_description:StringSchema<undefined>;
-				readonly update_item:StringSchema<undefined>;
-				readonly view_item:StringSchema<undefined>;
+			readonly rest_base: import("valibot").StringSchema<undefined>;
+			readonly rest_namespace: import("valibot").StringSchema<undefined>;
+			readonly types: ArraySchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly hierarchical: import("valibot").BooleanSchema<undefined>;
+			readonly capabilities: import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, import("valibot").StringSchema<undefined>, undefined>;
+			readonly labels: import("valibot").ObjectSchema<{
+				readonly add_new_item: import("valibot").StringSchema<undefined>;
+				readonly add_or_remove_items: import("valibot").NullableSchema<import("valibot").StringSchema<undefined>, undefined>;
+				readonly all_items: import("valibot").StringSchema<undefined>;
+				readonly archives: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+				readonly back_to_items: import("valibot").StringSchema<undefined>;
+				readonly choose_from_most_used: import("valibot").NullableSchema<import("valibot").StringSchema<undefined>, undefined>;
+				readonly desc_field_description: import("valibot").StringSchema<undefined>;
+				readonly edit_item: import("valibot").StringSchema<undefined>;
+				readonly filter_by_item: import("valibot").NullableSchema<import("valibot").StringSchema<undefined>, undefined>;
+				readonly item_link_description: import("valibot").StringSchema<undefined>;
+				readonly item_link: import("valibot").StringSchema<undefined>;
+				readonly items_list_navigation: import("valibot").StringSchema<undefined>;
+				readonly items_list: import("valibot").StringSchema<undefined>;
+				readonly menu_name: import("valibot").StringSchema<undefined>;
+				readonly most_used: import("valibot").StringSchema<undefined>;
+				readonly name_admin_bar: import("valibot").StringSchema<undefined>;
+				readonly name_field_description: import("valibot").StringSchema<undefined>;
+				readonly name: import("valibot").StringSchema<undefined>;
+				readonly new_item_name: import("valibot").StringSchema<undefined>;
+				readonly no_terms: import("valibot").StringSchema<undefined>;
+				readonly not_found: import("valibot").StringSchema<undefined>;
+				readonly parent_field_description: import("valibot").NullableSchema<import("valibot").StringSchema<undefined>, undefined>;
+				readonly parent_item_colon: import("valibot").NullableSchema<import("valibot").StringSchema<undefined>, undefined>;
+				readonly parent_item: import("valibot").StringSchema<undefined>;
+				readonly popular_items: import("valibot").NullableSchema<import("valibot").StringSchema<undefined>, undefined>;
+				readonly search_items: import("valibot").StringSchema<undefined>;
+				readonly separate_items_with_commas: import("valibot").NullableSchema<import("valibot").StringSchema<undefined>, undefined>;
+				readonly singular_name: import("valibot").StringSchema<undefined>;
+				readonly slug_field_description: import("valibot").StringSchema<undefined>;
+				readonly update_item: import("valibot").StringSchema<undefined>;
+				readonly view_item: import("valibot").StringSchema<undefined>;
 			}, undefined>;
-			readonly show_cloud:BooleanSchema<undefined>;
-			readonly visibility:ObjectSchema<{
-				readonly public:BooleanSchema<undefined>;
-				readonly publicly_queryable:BooleanSchema<undefined>;
-				readonly show_admin_column:BooleanSchema<undefined>;
-				readonly show_in_nav_menus:BooleanSchema<undefined>;
-				readonly show_in_quick_edit:BooleanSchema<undefined>;
-				readonly show_ui:BooleanSchema<undefined>;
-			}, undefined>;
-		}, undefined>;
-		embed:ObjectSchema<{
-			readonly name:StringSchema<undefined>;
-			readonly rest_base:StringSchema<undefined>;
-			readonly rest_namespace:StringSchema<undefined>;
-			readonly slug:StringSchema<undefined>;
-			readonly _links:ObjectSchema<{
-				readonly collection:ArraySchema<ObjectSchema<{
-					readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-					readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-					readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-					readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
-				}, undefined>, undefined>;
-				readonly 'wp:items':ArraySchema<ObjectSchema<{
-					readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-					readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-					readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-					readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
-				}, undefined>, undefined>;
+			readonly show_cloud: import("valibot").BooleanSchema<undefined>;
+			readonly visibility: import("valibot").ObjectSchema<{
+				readonly public: import("valibot").BooleanSchema<undefined>;
+				readonly publicly_queryable: import("valibot").BooleanSchema<undefined>;
+				readonly show_admin_column: import("valibot").BooleanSchema<undefined>;
+				readonly show_in_nav_menus: import("valibot").BooleanSchema<undefined>;
+				readonly show_in_quick_edit: import("valibot").BooleanSchema<undefined>;
+				readonly show_ui: import("valibot").BooleanSchema<undefined>;
 			}, undefined>;
 		}, undefined>;
-		view:ObjectSchema<{
-			readonly name:StringSchema<undefined>;
-			readonly slug:StringSchema<undefined>;
-			readonly _links:ObjectSchema<{
-				readonly collection:ArraySchema<ObjectSchema<{
-					readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-					readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-					readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-					readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+		embed: import("valibot").ObjectSchema<{
+			readonly name: import("valibot").StringSchema<undefined>;
+			readonly rest_base: import("valibot").StringSchema<undefined>;
+			readonly rest_namespace: import("valibot").StringSchema<undefined>;
+			readonly slug: import("valibot").StringSchema<undefined>;
+			readonly _links: import("valibot").ObjectSchema<{
+				readonly collection: ArraySchema<import("valibot").ObjectSchema<{
+					readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+					readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+					readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+					readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 				}, undefined>, undefined>;
-				readonly 'wp:items':ArraySchema<ObjectSchema<{
-					readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-					readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-					readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-					readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+				readonly 'wp:items': ArraySchema<import("valibot").ObjectSchema<{
+					readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+					readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+					readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+					readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 				}, undefined>, undefined>;
 			}, undefined>;
-			readonly rest_base:StringSchema<undefined>;
-			readonly rest_namespace:StringSchema<undefined>;
-			readonly description:StringSchema<undefined>;
-			readonly hierarchical:BooleanSchema<undefined>;
-			readonly types:ArraySchema<StringSchema<undefined>, undefined>;
+		}, undefined>;
+		view: import("valibot").ObjectSchema<{
+			readonly name: import("valibot").StringSchema<undefined>;
+			readonly slug: import("valibot").StringSchema<undefined>;
+			readonly _links: import("valibot").ObjectSchema<{
+				readonly collection: ArraySchema<import("valibot").ObjectSchema<{
+					readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+					readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+					readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+					readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+				}, undefined>, undefined>;
+				readonly 'wp:items': ArraySchema<import("valibot").ObjectSchema<{
+					readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+					readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+					readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+					readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+				}, undefined>, undefined>;
+			}, undefined>;
+			readonly rest_base: import("valibot").StringSchema<undefined>;
+			readonly rest_namespace: import("valibot").StringSchema<undefined>;
+			readonly description: import("valibot").StringSchema<undefined>;
+			readonly hierarchical: import("valibot").BooleanSchema<undefined>;
+			readonly types: ArraySchema<import("valibot").StringSchema<undefined>, undefined>;
 		}, undefined>;
 	}[C]>>;
 
-	export const TaxonomyEmbedSchema:ObjectSchema<{
-		readonly name:StringSchema<undefined>;
-		readonly rest_base:StringSchema<undefined>;
-		readonly rest_namespace:StringSchema<undefined>;
-		readonly slug:StringSchema<undefined>;
-		readonly _links:ObjectSchema<{
-			readonly collection:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+	export const TaxonomyEmbedSchema: import("valibot").ObjectSchema<{
+		readonly name: import("valibot").StringSchema<undefined>;
+		readonly rest_base: import("valibot").StringSchema<undefined>;
+		readonly rest_namespace: import("valibot").StringSchema<undefined>;
+		readonly slug: import("valibot").StringSchema<undefined>;
+		readonly _links: import("valibot").ObjectSchema<{
+			readonly collection: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
-			readonly 'wp:items':ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+			readonly 'wp:items': ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
 		}, undefined>;
 	}, undefined>;
 
-	export const TaxonomyViewSchema:ObjectSchema<{
-		readonly name:StringSchema<undefined>;
-		readonly slug:StringSchema<undefined>;
-		readonly _links:ObjectSchema<{
-			readonly collection:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+	export const TaxonomyViewSchema: import("valibot").ObjectSchema<{
+		readonly name: import("valibot").StringSchema<undefined>;
+		readonly slug: import("valibot").StringSchema<undefined>;
+		readonly _links: import("valibot").ObjectSchema<{
+			readonly collection: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
-			readonly 'wp:items':ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+			readonly 'wp:items': ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
 		}, undefined>;
-		readonly rest_base:StringSchema<undefined>;
-		readonly rest_namespace:StringSchema<undefined>;
-		readonly description:StringSchema<undefined>;
-		readonly hierarchical:BooleanSchema<undefined>;
-		readonly types:ArraySchema<StringSchema<undefined>, undefined>;
+		readonly rest_base: import("valibot").StringSchema<undefined>;
+		readonly rest_namespace: import("valibot").StringSchema<undefined>;
+		readonly description: import("valibot").StringSchema<undefined>;
+		readonly hierarchical: import("valibot").BooleanSchema<undefined>;
+		readonly types: ArraySchema<import("valibot").StringSchema<undefined>, undefined>;
 	}, undefined>;
 
-	export const TaxonomyEditSchema:ObjectSchema<{
-		readonly name:StringSchema<undefined>;
-		readonly description:StringSchema<undefined>;
-		readonly slug:StringSchema<undefined>;
-		readonly _links:ObjectSchema<{
-			readonly collection:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+	export const TaxonomyEditSchema: import("valibot").ObjectSchema<{
+		readonly name: import("valibot").StringSchema<undefined>;
+		readonly description: import("valibot").StringSchema<undefined>;
+		readonly slug: import("valibot").StringSchema<undefined>;
+		readonly _links: import("valibot").ObjectSchema<{
+			readonly collection: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
-			readonly 'wp:items':ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+			readonly 'wp:items': ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
 		}, undefined>;
-		readonly rest_base:StringSchema<undefined>;
-		readonly rest_namespace:StringSchema<undefined>;
-		readonly types:ArraySchema<StringSchema<undefined>, undefined>;
-		readonly hierarchical:BooleanSchema<undefined>;
-		readonly capabilities:RecordSchema<StringSchema<undefined>,StringSchema<undefined>, undefined>;
-		readonly labels:ObjectSchema<{
-			readonly add_new_item:StringSchema<undefined>;
-			readonly add_or_remove_items:NullableSchema<StringSchema<undefined>, undefined>;
-			readonly all_items:StringSchema<undefined>;
-			readonly archives:OptionalSchema<StringSchema<undefined>, undefined>;
-			readonly back_to_items:StringSchema<undefined>;
-			readonly choose_from_most_used:NullableSchema<StringSchema<undefined>, undefined>;
-			readonly desc_field_description:StringSchema<undefined>;
-			readonly edit_item:StringSchema<undefined>;
-			readonly filter_by_item:NullableSchema<StringSchema<undefined>, undefined>;
-			readonly item_link_description:StringSchema<undefined>;
-			readonly item_link:StringSchema<undefined>;
-			readonly items_list_navigation:StringSchema<undefined>;
-			readonly items_list:StringSchema<undefined>;
-			readonly menu_name:StringSchema<undefined>;
-			readonly most_used:StringSchema<undefined>;
-			readonly name_admin_bar:StringSchema<undefined>;
-			readonly name_field_description:StringSchema<undefined>;
-			readonly name:StringSchema<undefined>;
-			readonly new_item_name:StringSchema<undefined>;
-			readonly no_terms:StringSchema<undefined>;
-			readonly not_found:StringSchema<undefined>;
-			readonly parent_field_description:NullableSchema<StringSchema<undefined>, undefined>;
-			readonly parent_item_colon:NullableSchema<StringSchema<undefined>, undefined>;
-			readonly parent_item:StringSchema<undefined>;
-			readonly popular_items:NullableSchema<StringSchema<undefined>, undefined>;
-			readonly search_items:StringSchema<undefined>;
-			readonly separate_items_with_commas:NullableSchema<StringSchema<undefined>, undefined>;
-			readonly singular_name:StringSchema<undefined>;
-			readonly slug_field_description:StringSchema<undefined>;
-			readonly update_item:StringSchema<undefined>;
-			readonly view_item:StringSchema<undefined>;
+		readonly rest_base: import("valibot").StringSchema<undefined>;
+		readonly rest_namespace: import("valibot").StringSchema<undefined>;
+		readonly types: ArraySchema<import("valibot").StringSchema<undefined>, undefined>;
+		readonly hierarchical: import("valibot").BooleanSchema<undefined>;
+		readonly capabilities: import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, import("valibot").StringSchema<undefined>, undefined>;
+		readonly labels: import("valibot").ObjectSchema<{
+			readonly add_new_item: import("valibot").StringSchema<undefined>;
+			readonly add_or_remove_items: import("valibot").NullableSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly all_items: import("valibot").StringSchema<undefined>;
+			readonly archives: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly back_to_items: import("valibot").StringSchema<undefined>;
+			readonly choose_from_most_used: import("valibot").NullableSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly desc_field_description: import("valibot").StringSchema<undefined>;
+			readonly edit_item: import("valibot").StringSchema<undefined>;
+			readonly filter_by_item: import("valibot").NullableSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly item_link_description: import("valibot").StringSchema<undefined>;
+			readonly item_link: import("valibot").StringSchema<undefined>;
+			readonly items_list_navigation: import("valibot").StringSchema<undefined>;
+			readonly items_list: import("valibot").StringSchema<undefined>;
+			readonly menu_name: import("valibot").StringSchema<undefined>;
+			readonly most_used: import("valibot").StringSchema<undefined>;
+			readonly name_admin_bar: import("valibot").StringSchema<undefined>;
+			readonly name_field_description: import("valibot").StringSchema<undefined>;
+			readonly name: import("valibot").StringSchema<undefined>;
+			readonly new_item_name: import("valibot").StringSchema<undefined>;
+			readonly no_terms: import("valibot").StringSchema<undefined>;
+			readonly not_found: import("valibot").StringSchema<undefined>;
+			readonly parent_field_description: import("valibot").NullableSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly parent_item_colon: import("valibot").NullableSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly parent_item: import("valibot").StringSchema<undefined>;
+			readonly popular_items: import("valibot").NullableSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly search_items: import("valibot").StringSchema<undefined>;
+			readonly separate_items_with_commas: import("valibot").NullableSchema<import("valibot").StringSchema<undefined>, undefined>;
+			readonly singular_name: import("valibot").StringSchema<undefined>;
+			readonly slug_field_description: import("valibot").StringSchema<undefined>;
+			readonly update_item: import("valibot").StringSchema<undefined>;
+			readonly view_item: import("valibot").StringSchema<undefined>;
 		}, undefined>;
-		readonly show_cloud:BooleanSchema<undefined>;
-		readonly visibility:ObjectSchema<{
-			readonly public:BooleanSchema<undefined>;
-			readonly publicly_queryable:BooleanSchema<undefined>;
-			readonly show_admin_column:BooleanSchema<undefined>;
-			readonly show_in_nav_menus:BooleanSchema<undefined>;
-			readonly show_in_quick_edit:BooleanSchema<undefined>;
-			readonly show_ui:BooleanSchema<undefined>;
+		readonly show_cloud: import("valibot").BooleanSchema<undefined>;
+		readonly visibility: import("valibot").ObjectSchema<{
+			readonly public: import("valibot").BooleanSchema<undefined>;
+			readonly publicly_queryable: import("valibot").BooleanSchema<undefined>;
+			readonly show_admin_column: import("valibot").BooleanSchema<undefined>;
+			readonly show_in_nav_menus: import("valibot").BooleanSchema<undefined>;
+			readonly show_in_quick_edit: import("valibot").BooleanSchema<undefined>;
+			readonly show_ui: import("valibot").BooleanSchema<undefined>;
 		}, undefined>;
 	}, undefined>;
-	export type WP_Taxonomy_Embed =InferOutput<typeof TaxonomyEmbedSchema>;
-	export type WP_Taxonomy =InferOutput<typeof TaxonomyViewSchema>;
-	export type WP_Taxonomy_Edit =InferOutput<typeof TaxonomyEditSchema>;
+	export type WP_Taxonomy_Embed = InferOutput<typeof TaxonomyEmbedSchema>;
+	export type WP_Taxonomy = InferOutput<typeof TaxonomyViewSchema>;
+	export type WP_Taxonomy_Edit = InferOutput<typeof TaxonomyEditSchema>;
 	namespace TaxQuerySchemas {
 		export { TaxonomyEditSchema as edit };
 		export { TaxonomyEmbedSchema as embed };
@@ -932,119 +932,119 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param auth Authorization header.
 	 * @param args Request arguments.
 	 *
-	 * @return {Promise<v.InferOutput<v.ArraySchema<typeof TermQuerySchemas[C], undefined>>>} Term collection.
+	 * @return {Promise<InferOutput<ArraySchema<typeof TermQuerySchemas[C], undefined>>>} Term collection.
 	 */
 	export function get_terms<C extends keyof typeof TermQuerySchemas>(url: string, taxonomy: string, context: C, auth?: string | undefined, args?: Fetch_Terms_Args | undefined): Promise<InferOutput<ArraySchema<(typeof TermQuerySchemas)[C], undefined>>>;
 
-	export const TermEmbedSchema:ObjectSchema<{
-		readonly id:SchemaWithPipe<readonly [NumberSchema<undefined>,MinValueAction<number, 1, undefined>]>;
-		readonly link:StringSchema<undefined>;
-		readonly name:StringSchema<undefined>;
-		readonly slug:StringSchema<undefined>;
-		readonly taxonomy:StringSchema<undefined>;
-		readonly _links:ObjectSchema<{
-			readonly about:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+	export const TermEmbedSchema: import("valibot").ObjectSchema<{
+		readonly id: import("valibot").SchemaWithPipe<readonly [import("valibot").NumberSchema<undefined>, import("valibot").MinValueAction<number, 1, undefined>]>;
+		readonly link: import("valibot").StringSchema<undefined>;
+		readonly name: import("valibot").StringSchema<undefined>;
+		readonly slug: import("valibot").StringSchema<undefined>;
+		readonly taxonomy: import("valibot").StringSchema<undefined>;
+		readonly _links: import("valibot").ObjectSchema<{
+			readonly about: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
-			readonly collection:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+			readonly collection: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
-			readonly self:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+			readonly self: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
-			readonly 'wp:post_type':ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+			readonly 'wp:post_type': ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
 		}, undefined>;
 	}, undefined>;
 
-	export const TermViewSchema:ObjectSchema<{
-		readonly link:StringSchema<undefined>;
-		readonly name:StringSchema<undefined>;
-		readonly id:SchemaWithPipe<readonly [NumberSchema<undefined>,MinValueAction<number, 1, undefined>]>;
-		readonly slug:StringSchema<undefined>;
-		readonly _links:ObjectSchema<{
-			readonly about:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+	export const TermViewSchema: import("valibot").ObjectSchema<{
+		readonly link: import("valibot").StringSchema<undefined>;
+		readonly name: import("valibot").StringSchema<undefined>;
+		readonly id: import("valibot").SchemaWithPipe<readonly [import("valibot").NumberSchema<undefined>, import("valibot").MinValueAction<number, 1, undefined>]>;
+		readonly slug: import("valibot").StringSchema<undefined>;
+		readonly _links: import("valibot").ObjectSchema<{
+			readonly about: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
-			readonly collection:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+			readonly collection: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
-			readonly self:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+			readonly self: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
-			readonly 'wp:post_type':ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+			readonly 'wp:post_type': ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
 		}, undefined>;
-		readonly taxonomy:StringSchema<undefined>;
-		readonly meta:OptionalSchema<UnionSchema<[AnySchema,ArraySchema<NeverSchema<undefined>, undefined>], undefined>, undefined>;
-		readonly count:NumberSchema<undefined>;
-		readonly description:StringSchema<undefined>;
-		readonly parent:NumberSchema<undefined>;
+		readonly taxonomy: import("valibot").StringSchema<undefined>;
+		readonly meta: import("valibot").OptionalSchema<import("valibot").UnionSchema<[import("valibot").AnySchema, ArraySchema<import("valibot").NeverSchema<undefined>, undefined>], undefined>, undefined>;
+		readonly count: import("valibot").NumberSchema<undefined>;
+		readonly description: import("valibot").StringSchema<undefined>;
+		readonly parent: import("valibot").NumberSchema<undefined>;
 	}, undefined>;
-	export type WP_Term_Embed =InferOutput<typeof TermEmbedSchema>;
-	export type WP_Term =InferOutput<typeof TermViewSchema>;
-	export type WP_Term_Edit =InferOutput<ObjectSchema<{
-		readonly link:StringSchema<undefined>;
-		readonly name:StringSchema<undefined>;
-		readonly id:SchemaWithPipe<readonly [NumberSchema<undefined>,MinValueAction<number, 1, undefined>]>;
-		readonly slug:StringSchema<undefined>;
-		readonly _links:ObjectSchema<{
-			readonly about:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+	export type WP_Term_Embed = InferOutput<typeof TermEmbedSchema>;
+	export type WP_Term = InferOutput<typeof TermViewSchema>;
+	export type WP_Term_Edit = InferOutput<import("valibot").ObjectSchema<{
+		readonly link: import("valibot").StringSchema<undefined>;
+		readonly name: import("valibot").StringSchema<undefined>;
+		readonly id: import("valibot").SchemaWithPipe<readonly [import("valibot").NumberSchema<undefined>, import("valibot").MinValueAction<number, 1, undefined>]>;
+		readonly slug: import("valibot").StringSchema<undefined>;
+		readonly _links: import("valibot").ObjectSchema<{
+			readonly about: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
-			readonly collection:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+			readonly collection: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
-			readonly self:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+			readonly self: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
-			readonly 'wp:post_type':ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+			readonly 'wp:post_type': ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
 		}, undefined>;
-		readonly taxonomy:StringSchema<undefined>;
-		readonly meta:OptionalSchema<UnionSchema<[AnySchema,ArraySchema<NeverSchema<undefined>, undefined>], undefined>, undefined>;
-		readonly count:NumberSchema<undefined>;
-		readonly description:StringSchema<undefined>;
-		readonly parent:NumberSchema<undefined>;
+		readonly taxonomy: import("valibot").StringSchema<undefined>;
+		readonly meta: import("valibot").OptionalSchema<import("valibot").UnionSchema<[import("valibot").AnySchema, ArraySchema<import("valibot").NeverSchema<undefined>, undefined>], undefined>, undefined>;
+		readonly count: import("valibot").NumberSchema<undefined>;
+		readonly description: import("valibot").StringSchema<undefined>;
+		readonly parent: import("valibot").NumberSchema<undefined>;
 	}, undefined>>;
 	namespace TermQuerySchemas {
 		export { TermViewSchema as edit };
@@ -1061,7 +1061,7 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param context Request context, defaults to 'view'.
 	 * @param auth Authorization header (required when `id` is `me`).
 	 *
-	 * @return {Promise<v.InferOutput<typeof UserQuerySchemas[C]>>} User data.
+	 * @return {Promise<InferOutput<typeof UserQuerySchemas[C]>>} User data.
 	 */
 	export function get_single_user<C extends keyof typeof UserQuerySchemas>(id: User_ID_Arg, url: string, context: C, auth?: string): Promise<InferOutput<(typeof UserQuerySchemas)[C]>>;
 	/**
@@ -1074,94 +1074,94 @@ declare module '@kucrut/wp-api-helpers' {
 	 * @param auth Authorization header.
 	 * @param args Request arguments.
 	 *
-	 * @return {Promise<v.InferOutput<v.ArraySchema<typeof UserQuerySchemas[C], undefined>>>} User collection.
+	 * @return {Promise<InferOutput<ArraySchema<typeof UserQuerySchemas[C], undefined>>>} User collection.
 	 */
 	export function get_users<C extends keyof typeof UserQuerySchemas>(url: string, context: C, auth?: string, args?: Fetch_Users_Args): Promise<InferOutput<ArraySchema<(typeof UserQuerySchemas)[C], undefined>>>;
 
-	export const UserEmbedSchema:ObjectSchema<{
-		readonly avatar_urls:RecordSchema<StringSchema<undefined>,SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>, undefined>;
-		readonly description:StringSchema<undefined>;
-		readonly id:SchemaWithPipe<readonly [NumberSchema<undefined>,MinValueAction<number, 1, undefined>]>;
-		readonly name:SchemaWithPipe<readonly [StringSchema<undefined>,MinLengthAction<string, 1, undefined>]>;
-		readonly url:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly slug:StringSchema<undefined>;
-		readonly _links:ObjectSchema<{
-			readonly self:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+	export const UserEmbedSchema: import("valibot").ObjectSchema<{
+		readonly avatar_urls: import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>, undefined>;
+		readonly description: import("valibot").StringSchema<undefined>;
+		readonly id: import("valibot").SchemaWithPipe<readonly [import("valibot").NumberSchema<undefined>, import("valibot").MinValueAction<number, 1, undefined>]>;
+		readonly name: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").MinLengthAction<string, 1, undefined>]>;
+		readonly url: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly slug: import("valibot").StringSchema<undefined>;
+		readonly _links: import("valibot").ObjectSchema<{
+			readonly self: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
-			readonly collection:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+			readonly collection: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
 		}, undefined>;
 	}, undefined>;
 
-	export const UserViewSchema:ObjectSchema<{
-		readonly name:SchemaWithPipe<readonly [StringSchema<undefined>,MinLengthAction<string, 1, undefined>]>;
-		readonly id:SchemaWithPipe<readonly [NumberSchema<undefined>,MinValueAction<number, 1, undefined>]>;
-		readonly url:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly description:StringSchema<undefined>;
-		readonly slug:StringSchema<undefined>;
-		readonly _links:ObjectSchema<{
-			readonly self:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+	export const UserViewSchema: import("valibot").ObjectSchema<{
+		readonly name: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").MinLengthAction<string, 1, undefined>]>;
+		readonly id: import("valibot").SchemaWithPipe<readonly [import("valibot").NumberSchema<undefined>, import("valibot").MinValueAction<number, 1, undefined>]>;
+		readonly url: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly description: import("valibot").StringSchema<undefined>;
+		readonly slug: import("valibot").StringSchema<undefined>;
+		readonly _links: import("valibot").ObjectSchema<{
+			readonly self: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
-			readonly collection:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+			readonly collection: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
 		}, undefined>;
-		readonly avatar_urls:RecordSchema<StringSchema<undefined>,SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>, undefined>;
-		readonly meta:OptionalSchema<UnionSchema<[AnySchema,ArraySchema<NeverSchema<undefined>, undefined>], undefined>, undefined>;
+		readonly avatar_urls: import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>, undefined>;
+		readonly meta: import("valibot").OptionalSchema<import("valibot").UnionSchema<[import("valibot").AnySchema, ArraySchema<import("valibot").NeverSchema<undefined>, undefined>], undefined>, undefined>;
 	}, undefined>;
 
-	export const UserEditSchema:ObjectSchema<{
-		readonly name:SchemaWithPipe<readonly [StringSchema<undefined>,MinLengthAction<string, 1, undefined>]>;
-		readonly id:SchemaWithPipe<readonly [NumberSchema<undefined>,MinValueAction<number, 1, undefined>]>;
-		readonly url:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly meta:OptionalSchema<UnionSchema<[AnySchema,ArraySchema<NeverSchema<undefined>, undefined>], undefined>, undefined>;
-		readonly description:StringSchema<undefined>;
-		readonly slug:StringSchema<undefined>;
-		readonly _links:ObjectSchema<{
-			readonly self:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+	export const UserEditSchema: import("valibot").ObjectSchema<{
+		readonly name: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").MinLengthAction<string, 1, undefined>]>;
+		readonly id: import("valibot").SchemaWithPipe<readonly [import("valibot").NumberSchema<undefined>, import("valibot").MinValueAction<number, 1, undefined>]>;
+		readonly url: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly meta: import("valibot").OptionalSchema<import("valibot").UnionSchema<[import("valibot").AnySchema, ArraySchema<import("valibot").NeverSchema<undefined>, undefined>], undefined>, undefined>;
+		readonly description: import("valibot").StringSchema<undefined>;
+		readonly slug: import("valibot").StringSchema<undefined>;
+		readonly _links: import("valibot").ObjectSchema<{
+			readonly self: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
-			readonly collection:ArraySchema<ObjectSchema<{
-				readonly embeddable:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly href:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-				readonly templated:OptionalSchema<BooleanSchema<undefined>, undefined>;
-				readonly type:OptionalSchema<StringSchema<undefined>, undefined>;
+			readonly collection: ArraySchema<import("valibot").ObjectSchema<{
+				readonly embeddable: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly href: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+				readonly templated: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, undefined>;
+				readonly type: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 			}, undefined>, undefined>;
 		}, undefined>;
-		readonly avatar_urls:RecordSchema<StringSchema<undefined>,SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>, undefined>;
-		readonly capabilities:RecordSchema<StringSchema<undefined>,BooleanSchema<undefined>, undefined>;
-		readonly email:SchemaWithPipe<readonly [StringSchema<undefined>,EmailAction<string, undefined>]>;
-		readonly extra_capabilities:RecordSchema<StringSchema<undefined>,BooleanSchema<undefined>, undefined>;
-		readonly first_name:StringSchema<undefined>;
-		readonly last_name:StringSchema<undefined>;
-		readonly link:SchemaWithPipe<readonly [StringSchema<undefined>,UrlAction<string, undefined>]>;
-		readonly locale:StringSchema<undefined>;
-		readonly nickname:StringSchema<undefined>;
-		readonly registered_date:RecordSchema<StringSchema<undefined>,BooleanSchema<undefined>, undefined>;
-		readonly roles:ArraySchema<StringSchema<undefined>, undefined>;
-		readonly username:StringSchema<undefined>;
+		readonly avatar_urls: import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>, undefined>;
+		readonly capabilities: import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, import("valibot").BooleanSchema<undefined>, undefined>;
+		readonly email: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").EmailAction<string, undefined>]>;
+		readonly extra_capabilities: import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, import("valibot").BooleanSchema<undefined>, undefined>;
+		readonly first_name: import("valibot").StringSchema<undefined>;
+		readonly last_name: import("valibot").StringSchema<undefined>;
+		readonly link: import("valibot").SchemaWithPipe<readonly [import("valibot").StringSchema<undefined>, import("valibot").UrlAction<string, undefined>]>;
+		readonly locale: import("valibot").StringSchema<undefined>;
+		readonly nickname: import("valibot").StringSchema<undefined>;
+		readonly registered_date: import("valibot").RecordSchema<import("valibot").StringSchema<undefined>, import("valibot").BooleanSchema<undefined>, undefined>;
+		readonly roles: ArraySchema<import("valibot").StringSchema<undefined>, undefined>;
+		readonly username: import("valibot").StringSchema<undefined>;
 	}, undefined>;
-	export type WP_User_Embed =InferOutput<typeof UserEmbedSchema>;
-	export type WP_User =InferOutput<typeof UserViewSchema>;
-	export type WP_User_Edit =InferOutput<typeof UserEditSchema>;
+	export type WP_User_Embed = InferOutput<typeof UserEmbedSchema>;
+	export type WP_User = InferOutput<typeof UserViewSchema>;
+	export type WP_User_Edit = InferOutput<typeof UserEditSchema>;
 	namespace UserQuerySchemas {
 		export { UserEditSchema as edit };
 		export { UserEmbedSchema as embed };
@@ -1361,7 +1361,7 @@ declare module '@kucrut/wp-api-helpers' {
 }
 
 declare module '@kucrut/wp-api-helpers/utils' {
-	import * as v from 'valibot';
+	import type { GenericSchema, InferOutput } from 'valibot';
 	/**
 	 * Create basic auth string
 	 *
@@ -1380,9 +1380,9 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @param schema Valibot schema to parse the response with.
 	 * @param fetcher Fetch function.
 	 *
-	 * @return {ReturnType<import('../../types.ts').Handle_Response<v.InferOutput<T>>>} Parsed data.
+	 * @return {ReturnType<import('../../types.ts').Handle_Response<InferOutput<T>>>} Parsed data.
 	 */
-	export function fetch_and_parse<T extendsGenericSchema>(schema: T, fetcher: () => ReturnType<typeof fetch>): ReturnType<Handle_Response<InferOutput<T>>>;
+	export function fetch_and_parse<T extends GenericSchema>(schema: T, fetcher: () => ReturnType<typeof fetch>): ReturnType<Handle_Response<InferOutput<T>>>;
 	/**
 	 * Fetch data
 	 *
@@ -1394,7 +1394,7 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 *
 	 * @return {ReturnType<typeof fetch>} Response.
 	 */
-	export function fetch_data<A extends Record<string, unknown>>(endpoint: string | URL, auth?: string | undefined, args?: A | undefined): ReturnType<typeof fetch>;
+	export function fetch_data(endpoint: string | URL, auth?: string | undefined, args?: object | undefined): ReturnType<typeof fetch>;
 	/**
 	 * Generate endpoint URL
 	 *
@@ -1429,7 +1429,7 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @param response Fetch response object.
 	 * @param callback Callback to run when json is valid.
 	 *
-	 * @throws {Error|v.ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
+	 * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
 	 *
 	 * @return {Promise<T>} Whatever the callback returns.
 	 */
@@ -1451,7 +1451,7 @@ declare module '@kucrut/wp-api-helpers/utils' {
 	 * @param args Fetch arguments.
 	 * @return {[string, string][]} Pairs of key and value strings.
 	 */
-	export function normalize_fetch_args(args: Record<string, unknown>): [string, string][];
+	export function normalize_fetch_args(args: object): [string, string][];
 	export class WP_REST_Error extends Error {
 		/**
 		 * @param message Error message.

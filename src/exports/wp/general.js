@@ -1,29 +1,31 @@
+/** @import {InferOutput} from "valibot" */
+
+import { array, number, object, pipe, record, string, toNumber } from 'valibot';
 import { fetch_and_parse, fetch_data, get_fetch } from '../utils/index.js';
 import { LinkItemSchema, UrlSchema } from './schema.js';
-import * as v from 'valibot';
 
-/** @typedef {v.InferOutput<typeof InfoSchema>} WP_Info */
-export const InfoSchema = v.object( {
-	description: v.string(),
+/** @typedef {InferOutput<typeof InfoSchema>} WP_Info */
+export const InfoSchema = object( {
+	description: string(),
 	// TODO
-	gmt_offset: v.pipe( v.string(), v.toNumber() ),
+	gmt_offset: pipe( string(), toNumber() ),
 	home: UrlSchema,
-	name: v.string(),
-	namespaces: v.array( v.string() ),
+	name: string(),
+	namespaces: array( string() ),
 	site_icon_url: UrlSchema,
-	site_icon: v.number(),
-	site_logo: v.number(),
-	timezone_string: v.string(),
+	site_icon: number(),
+	site_logo: number(),
+	timezone_string: string(),
 	url: UrlSchema,
-	authentication: v.record(
-		v.string(),
-		v.object( {
-			endpoints: v.object( {
+	authentication: record(
+		string(),
+		object( {
+			endpoints: object( {
 				authorization: UrlSchema,
 			} ),
 		} ),
 	),
-	_links: v.record( v.string(), LinkItemSchema ),
+	_links: record( string(), LinkItemSchema ),
 } );
 
 /**
@@ -68,8 +70,6 @@ export async function discover( url ) {
  *
  * @param {string} url WordPress API root URL.
  * @param {string} auth Authorization header.
- *
- * @throws {Error|v.ValiError}
  *
  * @return {Promise<WP_Info>} Site info data.
  */
