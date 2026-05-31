@@ -1,6 +1,17 @@
 /** @import {InferOutput} from "valibot" */
 
-import { array, number, object, pipe, record, string, toNumber } from 'valibot';
+import {
+	array,
+	literal,
+	number,
+	object,
+	optional,
+	pipe,
+	record,
+	string,
+	toNumber,
+	union,
+} from 'valibot';
 import { fetch_and_parse, fetch_data, get_fetch } from '../utils/index.js';
 import { LinkItemSchema, UrlSchema } from './schema.js';
 
@@ -12,7 +23,7 @@ export const InfoSchema = object( {
 	home: UrlSchema,
 	name: string(),
 	namespaces: array( string() ),
-	site_icon_url: UrlSchema,
+	site_icon_url: optional( union( [ UrlSchema, literal( '' ) ] ), '' ),
 	site_icon: number(),
 	site_logo: number(),
 	timezone_string: string(),
