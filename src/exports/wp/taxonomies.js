@@ -1,75 +1,78 @@
-import * as v from 'valibot';
+/** @import {ArraySchema, InferOutput, ValiError} from "valibot" */
+/** @import {WP_REST_Error} from "../utils/index.js" */
+
+import { array, boolean, entriesFromObjects, nullable, object, optional, record, string } from 'valibot';
 import { fetch_and_parse, fetch_data, generate_endpoint_url } from '../utils/index.js';
 import { LinkItemSchema } from './schema.js';
 
-/** @typedef {v.InferOutput<typeof TaxonomyEmbedSchema>} WP_Taxonomy_Embed */
-export const TaxonomyEmbedSchema = v.object( {
-	name: v.string(),
-	rest_base: v.string(),
-	rest_namespace: v.string(),
-	slug: v.string(),
-	_links: v.object( {
+/** @typedef {InferOutput<typeof TaxonomyEmbedSchema>} WP_Taxonomy_Embed */
+export const TaxonomyEmbedSchema = object( {
+	name: string(),
+	rest_base: string(),
+	rest_namespace: string(),
+	slug: string(),
+	_links: object( {
 		'collection': LinkItemSchema,
 		'wp:items': LinkItemSchema,
 	} ),
 } );
 
-/** @typedef {v.InferOutput<typeof TaxonomyViewSchema>} WP_Taxonomy */
-export const TaxonomyViewSchema = v.object( v.entriesFromObjects( [
+/** @typedef {InferOutput<typeof TaxonomyViewSchema>} WP_Taxonomy */
+export const TaxonomyViewSchema = object( entriesFromObjects( [
 	TaxonomyEmbedSchema,
-	v.object( {
-		description: v.string(),
-		hierarchical: v.boolean(),
-		types: v.array( v.string() ),
+	object( {
+		description: string(),
+		hierarchical: boolean(),
+		types: array( string() ),
 	} ),
 ] ) );
 
-/** @typedef {v.InferOutput<typeof TaxonomyEditSchema>} WP_Taxonomy_Edit */
-export const TaxonomyEditSchema = v.object( v.entriesFromObjects( [
+/** @typedef {InferOutput<typeof TaxonomyEditSchema>} WP_Taxonomy_Edit */
+export const TaxonomyEditSchema = object( entriesFromObjects( [
 	TaxonomyViewSchema,
-	v.object( {
-		capabilities: v.record( v.string(), v.string() ),
-		labels: v.object( {
-			add_new_item: v.string(),
-			add_or_remove_items: v.nullable( v.string() ),
-			all_items: v.string(),
-			archives: v.optional( v.string() ),
-			back_to_items: v.string(),
-			choose_from_most_used: v.nullable( v.string() ),
-			desc_field_description: v.string(),
-			edit_item: v.string(),
-			filter_by_item: v.nullable( v.string() ),
-			item_link_description: v.string(),
-			item_link: v.string(),
-			items_list_navigation: v.string(),
-			items_list: v.string(),
-			menu_name: v.string(),
-			most_used: v.string(),
-			name_admin_bar: v.string(),
-			name_field_description: v.string(),
-			name: v.string(),
-			new_item_name: v.string(),
-			no_terms: v.string(),
-			not_found: v.string(),
-			parent_field_description: v.nullable( v.string() ),
-			parent_item_colon: v.nullable( v.string() ),
-			parent_item: v.string(),
-			popular_items: v.nullable( v.string() ),
-			search_items: v.string(),
-			separate_items_with_commas: v.nullable( v.string() ),
-			singular_name: v.string(),
-			slug_field_description: v.string(),
-			update_item: v.string(),
-			view_item: v.string(),
+	object( {
+		capabilities: record( string(), string() ),
+		labels: object( {
+			add_new_item: string(),
+			add_or_remove_items: nullable( string() ),
+			all_items: string(),
+			archives: optional( string() ),
+			back_to_items: string(),
+			choose_from_most_used: nullable( string() ),
+			desc_field_description: string(),
+			edit_item: string(),
+			filter_by_item: nullable( string() ),
+			item_link_description: string(),
+			item_link: string(),
+			items_list_navigation: string(),
+			items_list: string(),
+			menu_name: string(),
+			most_used: string(),
+			name_admin_bar: string(),
+			name_field_description: string(),
+			name: string(),
+			new_item_name: string(),
+			no_terms: string(),
+			not_found: string(),
+			parent_field_description: nullable( string() ),
+			parent_item_colon: nullable( string() ),
+			parent_item: string(),
+			popular_items: nullable( string() ),
+			search_items: string(),
+			separate_items_with_commas: nullable( string() ),
+			singular_name: string(),
+			slug_field_description: string(),
+			update_item: string(),
+			view_item: string(),
 		} ),
-		show_cloud: v.boolean(),
-		visibility: v.object( {
-			public: v.boolean(),
-			publicly_queryable: v.boolean(),
-			show_admin_column: v.boolean(),
-			show_in_nav_menus: v.boolean(),
-			show_in_quick_edit: v.boolean(),
-			show_ui: v.boolean(),
+		show_cloud: boolean(),
+		visibility: object( {
+			public: boolean(),
+			publicly_queryable: boolean(),
+			show_admin_column: boolean(),
+			show_in_nav_menus: boolean(),
+			show_in_quick_edit: boolean(),
+			show_ui: boolean(),
 		} ),
 	} ),
 ] ) );
@@ -107,13 +110,13 @@ function generate_url( url, context = undefined, name = '' ) {
  * @param {string|undefined} auth Authorization header.
  * @param {import("$types").Fetch_Taxonomies_Args|undefined} args Request arguments.
  *
- * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
+ * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
- * @return {Promise<v.InferOutput<v.ArraySchema<typeof TaxQuerySchemas[C], undefined>>>} Taxonomy collection.
+ * @return {Promise<InferOutput<ArraySchema<typeof TaxQuerySchemas[C], undefined>>>} Taxonomy collection.
  */
 export async function get_taxonomies( url, context, auth = '', args = undefined ) {
 	const data = await fetch_and_parse(
-		v.record( v.string(), TaxQuerySchemas[ context ] ),
+		record( string(), TaxQuerySchemas[ context ] ),
 		() => {
 			return fetch_data( generate_url( url, context ), auth, args );
 		},
@@ -134,9 +137,9 @@ export async function get_taxonomies( url, context, auth = '', args = undefined 
  * @param {C} context Request context, defaults to 'view'.
  * @param {string|undefined} auth Authorization header.
  *
- * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
+ * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
- * @return {Promise<v.InferOutput<TaxQuerySchemas[C]>>} Taxonomy collection.
+ * @return {Promise<InferOutput<TaxQuerySchemas[C]>>} Taxonomy collection.
  */
 export async function get_single_taxonomy( name, url, context, auth = '' ) {
 	return fetch_and_parse(

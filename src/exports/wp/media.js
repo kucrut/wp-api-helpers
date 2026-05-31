@@ -1,61 +1,64 @@
-import * as v from 'valibot';
+/** @import {ArraySchema, InferOutput, ValiError} from "valibot" */
+/** @import {WP_REST_Error} from "../utils/index.js" */
+
+import { any, array, entriesFromObjects, nullable, number, object, omit, optional, record, string } from 'valibot';
 import { fetch_and_parse, fetch_data, generate_endpoint_url, get_fetch } from '../utils/index.js';
 import { PostEditBaseSchema, PostEmbedSchema, PostViewSchema } from './posts.js';
 import { RenderableItemSchema, UrlSchema } from './schema.js';
 
-/** @typedef {v.InferOutput<typeof ImageSizeSchema>} WP_Image_Size */
-export const ImageSizeSchema = v.object( {
-	file: v.string(),
-	height: v.number(),
-	mime_type: v.string(),
+/** @typedef {InferOutput<typeof ImageSizeSchema>} WP_Image_Size */
+export const ImageSizeSchema = object( {
+	file: string(),
+	height: number(),
+	mime_type: string(),
 	source_url: UrlSchema,
-	width: v.number(),
+	width: number(),
 } );
 
-/** @typedef {v.InferOutput<typeof MediaEmbedSchema>} WP_Media_Embed */
-export const MediaEmbedSchema = v.object( v.entriesFromObjects( [
-	v.omit( PostEmbedSchema, [ 'excerpt', 'featured_media' ] ),
-	v.object( {
-		alt_text: v.string(),
+/** @typedef {InferOutput<typeof MediaEmbedSchema>} WP_Media_Embed */
+export const MediaEmbedSchema = object( entriesFromObjects( [
+	omit( PostEmbedSchema, [ 'excerpt', 'featured_media' ] ),
+	object( {
+		alt_text: string(),
 		caption: RenderableItemSchema,
-		media_type: v.string(),
-		media_details: v.object( {
+		media_type: string(),
+		media_details: object( {
 			// Video.
-			bitrate: v.optional( v.number() ),
+			bitrate: optional( number() ),
 			// Video.
-			dataformat: v.optional( v.string() ),
+			dataformat: optional( string() ),
 			// Image.
-			file: v.optional( v.string() ),
+			file: optional( string() ),
 			// Video.
-			fileformat: v.optional( v.string() ),
+			fileformat: optional( string() ),
 			// Image.
-			filesize: v.number(),
+			filesize: number(),
 			// Image.
-			height: v.optional( v.number() ),
+			height: optional( number() ),
 			// Image.
-			image_meta: v.optional( v.record( v.string(), v.any() ) ),
+			image_meta: optional( record( string(), any() ) ),
 			// Video.
-			length: v.optional( v.number() ),
+			length: optional( number() ),
 			// Video.
-			length_formatted: v.optional( v.string() ),
+			length_formatted: optional( string() ),
 			// Image.
-			width: v.optional( v.number() ),
+			width: optional( number() ),
 			// Image.
-			sizes: v.optional( v.record( v.string(), ImageSizeSchema ) ),
+			sizes: optional( record( string(), ImageSizeSchema ) ),
 		} ),
-		mime_type: v.string(),
+		mime_type: string(),
 		source_url: UrlSchema,
 	} ),
 ] ) );
 
-/** @typedef {v.InferOutput<typeof MediaViewSchema>} WP_Media */
-export const MediaViewSchema = v.object( v.entriesFromObjects( [
+/** @typedef {InferOutput<typeof MediaViewSchema>} WP_Media */
+export const MediaViewSchema = object( entriesFromObjects( [
 	MediaEmbedSchema,
-	v.object( {
+	object( {
 		description: RenderableItemSchema,
-		post: v.nullable( v.number() ),
+		post: nullable( number() ),
 	} ),
-	v.omit( PostViewSchema, [
+	omit( PostViewSchema, [
 		'content',
 		'excerpt',
 		'featured_media',
@@ -65,8 +68,8 @@ export const MediaViewSchema = v.object( v.entriesFromObjects( [
 	] ),
 ] ) );
 
-/** @typedef {v.InferOutput<typeof MediaEditSchema>} WP_Media_Edit */
-export const MediaEditSchema = v.object( v.entriesFromObjects( [
+/** @typedef {InferOutput<typeof MediaEditSchema>} WP_Media_Edit */
+export const MediaEditSchema = object( entriesFromObjects( [
 	MediaViewSchema,
 	PostEditBaseSchema,
 ] ) );
@@ -126,13 +129,13 @@ export function create_media( url, auth, data ) {
  * @param {string|undefined} auth Authorization header.
  * @param {import('$types').Fetch_Media_Args|undefined} args Request arguments.
  *
- * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
+ * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
- * @return {Promise<v.InferOutput<v.ArraySchema<typeof MediaQuerySchemas[C], undefined>>>} Media collection.
+ * @return {Promise<InferOutput<ArraySchema<typeof MediaQuerySchemas[C], undefined>>>} Media collection.
  */
 export async function get_media( url, context, auth = '', args = undefined ) {
 	return fetch_and_parse(
-		v.array( MediaQuerySchemas[ context ] ),
+		array( MediaQuerySchemas[ context ] ),
 		() => fetch_data( generate_url( url, context ), auth, args ),
 	);
 }
@@ -149,9 +152,9 @@ export async function get_media( url, context, auth = '', args = undefined ) {
  * @param {C} context Request context, defaults to 'view'.
  * @param {string|undefined} auth Authorization header.
  *
- * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
+ * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
- * @return {Promise<v.InferOutput<typeof MediaQuerySchemas[C]>>} Single media data.
+ * @return {Promise<InferOutput<typeof MediaQuerySchemas[C]>>} Single media data.
  */
 export async function get_single_media( id, url, context, auth = '' ) {
 	return fetch_and_parse(

@@ -1,20 +1,23 @@
-import * as v from 'valibot';
+/** @import {InferOutput, ValiError} from "valibot" */
+/** @import {WP_REST_Error} from "../utils/index.js" */
+
+import { check, number, object, pipe, string } from 'valibot';
 import { EmailSchema } from './schema.js';
 import { fetch_and_parse, get_fetch } from '../utils/index.js';
 
-/** @typedef {v.InferOutput<typeof JwtAuthDataSchema>} JWT_Auth */
-export const JwtAuthDataSchema = v.object( {
+/** @typedef {InferOutput<typeof JwtAuthDataSchema>} JWT_Auth */
+export const JwtAuthDataSchema = object( {
 	user_email: EmailSchema,
-	user_display_name: v.string(),
-	user_nicename: v.string(),
-	token: v.string(),
+	user_display_name: string(),
+	user_nicename: string(),
+	token: string(),
 } );
 
-/** @typedef {v.InferOutput<typeof JwtValidTokenSchema>} JWT_Valid_Token */
-export const JwtValidTokenSchema = v.object( {
-	code: v.pipe( v.string(), v.check( val => val === 'jwt_auth_valid_token' ) ),
-	data: v.object( {
-		status: v.pipe( v.number(), v.check( val => val === 200 ) ),
+/** @typedef {InferOutput<typeof JwtValidTokenSchema>} JWT_Valid_Token */
+export const JwtValidTokenSchema = object( {
+	code: pipe( string(), check( val => val === 'jwt_auth_valid_token' ) ),
+	data: object( {
+		status: pipe( number(), check( val => val === 200 ) ),
 	} ),
 } );
 
@@ -27,7 +30,7 @@ export const JwtValidTokenSchema = v.object( {
  * @param {string} username Username or email.
  * @param {string} password User password.
  *
- * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
+ * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<JWT_Auth>} Auth data.
  */
@@ -52,7 +55,7 @@ export async function get_jwt_auth( url, username, password ) {
  * @param {string} url WordPress API root URL.
  * @param {string} token JWT token.
  *
- * @throws {Error|v.ValiError|import('../utils/index.js').WP_REST_Error} JSON.parse error, Valibot error or WP API error.
+ * @throws {Error|ValiError|WP_REST_Error} JSON.parse error, Valibot error or WP API error.
  *
  * @return {Promise<JWT_Valid_Token>} Valid token data.
  */
