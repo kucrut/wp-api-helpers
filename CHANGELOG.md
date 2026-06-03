@@ -1,5 +1,16 @@
 # @kucrut/wp-api-helpers
 
+## 0.7.0
+
+### Minor Changes
+
+- 557bee5: Migrate to Valibot
+
+### Patch Changes
+
+- e53d2ec: Fix InfoSchema
+- 46e25aa: Fix Valibot imports
+
 ## 0.6.1
 
 ### Patch Changes
