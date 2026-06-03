@@ -1,5 +1,12 @@
 # @kucrut/wp-api-helpers
 
+## 0.7.1
+
+### Patch Changes
+
+- 8351f99: Fix GH release wf
+- cbdd505: Setup NPM trusted publishing
+
 ## 0.7.0
 
 ### Minor Changes
