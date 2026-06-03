@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"version": "0.6.1",
 	"type": "module",
-	"packageManager": "pnpm@11.5.0",
+	"packageManager": "pnpm@11.5.1",
 	"types": "types/index.d.ts",
 	"files": [
 		"src",
@@ -36,11 +36,11 @@
 		"@kucrut/eslint-config": "^0.5.1",
 		"@types/node": "^24.12.4",
 		"dts-buddy": "^0.8.0",
-		"eslint": "^10.4.0",
-		"eslint-plugin-jsdoc": "^63.0.0",
+		"eslint": "^10.4.1",
+		"eslint-plugin-jsdoc": "^63.0.1",
 		"globals": "^17.6.0",
 		"typescript": "^6.0.3",
-		"typescript-eslint": "^8.60.0",
+		"typescript-eslint": "^8.60.1",
 		"valibot": "^1.4.1",
 		"vitest": "^2.0.1"
 	},
