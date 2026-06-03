@@ -6,6 +6,10 @@
 	"version": "0.6.1",
 	"type": "module",
 	"packageManager": "pnpm@11.5.1",
+	"repository": {
+    	"type": "git",
+    	"url": "https://github.com/kucrut/wp-api-helpers"
+  	},
 	"types": "types/index.d.ts",
 	"files": [
 		"src",
